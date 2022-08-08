@@ -1,0 +1,30 @@
+from pages.base import BasePage
+from selene.api import s, be, have
+import allure
+
+
+
+class LoginPage(BasePage):
+
+    # Locators
+    email_input = s('input[placeholder="Введите e-mail"]')
+    password_input = s('input[type="password"]')
+    enter_btn = s('button[type="submit"]')
+    logout_btn = s('//button[contains(.,"Выйти")]')
+    error_message = s(".snack-bar")
+
+    # Methods
+    def login(self, email, password):
+        with allure.step(f"Войти как '{email}' '{password}'"):
+            self.email_input.set_value(email)
+            self.password_input.set_value(password)
+            self.enter_btn.should(be.enabled).click()
+
+    @allure.step("Проверить что кнопка Выйти отображается")
+    def check_logout_btn_is_visible(self):
+        self.logout_btn.should(be.visible)
+
+    @allure.step("Проверить что ошибка логина отображается")
+    def check_login_error(self):
+        self.error_message.should(have.text("Неверный пароль"))
+        self.logout_btn.should_not(be.visible)
