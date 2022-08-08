@@ -1,0 +1,55 @@
+repos:
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.9.3
+    hooks:
+      - id: isort
+        args: [--atomic, -m=3, -l=120, --tc]
+
+  - repo: https://github.com/ambv/black
+    rev: "20.8b1"
+    hooks:
+      - id: black
+        args: [--line-length=120]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v0.812
+    hooks:
+      - id: mypy
+        exclude: dev-scripts/
+        args: [--no-strict-optional, --ignore-missing-imports]
+
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.1.0
+    hooks:
+      - id: python-use-type-annotations
+
+  - repo: https://github.com/pre-commit/mirrors-pylint
+    rev: v2.7.4
+    hooks:
+      - id: pylint
+        #args: [--disable=all, --enable=classes]
+        args:
+          [
+            --max-line-length=120,
+            --disable=design,
+            --disable=missing-docstring,
+            --disable=bad-continuation,
+            --disable=max-module-lines,
+            --disable=useless-super-delegation,
+            --disable=import-error,
+            --disable=logging-fstring-interpolation,
+            --disable=invalid-name,
+            --disable=duplicate-code,
+            --disable=len-as-condition,
+            --disable=fixme,
+            --disable=global-statement,
+          ]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v1.4.0
+    hooks:
+      - id: trailing-whitespace
+  - repo: https://github.com/prettier/pre-commit
+    rev: v2.1.2
+    hooks:
+      - id: prettier

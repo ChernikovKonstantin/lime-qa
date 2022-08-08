@@ -1,6 +1,7 @@
-from pages.base import BasePage
-from selene.api import s
 import allure
+from selene.api import s
+
+from pages.base import BasePage
 
 
 class HomePage(BasePage):

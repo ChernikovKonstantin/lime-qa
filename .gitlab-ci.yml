@@ -1,0 +1,62 @@
+variables:
+  ALLURE_VERSION: 2.17.3
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+tests:
+  stage: test
+  image: joyzoursky/python-chromedriver:3.9
+
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+
+    paths:
+      - .cache/pip
+      - .venv
+
+  before_script:
+    - apt -qq update ; apt -qq -o=Dpkg::Use-Pty=0 install default-jdk jq -y
+    - wget -q https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/$ALLURE_VERSION/allure-commandline-$ALLURE_VERSION.tgz
+    - tar -xf allure-commandline-$ALLURE_VERSION.tgz
+    - pip install --upgrade pip
+    - pip install virtualenv
+    - virtualenv .venv > /dev/null 2>&1 || true
+    - .venv/bin/pip install -r requirements.txt
+    - source .venv/bin/activate
+    - pip install -r requirements.txt --quiet
+
+  script:
+    - pytest -v tests/
+
+  after_script:
+    - mkdir -p allure-results/history ; cd allure-results/history
+    - export JOB_ID=$(curl --silent "https://gitlab.com/api/v4/projects/36134769/jobs?scope=success&per_page=1&private_token=$GITLAB_API_TOKEN" | jq '.[0].id')
+    - wget -q "https://gitlab.com/api/v4/projects/36134769/jobs/$JOB_ID/artifacts/public/history/categories-trend.json?private_token=$GITLAB_API_TOKEN" -O categories-trend.json || true
+    - wget -q "https://gitlab.com/api/v4/projects/36134769/jobs/$JOB_ID/artifacts/public/history/duration-trend.json?private_token=$GITLAB_API_TOKEN" -O duration-trend.json || true
+    - wget -q "https://gitlab.com/api/v4/projects/36134769/jobs/$JOB_ID/artifacts/public/history/history.json?private_token=$GITLAB_API_TOKEN" -O history.json || true
+    - wget -q "https://gitlab.com/api/v4/projects/36134769/jobs/$JOB_ID/artifacts/public/history/history-trend.json?private_token=$GITLAB_API_TOKEN" -O history-trend.json || true
+    - wget -q "https://gitlab.com/api/v4/projects/36134769/jobs/$JOB_ID/artifacts/public/history/retry-trend.json?private_token=$GITLAB_API_TOKEN" -O retry-trend.json || true
+    - cd ../.. ; ./allure-$ALLURE_VERSION/bin/allure generate ./allure-results -o ./public
+  artifacts:
+    when: always
+    paths:
+      - public
+    expire_in: 30 days
+
+  only:
+    - master
+
+pages:
+  stage: deploy
+  image: joyzoursky/python-chromedriver:3.9
+  when: always
+  dependencies:
+    - tests
+  script:
+    - echo "The site will be available at to $CI_PAGES_URL"
+
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
+  only:
+    - master

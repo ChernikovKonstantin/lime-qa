@@ -3,16 +3,17 @@ import os
 import allure
 import pytest
 
-from pages.login import LoginPage
 from pages.account import AccountPage
 from pages.home import HomePage
+from pages.login import LoginPage
 
 
 @allure.feature("Тесты логина")
 @pytest.mark.usefixtures("setup")
 class TestLogin:
+    @staticmethod
     @allure.title("Успешный вход")
-    def test_login_success(self):
+    def test_login_success():
         page = HomePage()
         page.click_account_btn()
 
@@ -23,8 +24,9 @@ class TestLogin:
         page.login(email=os.getenv("test_user"), password=os.getenv("password"))
         page.check_logout_btn_is_visible()
 
+    @staticmethod
     @allure.title("Неуспешный вход")
-    def test_login_fail(self):
+    def test_login_fail():
         page = HomePage()
         page.click_account_btn()
 

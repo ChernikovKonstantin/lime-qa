@@ -1,7 +1,7 @@
-from pages.base import BasePage
-from selene.api import s, be, have
 import allure
+from selene.api import be, have, s
 
+from pages.base import BasePage
 
 
 class LoginPage(BasePage):
