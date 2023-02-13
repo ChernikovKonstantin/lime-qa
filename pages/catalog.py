@@ -24,6 +24,8 @@ class CatalogPage(BasePage):
     product_article_text = s("//div[@class='product__article']")
     product_color_text = s("//div[@class='ColorSelector product__colors']")
     product_size_text = s("//div[@class='SizeSelector__selected']")
+    add_favorite_btn = s("//div[@class='actions__fav']")
+    favorites_btn = s("//a[contains(@href,'#favorites') and @class='btn-control']")
 
     @allure.step("Добавление в корзину")
     def add_to_basket(self):
@@ -32,8 +34,11 @@ class CatalogPage(BasePage):
         self.menu_chapter.click()
         self.menu_subsection.click()
         self.choose_a_product.click()
+        time.sleep(1)
         self.click_random_color()
+        time.sleep(1)
         self.click_random_size()
+        time.sleep(1)
 
         title = self.get_element_text(self.title_text)
         price = self.get_element_text(self.product_price_text)
@@ -52,3 +57,13 @@ class CatalogPage(BasePage):
         self.drop_down_size.click()
         time.sleep(2)
         random.choice(self.sizes_list).click()
+
+    @allure.step("Добавление в избранное")
+    def add_to_favorite(self):
+        self.click(self.hamburger_menu, "Открыть гамбургер-меню")
+        self.click(self.menu_link_clothes, "Открыть блок одежда")
+        self.click(self.menu_chapter, "Нажать раздел Брюки")
+        self.click(self.menu_subsection, "Нажать подраздел Легинсы")
+        self.click(self.choose_a_product, "Выбрать товар")
+        self.click(self.add_favorite_btn, "Добавить в избранное")
+        self.click(self.favorites_btn, "Перейти в избранное")

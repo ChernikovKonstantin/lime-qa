@@ -11,3 +11,10 @@ class BasePage:
 
     def get_element_text(self, element):
         return element.get(query.text)
+
+    @allure.step("Заполнение поля {fieldName} текстом '{text}'")
+    def set_text(self, element, text, fieldName):
+        element.set_value(text)
+    @allure.step("Клик по элементу {text}")
+    def click(self, element, text):
+        element.click()
