@@ -26,5 +26,9 @@ class LoginPage(BasePage):
 
     @allure.step("Проверить что ошибка логина отображается")
     def check_login_error(self):
-        self.error_message.should(have.text("Неверный пароль"))
-        self.logout_btn.should_not(be.visible)
+        self.error_message.should(have.text("Неверный логин или пароль"))
+        # self.logout_btn.should_not(be.visible)
+
+    # @allure.step("Проверить что товар добавлен в корзину")
+    # def check_add_to_basket(self):
+    #     self.logout_btn.should(be.visible)

@@ -1,4 +1,5 @@
 import os
+import time
 
 import allure
 import pytest
@@ -36,3 +37,17 @@ class TestLogin:
         page = LoginPage()
         page.login(email="qwerty@qwerty.qwerty", password=os.getenv("password"))
         page.check_login_error()
+
+    @staticmethod
+    @allure.title("Регистрация")
+    def test_registration_success():
+        page = HomePage()
+
+        page.click_account_btn()
+        page.click_registration_btn()
+        page.fill_registration_fields()
+
+        page = LoginPage()
+        page.check_logout_btn_is_visible()
+
+        time.sleep(3)

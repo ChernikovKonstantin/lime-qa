@@ -13,3 +13,4 @@ class AccountPage(BasePage):
     @allure.step("Нажать Войти")
     def click_enter_btn(self):
         self.enter_btn.click()
+

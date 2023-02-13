@@ -11,3 +11,5 @@ pytest-xdist==2.2.1
 selenium-wire==4.6.4
 pre-commit==2.19.0
 
+
+selenium~=3.141.0
