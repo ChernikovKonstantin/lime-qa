@@ -15,8 +15,14 @@ class LoginPage(BasePage):
     logout_btn = s('//button[contains(.,"Выйти")]')
     error_message = s(".snack-bar")
     account_btn = s('a[href="/#lk"]')
-    authorization_btn = s("//button[@class= 'btn btn-block btn-outline btn-primary']")
+    authorization_btn = s("//button[contains(text(),'Войти')]")
     close_btn = s("//button[@class = 'IButton IButtonClose ViewModal__closer']")
+    product_price_text = s("//div[@class='product__price']")
+    product_article_text = s("//div[@class='product__article']")
+    product_color_text = s("//div[@class='ColorSelector product__colors']")
+    product_size_text = s("//div[@class='SizeSelector__selected']")
+    add_favorite_btn = s("//div[@class='actions__fav']")
+    favorites_btn = s("//a[contains(@href,'#favorites') and @class='btn-control']")
 
     # Methods
     def login(self, email, password):
@@ -42,7 +48,6 @@ class LoginPage(BasePage):
         self.click(self.account_btn, "Нажать на Личный кабинет")
         self.click(self.authorization_btn, "Нажать Войти")
         self.set_text(self.email_input, "skurikhin.a@lime-shop.ru", "Поле Email")
-        time.sleep(2)
         self.set_text(self.password_input, "Work!1973", "Поле Пароль")
         self.click(self.authorization_btn, "Нажать Войти")
 
@@ -51,10 +56,6 @@ class LoginPage(BasePage):
 
 
 
-
-        # self.set_text(self.email_input, "hufdhguudfg", "Поле авторизация")
-        # self.authorization_btn.click()
-        # self.click(self.favorites_btn, "Перейти в избранное")
 
 
 

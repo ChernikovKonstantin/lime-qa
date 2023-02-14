@@ -26,6 +26,7 @@ class CatalogPage(BasePage):
     product_size_text = s("//div[@class='SizeSelector__selected']")
     add_favorite_btn = s("//div[@class='actions__fav']")
     favorites_btn = s("//a[contains(@href,'#favorites') and @class='btn-control']")
+    choose_a_product_in_favorite = s("//img[@class='PreviewGoods__img']")
 
     @allure.step("Добавление в корзину")
     def add_to_basket(self):
@@ -60,10 +61,19 @@ class CatalogPage(BasePage):
 
     @allure.step("Добавление в избранное")
     def add_to_favorite(self):
-        self.click(self.hamburger_menu, "Открыть гамбургер-меню")
-        self.click(self.menu_link_clothes, "Открыть блок одежда")
-        self.click(self.menu_chapter, "Нажать раздел Брюки")
-        self.click(self.menu_subsection, "Нажать подраздел Легинсы")
-        self.click(self.choose_a_product, "Выбрать товар")
-        self.click(self.add_favorite_btn, "Добавить в избранное")
-        self.click(self.favorites_btn, "Перейти в избранное")
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_clothes, " блок одежда")
+        self.click(self.menu_chapter, " раздел Брюки")
+        self.click(self.menu_subsection, " подраздел Легинсы")
+        self.click(self.choose_a_product, "Выброр товара")
+        self.click(self.add_favorite_btn, "Добавка в избранное")
+        self.click(self.favorites_btn, " в избранное")
+        self.click(self.choose_a_product_in_favorite, "выбор товара в избранном")
+
+        # title = self.get_element_text(self.title_text)
+        # price = self.get_element_text(self.product_price_text)
+        # article = self.get_element_text(self.product_article_text)
+        # color = self.get_element_text(self.product_color_text)
+        # size = self.get_element_text(self.product_size_text)
+        #
+        # return title, price, article, color, size
