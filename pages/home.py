@@ -20,6 +20,7 @@ class HomePage(BasePage):
 
 
 
+
     # Methods
     @allure.step("Нажать Аккаунт")
     def click_account_btn(self):
@@ -31,12 +32,13 @@ class HomePage(BasePage):
 
     @allure.step("Заполнение всех полей регистрации")
     def fill_registration_fields(self):
-        self.email_field.set_value('test' + str(randint(0, 9999)) + '@test.ru')
-        self.phone_number_field.set_value('+79998887755')
-        self.name_field.set_value('Test')
-        self.surname_name_field.set_value('Testerov')
-        self.new_password_field.set_value('123456789')
-        self.repeat_the_password_field.set_value('123456789')
+        self.set_text(self.email_field, 'test' + str(randint(0, 9999)) + '@test.ru', " почта")
+        self.set_text(self.phone_number_field, "+79998887755", " номер телефона")
+        self.set_text(self.name_field, "Test", " ИМЯ")
+        self.set_text(self.surname_name_field, "Testerov", " ФАМИЛИЯ")
+        self.set_text(self.new_password_field, "123456789", " НОВЫЙ ПАРОЛЬ")
+        self.set_text(self.repeat_the_password_field, "123456789", " ПОДТВЕРДИТЕ ПАРОЛЬ")
         self.registration_btn.click()
+
 
 

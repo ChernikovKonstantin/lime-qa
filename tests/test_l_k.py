@@ -23,6 +23,14 @@ class TestFavorites:
         time.sleep(1)
         page = CatalogPage()
         page.add_to_favorite()
-        time.sleep(2)
+
+    @staticmethod
+    @allure.title("Добавление в избранное из каталога")
+    def test_add_to_favorites_in_catalog():
+        page = LoginPage()
+        page.authorization()
+        page.click_close_btn()
+        time.sleep(1)
+
 
 

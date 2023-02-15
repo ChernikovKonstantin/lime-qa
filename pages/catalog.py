@@ -27,19 +27,22 @@ class CatalogPage(BasePage):
     add_favorite_btn = s("//div[@class='actions__fav']")
     favorites_btn = s("//a[contains(@href,'#favorites') and @class='btn-control']")
     choose_a_product_in_favorite = s("//img[@class='PreviewGoods__img']")
+    first_card = s("(//a[@class='CatalogProduct__image-link'])[1]")
+    last_card = s("//a[@href='/product/11471_7809_307-xaki']")
 
     @allure.step("Добавление в корзину")
     def add_to_basket(self):
-        self.hamburger_menu.click()
-        self.menu_link_clothes.click()
-        self.menu_chapter.click()
-        self.menu_subsection.click()
-        self.choose_a_product.click()
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_clothes, "Ссылка ОДЕЖДА")
+        self.click(self.menu_chapter, " раздел Брюки")
+        self.click(self.menu_subsection, " подраздел Легинсы")
+        self.click(self.choose_a_product, "Выброр товара")
         time.sleep(1)
         self.click_random_color()
         time.sleep(1)
         self.click_random_size()
         time.sleep(1)
+
 
         title = self.get_element_text(self.title_text)
         price = self.get_element_text(self.product_price_text)
@@ -62,18 +65,22 @@ class CatalogPage(BasePage):
     @allure.step("Добавление в избранное")
     def add_to_favorite(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_clothes, " блок одежда")
-        self.click(self.menu_chapter, " раздел Брюки")
+        self.click(self.menu_link_clothes, " Ссылка ОДЕЖДА")
+        self.click(self.menu_chapter, " Раздел Брюки")
         self.click(self.menu_subsection, " подраздел Легинсы")
+        url_first_card = self.get_attribute(self.first_card, "href").partition('product/')[2]
+        # print(url_first_card)
         self.click(self.choose_a_product, "Выброр товара")
+        time.sleep(2)
         self.click(self.add_favorite_btn, "Добавка в избранное")
-        self.click(self.favorites_btn, " в избранное")
+        self.click(self.favorites_btn, "переход в избранное")
+        time.sleep(2)
+        url_last_card = self.get_attribute(self.last_card, "href").partition('product/')[2]
         self.click(self.choose_a_product_in_favorite, "выбор товара в избранном")
+        self.click(self.add_favorite_btn, "Удаление из избранного")
+        self.click(self.favorites_btn, "переход в избранное")
+        time.sleep(2)
 
-        # title = self.get_element_text(self.title_text)
-        # price = self.get_element_text(self.product_price_text)
-        # article = self.get_element_text(self.product_article_text)
-        # color = self.get_element_text(self.product_color_text)
-        # size = self.get_element_text(self.product_size_text)
-        #
-        # return title, price, article, color, size
+        assert url_first_card == url_last_card, print('Урл отличается')
+
+

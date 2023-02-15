@@ -9,6 +9,7 @@ class BasePage:
         with allure.step(f"Открыть страницу {url}"):
             browser.open_url(url)
 
+    @allure.step("Взять текст")
     def get_element_text(self, element):
         return element.get(query.text)
 
@@ -18,3 +19,8 @@ class BasePage:
     @allure.step("Клик по элементу {text}")
     def click(self, element, text):
         element.click()
+
+    @allure.step("Получение аттрибута")
+    def get_attribute(self, element, attribute):
+        return element.get_attribute(attribute)
+
