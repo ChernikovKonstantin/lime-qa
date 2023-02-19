@@ -29,6 +29,18 @@ class CatalogPage(BasePage):
     choose_a_product_in_favorite = s("//img[@class='PreviewGoods__img']")
     first_card = s("(//a[@class='CatalogProduct__image-link'])[1]")
     last_card = s("//a[@href='/product/11471_7809_307-xaki']")
+    menu_blazers = s("//a[@class = 'mainmenu-children__link' and span ='БЛЕЙЗЕРЫ']")
+    product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]']")
+    menu_link_bags = s("//a[span= 'СУМКИ']")
+    choose_a_product_bags = s("(//a[@href= '/product/12759_9803_228-verbliuzii'])[2]")
+    menu_link_shoes = s("//span[span= 'ОБУВЬ']")
+    menu_subsection_shoes = s("//a[@class= 'mainmenu-children__link' and span = 'БОТИЛЬОНЫ']")
+    choose_a_product_shoes = s("(//a[@href = '/product/12598_9626_094-bezevyi'])[2]")
+    menu_link_lingerie = s("//span[span= 'НИЖНЕЕ БЕЛЬЕ']")
+    menu_subsection_all_models = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
+    choose_a_product_lingerie = s("(//a[@href= '/product/12463_8035_966-cernyi'])[4]")
+
+
 
     @allure.step("Добавление в корзину")
     def add_to_basket(self):
@@ -69,7 +81,6 @@ class CatalogPage(BasePage):
         self.click(self.menu_chapter, " Раздел Брюки")
         self.click(self.menu_subsection, " подраздел Легинсы")
         url_first_card = self.get_attribute(self.first_card, "href").partition('product/')[2]
-        # print(url_first_card)
         self.click(self.choose_a_product, "Выброр товара")
         time.sleep(2)
         self.click(self.add_favorite_btn, "Добавка в избранное")
@@ -82,5 +93,42 @@ class CatalogPage(BasePage):
         time.sleep(2)
 
         assert url_first_card == url_last_card, print('Урл отличается')
+
+    @allure.step("Добавление в избранное из каталога")
+    def add_to_favorites_in_catalog(self):
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_clothes, " Ссылка ОДЕЖДА")
+        self.click(self.menu_blazers, " Раздел БЛЕЙЗЕРЫ")
+        self.click(self.product_in_catalog, "избранное в каталоге")
+
+
+
+    @allure.step("Добавление в корзину несколько товаров")
+    def basket_multiple_products(self):
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_bags, " Ссылка СУМКИ")
+        self.click(self.choose_a_product_bags, "товар сумка")
+        self.click(self. add_to_cart, "добавить в корзину")
+
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_shoes, "Ссылка ТУФЛИ")
+        self.click(self.menu_subsection_shoes, "Раздел БОТИЛЬОНЫ")
+        self.click(self.choose_a_product_shoes, "Товар ботильоны")
+        self.click(self.add_to_cart, "добавить в корзину")
+
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_lingerie, " Ссылка СУМКИ")
+        self.click(self.menu_subsection_all_models, "Раздел НИЖНЕЕ БЕЛЬЕ")
+        self.click(self.choose_a_product_lingerie, "Товар брифы")
+        time.sleep(8)
+        self.click(self.add_to_cart, "добавить в корзину")
+        time.sleep(8)
+
+
+
+
+
+
+
 
 
