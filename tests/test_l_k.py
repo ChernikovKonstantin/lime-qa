@@ -30,11 +30,10 @@ class TestFavorites:
         page = LoginPage()
         page.authorization()
         page.click_close_btn()
-        time.sleep(1)
 
         page = CatalogPage()
         page.add_to_favorites_in_catalog()
-        time.sleep(2)
+
 
 
 

@@ -38,9 +38,7 @@ class CatalogPage(BasePage):
     choose_a_product_shoes = s("(//a[@href = '/product/12598_9626_094-bezevyi'])[2]")
     menu_link_lingerie = s("//span[span= 'НИЖНЕЕ БЕЛЬЕ']")
     menu_subsection_all_models = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
-    choose_a_product_lingerie = s("(//a[@href= '/product/12463_8035_966-cernyi'])[4]")
-
-
+    choose_a_product_lingerie = s("(//a[@href= '/product/12463_8035_966-svetlyi_xaki'])[2]")
 
     @allure.step("Добавление в корзину")
     def add_to_basket(self):
@@ -54,7 +52,6 @@ class CatalogPage(BasePage):
         time.sleep(1)
         self.click_random_size()
         time.sleep(1)
-
 
         title = self.get_element_text(self.title_text)
         price = self.get_element_text(self.product_price_text)
@@ -101,34 +98,30 @@ class CatalogPage(BasePage):
         self.click(self.menu_blazers, " Раздел БЛЕЙЗЕРЫ")
         self.click(self.product_in_catalog, "избранное в каталоге")
 
-
-
     @allure.step("Добавление в корзину несколько товаров")
     def basket_multiple_products(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_bags, " Ссылка СУМКИ")
         self.click(self.choose_a_product_bags, "товар сумка")
-        self.click(self. add_to_cart, "добавить в корзину")
+        price_bags = self.get_element_text(self.product_price_text)
+        self.click(self.add_to_cart, "добавить в корзину")
 
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_shoes, "Ссылка ТУФЛИ")
         self.click(self.menu_subsection_shoes, "Раздел БОТИЛЬОНЫ")
         self.click(self.choose_a_product_shoes, "Товар ботильоны")
-        self.click(self.add_to_cart, "добавить в корзину")
+        price_shoes = self.get_element_text(self.product_price_text)
 
+        self.click(self.add_to_cart, "добавить в корзину")
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_lingerie, " Ссылка СУМКИ")
         self.click(self.menu_subsection_all_models, "Раздел НИЖНЕЕ БЕЛЬЕ")
+        time.sleep(4)
         self.click(self.choose_a_product_lingerie, "Товар брифы")
-        time.sleep(8)
+        price_lingerie = self.get_element_text(self.product_price_text)
+        time.sleep(2)
         self.click(self.add_to_cart, "добавить в корзину")
-        time.sleep(8)
+        time.sleep(1)
 
 
-
-
-
-
-
-
-
+        return price_lingerie, price_shoes, price_bags,

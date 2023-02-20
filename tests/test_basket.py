@@ -36,10 +36,25 @@ class TestBasket:
     @allure.title("Добавление в корзину несколько товаров")
     def test_basket_multiple_products():
         page = CatalogPage()
-        page.basket_multiple_products()
-        time.sleep(8)
+        price_lingerie, price_shoes, price_bags  = page.basket_multiple_products()
+        # print(price_lingerie, price_shoes, price_bags)
+
+        time.sleep(2)
         page.basket_btn.click()
-        time.sleep(8)
+        time.sleep(1)
+        page = CartPage()
+        price_bags_cart, price_shoes_cart, price_lingerie_cart, quantity_products_cart, total_cost_products_cart, final_cost_products_cart, delivery_cart = page.get_cart_multidatabase()
+
+
+        assert quantity_products_cart == "3", print('Количество добавленных товаров в корзине не совпадает с количеством указанном в строке "количество"')
+        assert int(price_bags_cart) + int(price_shoes_cart) + int(price_lingerie_cart) == int(total_cost_products_cart), print ("Сумма добавленных товаров в корзине не совпадает с общей стоимостью товаров")
+        assert int(price_bags_cart) + int(price_shoes_cart) + int(price_lingerie_cart) + int(delivery_cart) == int(final_cost_products_cart), ("Сумма добавленных товаров в корзине + стоимость доставки не равна итоговой стоимости товаров")
+        assert int(total_cost_products_cart) + int(delivery_cart) == int(final_cost_products_cart), ("Общая сумма + доставка не равна Итоговой сумме")
+
+
+
+
+
 
 
 
