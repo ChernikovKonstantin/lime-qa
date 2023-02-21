@@ -43,7 +43,7 @@ class CatalogPage(BasePage):
     @allure.step("Добавление в корзину")
     def add_to_basket(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_clothes, "Ссылка ОДЕЖДА")
+        self.click(self.menu_link_clothes, "Блок ОДЕЖДА")
         self.click(self.menu_chapter, " раздел Брюки")
         self.click(self.menu_subsection, " подраздел Легинсы")
         self.click(self.choose_a_product, "Выброр товара")
@@ -74,7 +74,7 @@ class CatalogPage(BasePage):
     @allure.step("Добавление в избранное")
     def add_to_favorite(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_clothes, " Ссылка ОДЕЖДА")
+        self.click(self.menu_link_clothes, " Блок ОДЕЖДА")
         self.click(self.menu_chapter, " Раздел Брюки")
         self.click(self.menu_subsection, " подраздел Легинсы")
         url_first_card = self.get_attribute(self.first_card, "href").partition('product/')[2]
@@ -94,8 +94,8 @@ class CatalogPage(BasePage):
     @allure.step("Добавление в избранное из каталога")
     def add_to_favorites_in_catalog(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_clothes, " Ссылка ОДЕЖДА")
-        self.click(self.menu_blazers, " Раздел БЛЕЙЗЕРЫ")
+        self.click(self.menu_link_clothes, " Блок ОДЕЖДА")
+        self.click(self.menu_blazers, " Ссылка БЛЕЙЗЕРЫ")
         self.click(self.product_in_catalog, "избранное в каталоге")
 
     @allure.step("Добавление в корзину несколько товаров")
@@ -107,21 +107,20 @@ class CatalogPage(BasePage):
         self.click(self.add_to_cart, "добавить в корзину")
 
         self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_shoes, "Ссылка ТУФЛИ")
-        self.click(self.menu_subsection_shoes, "Раздел БОТИЛЬОНЫ")
+        self.click(self.menu_link_shoes, "Блок ТУФЛИ")
+        self.click(self.menu_subsection_shoes, "Ссылка БОТИЛЬОНЫ")
         self.click(self.choose_a_product_shoes, "Товар ботильоны")
         price_shoes = self.get_element_text(self.product_price_text)
 
         self.click(self.add_to_cart, "добавить в корзину")
         self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_lingerie, " Ссылка СУМКИ")
-        self.click(self.menu_subsection_all_models, "Раздел НИЖНЕЕ БЕЛЬЕ")
+        self.click(self.menu_link_lingerie, "Блок НИЖНЕЕ БЕЛЬЕ")
+        self.click(self.menu_subsection_all_models, "Ссылка Все модели")
         time.sleep(4)
         self.click(self.choose_a_product_lingerie, "Товар брифы")
         price_lingerie = self.get_element_text(self.product_price_text)
         time.sleep(2)
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
-
 
         return price_lingerie, price_shoes, price_bags,

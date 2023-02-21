@@ -5,7 +5,6 @@ from pages.base import BasePage
 
 
 class AccountPage(BasePage):
-
     # Locators
     enter_btn = s(".btn.btn-block.btn-outline.btn-primary")
 
@@ -13,4 +12,3 @@ class AccountPage(BasePage):
     @allure.step("Нажать Войти")
     def click_enter_btn(self):
         self.enter_btn.click()
-

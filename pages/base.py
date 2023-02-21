@@ -16,6 +16,7 @@ class BasePage:
     @allure.step("Заполнение поля {fieldName} текстом '{text}'")
     def set_text(self, element, text, fieldName):
         element.set_value(text)
+
     @allure.step("Клик по элементу {text}")
     def click(self, element, text):
         element.click()
@@ -23,4 +24,3 @@ class BasePage:
     @allure.step("Получение аттрибута")
     def get_attribute(self, element, attribute):
         return element.get_attribute(attribute)
-

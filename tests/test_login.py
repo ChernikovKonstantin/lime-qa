@@ -13,7 +13,7 @@ from pages.login import LoginPage
 @pytest.mark.usefixtures("setup")
 class TestLogin():
     @staticmethod
-    @allure.title("Успешный вход")
+    @allure.title("Успешная авторизация")
     def test_login_success():
         page = HomePage()
         page.click_account_btn()
@@ -26,7 +26,7 @@ class TestLogin():
         page.check_logout_btn_is_visible()
 
     @staticmethod
-    @allure.title("Неуспешный вход")
+    @allure.title("Не успешая авторизация")
     def test_login_fail():
         page = HomePage()
         page.click_account_btn()
@@ -38,8 +38,9 @@ class TestLogin():
         page.login(email="qwerty@qwerty.qwerty", password=os.getenv("password"))
         page.check_login_error()
 
+
     @staticmethod
-    @allure.title("Регистрация")
+    @allure.title("Успешная регистрация")
     def test_registration_success():
         page = HomePage()
 
