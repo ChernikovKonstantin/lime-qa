@@ -1,6 +1,8 @@
 import allure
 from selene import query
 from selene.api import browser
+from selene.support.shared import browser
+from selenium.webdriver import ActionChains
 
 
 class BasePage:
@@ -24,3 +26,13 @@ class BasePage:
     @allure.step("Получение аттрибута")
     def get_attribute(self, element, attribute):
         return element.get_attribute(attribute)
+
+    @allure.step("Получение аттрибута")
+    def get_url(self):
+        return browser.driver.current_url
+
+    @allure.step("Получение аттрибута")
+    def move_to(self, element):
+        driver = browser.driver
+        action = ActionChains(driver)
+        action.move_to_element(element).perform()

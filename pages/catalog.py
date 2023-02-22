@@ -5,6 +5,7 @@ import allure
 from selene.api import *
 
 from pages.base import BasePage
+from selene.support.shared import browser
 
 
 class CatalogPage(BasePage):
@@ -30,7 +31,7 @@ class CatalogPage(BasePage):
     first_card = s("(//a[@class='CatalogProduct__image-link'])[1]")
     last_card = s("//a[@href='/product/11471_7809_307-xaki']")
     menu_blazers = s("//a[@class = 'mainmenu-children__link' and span ='БЛЕЙЗЕРЫ']")
-    product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]']")
+    product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]")
     menu_link_bags = s("//a[span= 'СУМКИ']")
     choose_a_product_bags = s("(//a[@href= '/product/12759_9803_228-verbliuzii'])[2]")
     menu_link_shoes = s("//span[span= 'ОБУВЬ']")
@@ -78,13 +79,15 @@ class CatalogPage(BasePage):
         self.click(self.menu_chapter, " Раздел Брюки")
         self.click(self.menu_subsection, " подраздел Легинсы")
         url_first_card = self.get_attribute(self.first_card, "href").partition('product/')[2]
-        self.click(self.choose_a_product, "Выброр товара")
+        self.click(self.choose_a_product, "Выбор товара")
         time.sleep(2)
+        assert url_first_card in self.get_url()
         self.click(self.add_favorite_btn, "Добавка в избранное")
         self.click(self.favorites_btn, "переход в избранное")
         time.sleep(2)
         url_last_card = self.get_attribute(self.last_card, "href").partition('product/')[2]
         self.click(self.choose_a_product_in_favorite, "выбор товара в избранном")
+        assert url_last_card in self.get_url()
         self.click(self.add_favorite_btn, "Удаление из избранного")
         self.click(self.favorites_btn, "переход в избранное")
         time.sleep(2)
@@ -96,7 +99,22 @@ class CatalogPage(BasePage):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_clothes, " Блок ОДЕЖДА")
         self.click(self.menu_blazers, " Ссылка БЛЕЙЗЕРЫ")
+        time.sleep(1)
+        self.move_to(browser.driver.find_element_by_xpath("//a[@class='CatalogProduct__image-link']//img"))
+        time.sleep(3)
         self.click(self.product_in_catalog, "избранное в каталоге")
+        url_first_card = self.get_attribute(self.first_card, "href").partition('product/')[2]
+        print(url_first_card)
+
+        self.click(self.favorites_btn, "переход в избранное")
+        time.sleep(2)
+
+        url_last_card_catalog = self.get_attribute(self.choose_a_product_in_favorite, "href").partition('product/')[2]
+        print(url_last_card_catalog)
+
+
+
+        time.sleep(5)
 
     @allure.step("Добавление в корзину несколько товаров")
     def basket_multiple_products(self):
