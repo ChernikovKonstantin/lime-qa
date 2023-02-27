@@ -39,7 +39,14 @@ class CatalogPage(BasePage):
     choose_a_product_shoes = s("(//a[@href = '/product/12598_9626_094-bezevyi'])[2]")
     menu_link_lingerie = s("//span[span= 'НИЖНЕЕ БЕЛЬЕ']")
     menu_subsection_all_models = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
-    choose_a_product_lingerie = s("(//a[@href= '/product/12463_8035_966-svetlyi_xaki'])[2]")
+    choose_a_product_lingerie = s("(//a[@href= '/product/12463_8035_966-svetlyi_xaki'])[1]")
+    first_product_in_catalog = s(
+        "//button[contains(@class, 'isActive')]/ancestor::div[contains(@class, 'CatalogRow ')]//a")
+    choose_a_product_svetlyi_xaki = s("(//a[@href='/product/12718_9717_920-svetlyi_xaki'])[1]")
+    menu_chapter_accessories = s("//span[span= 'АКСЕССУАРЫ']")
+    menu_subsection_belts = s("//a[@class= 'mainmenu-children__link' and span = 'РЕМНИ']")
+    choose_a_product_belts = s("(//a[@href= '/product/12843_9898_293-cernyi'])[2]")
+
 
     @allure.step("Добавление в корзину")
     def add_to_basket(self):
@@ -54,11 +61,11 @@ class CatalogPage(BasePage):
         self.click_random_size()
         time.sleep(1)
 
-        title = self.get_element_text(self.title_text)
-        price = self.get_element_text(self.product_price_text)
-        article = self.get_element_text(self.product_article_text)
-        color = self.get_element_text(self.product_color_text)
-        size = self.get_element_text(self.product_size_text)
+        title = self.get_element_text(self.title_text, 'Заголовок')
+        price = self.get_element_text(self.product_price_text, 'Цена')
+        article = self.get_element_text(self.product_article_text, 'Артикул')
+        color = self.get_element_text(self.product_color_text, 'Цвет')
+        size = self.get_element_text(self.product_size_text, 'Размер')
 
         return title, price, article, color, size
 
@@ -101,44 +108,40 @@ class CatalogPage(BasePage):
         self.click(self.menu_blazers, " Ссылка БЛЕЙЗЕРЫ")
         time.sleep(1)
         self.move_to(browser.driver.find_element_by_xpath("//a[@class='CatalogProduct__image-link']//img"))
-        time.sleep(3)
+        time.sleep(1)
         self.click(self.product_in_catalog, "избранное в каталоге")
-        url_first_card = self.get_attribute(self.first_card, "href").partition('product/')[2]
-        print(url_first_card)
-
+        url_first_card = self.get_attribute(self.first_product_in_catalog, "href").partition('product/')[2]
         self.click(self.favorites_btn, "переход в избранное")
-        time.sleep(2)
+        time.sleep(1)
+        url_last_card_catalog = self.get_attribute(self.choose_a_product_svetlyi_xaki, "href").partition('product/')[2]
 
-        url_last_card_catalog = self.get_attribute(self.choose_a_product_in_favorite, "href").partition('product/')[2]
-        print(url_last_card_catalog)
-
-
-
-        time.sleep(5)
+        assert url_first_card == url_last_card_catalog, print('Урл отличается')
 
     @allure.step("Добавление в корзину несколько товаров")
     def basket_multiple_products(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_bags, " Ссылка СУМКИ")
         self.click(self.choose_a_product_bags, "товар сумка")
-        price_bags = self.get_element_text(self.product_price_text)
+        price_bags = self.get_element_text(self.product_price_text, 'цена сумки')
         self.click(self.add_to_cart, "добавить в корзину")
-
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_shoes, "Блок ТУФЛИ")
         self.click(self.menu_subsection_shoes, "Ссылка БОТИЛЬОНЫ")
         self.click(self.choose_a_product_shoes, "Товар ботильоны")
-        price_shoes = self.get_element_text(self.product_price_text)
-
+        price_shoes = self.get_element_text(self.product_price_text, 'цена туфли')
         self.click(self.add_to_cart, "добавить в корзину")
+
+        return price_shoes, price_bags,
+
+    @allure.step("Добавление товара в корзину")
+    def basket_changes_products(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_lingerie, "Блок НИЖНЕЕ БЕЛЬЕ")
-        self.click(self.menu_subsection_all_models, "Ссылка Все модели")
-        time.sleep(4)
-        self.click(self.choose_a_product_lingerie, "Товар брифы")
-        price_lingerie = self.get_element_text(self.product_price_text)
-        time.sleep(2)
+        self.click(self.menu_chapter_accessories, "Блок АКССЕСУАРЫ")
+        self.click(self.menu_subsection_belts, "Раздел РЕМНИ")
+        self.click(self.choose_a_product_belts, "Товар РЕМНИ")
         self.click(self.add_to_cart, "добавить в корзину")
-        time.sleep(1)
 
-        return price_lingerie, price_shoes, price_bags,
+
+
+
+
