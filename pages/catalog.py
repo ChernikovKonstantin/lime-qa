@@ -1,5 +1,6 @@
 import random
 import time
+import re
 
 import allure
 from selene.api import *
@@ -46,6 +47,7 @@ class CatalogPage(BasePage):
     menu_chapter_accessories = s("//span[span= 'АКСЕССУАРЫ']")
     menu_subsection_belts = s("//a[@class= 'mainmenu-children__link' and span = 'РЕМНИ']")
     choose_a_product_belts = s("(//a[@href= '/product/12843_9898_293-cernyi'])[2]")
+
 
 
     @allure.step("Добавление в корзину")
@@ -140,6 +142,10 @@ class CatalogPage(BasePage):
         self.click(self.menu_subsection_belts, "Раздел РЕМНИ")
         self.click(self.choose_a_product_belts, "Товар РЕМНИ")
         self.click(self.add_to_cart, "добавить в корзину")
+        price_belts = re.sub('[^0-9]', "",
+                                 self.get_element_text(self.product_price_text, 'выбор количества товаров в корзине'))
+
+        return price_belts
 
 
 

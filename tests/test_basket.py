@@ -57,9 +57,17 @@ class TestBasket:
     def test_basket_changes_products(self):
         page = CatalogPage()
         page.basket_changes_products()
+        price_belts = page.basket_changes_products()
         page.basket_btn.click()
+        time.sleep(2)
 
         page = CartPage()
         page.basket_changes_products_in_cart()
         page.get_quantity_products_and_final_cost()
-        time.sleep(1)
+        price_product_cart, choose_quantity, quantity_products_cart, final_cost_products_cart = page.get_quantity_products_and_final_cost()
+
+        # assert choose_quantity == quantity_products_cart, print('Количество товаров не равно')
+        # assert int(price_belts) * int(quantity_products_cart) == int(final_cost_products_cart), print('Итоговая сумма не равна цуне товара умноженная на количество товаров')
+
+
+        time.sleep(3)
