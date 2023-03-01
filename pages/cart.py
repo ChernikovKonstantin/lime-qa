@@ -59,6 +59,7 @@ class CartPage(BasePage):
         self.click(self.choose_quantity_in_cart, "Количество в корзине")
         self.click_random_quantity()
 
+
     @allure.step(
         "Получение: количество добавленных(рандомно) товаров, Количество товаров в итого, стоимость товара, итоговая стоимость")
     def get_quantity_products_and_final_cost(self):
@@ -67,15 +68,19 @@ class CartPage(BasePage):
 
         choose_quantity = re.sub('[^0-9]', "",
                                  self.get_element_text(self.choose_quantity_text, 'выбор количества товаров в корзине'))
+
         time.sleep(2)
         quantity_products_cart = re.sub('[^0-9]', "", self.get_element_text(self.quantity_products_cart_text,
                                                                             'количество товаров в корзине'))
         final_cost_products_cart = re.sub('[^0-9]', "", self.get_element_text(self.final_cost_products_cart_text,
                                                                               'итоговая стоимость товаров в корзине'))
+
         total_information = self.get_element_text(self.total_information_text, 'информация = цена*количество товаров')
 
 
-        return price_product_cart, choose_quantity, quantity_products_cart, final_cost_products_cart, total_information
+        total_cost_products_cart = re.sub('[^0-9]', "", self.get_element_text(self.total_cost_products_cart_text,
+                                                                              'общая стоимость товаров в корзине'))
+        return price_product_cart, choose_quantity, quantity_products_cart, final_cost_products_cart, total_information, total_cost_products_cart
 
     @allure.step("Рандомный выбор количества")
     def click_random_quantity(self):

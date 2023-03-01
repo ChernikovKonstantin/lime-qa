@@ -64,10 +64,11 @@ class TestBasket:
         page = CartPage()
         page.basket_changes_products_in_cart()
         page.get_quantity_products_and_final_cost()
-        price_product_cart, choose_quantity, quantity_products_cart, final_cost_products_cart = page.get_quantity_products_and_final_cost()
+        price_product_cart, choose_quantity, quantity_products_cart, final_cost_products_cart, total_information, total_cost_products_cart = page.get_quantity_products_and_final_cost()
+        information_cart = choose_quantity + " X " + price_belts
 
-        # assert choose_quantity == quantity_products_cart, print('Количество товаров не равно')
-        # assert int(price_belts) * int(quantity_products_cart) == int(final_cost_products_cart), print('Итоговая сумма не равна цуне товара умноженная на количество товаров')
-
+        assert information_cart in total_information, print('Нужный текст не присутствует')
+        assert choose_quantity == quantity_products_cart, print('Количество товаров не равно')
+        assert int(price_belts) * int(quantity_products_cart) == int(final_cost_products_cart), print('Итоговая сумма не равна цуне товара умноженная на количество товаров')
 
         time.sleep(3)
