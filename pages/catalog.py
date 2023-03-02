@@ -142,8 +142,9 @@ class CatalogPage(BasePage):
         self.click(self.menu_subsection_belts, "Раздел РЕМНИ")
         self.click(self.choose_a_product_belts, "Товар РЕМНИ")
         self.click(self.add_to_cart, "добавить в корзину")
+        time.sleep(1)
         price_belts = re.sub('[^0-9]', "",
-                                 self.get_element_text(self.product_price_text, 'выбор количества товаров в корзине'))
+                                 self.get_element_text(self.product_price_text, 'Цена товара'))
 
         return price_belts
 

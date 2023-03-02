@@ -56,19 +56,22 @@ class TestBasket:
     @allure.step("Изменеие количества товаров в корзине")
     def test_basket_changes_products(self):
         page = CatalogPage()
-        page.basket_changes_products()
         price_belts = page.basket_changes_products()
+        time.sleep(2)
         page.basket_btn.click()
         time.sleep(2)
 
         page = CartPage()
         page.basket_changes_products_in_cart()
-        page.get_quantity_products_and_final_cost()
         price_product_cart, choose_quantity, quantity_products_cart, final_cost_products_cart, total_information, total_cost_products_cart = page.get_quantity_products_and_final_cost()
         information_cart = choose_quantity + " X " + price_belts
 
-        assert information_cart in total_information, print('Нужный текст не присутствует')
+
+        if choose_quantity != '1':
+            assert information_cart in total_information, print(
+                'Нужный текст "цена*количество товаров" не присутствует')
+
         assert choose_quantity == quantity_products_cart, print('Количество товаров не равно')
         assert int(price_belts) * int(quantity_products_cart) == int(final_cost_products_cart), print('Итоговая сумма не равна цуне товара умноженная на количество товаров')
 
-        time.sleep(3)
+

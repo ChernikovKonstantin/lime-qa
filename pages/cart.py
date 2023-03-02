@@ -74,8 +74,11 @@ class CartPage(BasePage):
                                                                             'количество товаров в корзине'))
         final_cost_products_cart = re.sub('[^0-9]', "", self.get_element_text(self.final_cost_products_cart_text,
                                                                               'итоговая стоимость товаров в корзине'))
+        total_information = ''
+        if choose_quantity != '1':
+            total_information = self.get_element_text(self.total_information_text,
+                                                      'информация = цена*количество товаров')
 
-        total_information = self.get_element_text(self.total_information_text, 'информация = цена*количество товаров')
 
 
         total_cost_products_cart = re.sub('[^0-9]', "", self.get_element_text(self.total_cost_products_cart_text,
