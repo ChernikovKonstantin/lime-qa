@@ -71,7 +71,7 @@ class TestBasket:
             assert information_cart in total_information, print(
                 'Нужный текст "цена*количество товаров" не присутствует')
 
-        assert choose_quantity == quantity_products_cart, print('Количество товаров не равно')
-        assert int(price_belts) * int(quantity_products_cart) == int(final_cost_products_cart), print('Итоговая сумма не равна цуне товара умноженная на количество товаров')
+        assert choose_quantity == quantity_products_cart, print('Количество товаров в ,таблице где происходит смена количества товаров, и количество в итого не равно')
+        assert int(price_belts) * int(quantity_products_cart) == int(final_cost_products_cart), print('Итоговая сумма не равна цене товара умноженная на количество товаров')
 
 
