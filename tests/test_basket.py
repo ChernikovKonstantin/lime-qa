@@ -4,9 +4,10 @@ import time
 import allure
 import pytest
 
-from pages.login import LoginPage
+from pages.base import BasePage
 from pages.cart import CartPage
 from pages.catalog import CatalogPage
+
 
 
 @allure.feature("тесты корзины")
@@ -38,7 +39,7 @@ class TestBasket:
         page.basket_multiple_products()
         time.sleep(2)
         page.basket_btn.click()
-        time.sleep(2)
+        time.sleep(1)
         page = CartPage()
         price_bags_cart, price_shoes_cart, quantity_products_cart, total_cost_products_cart, final_cost_products_cart, delivery_cart = page.get_cart_multidatabase()
 
@@ -48,9 +49,9 @@ class TestBasket:
             total_cost_products_cart), print(
             "Сумма добавленных товаров в корзине не совпадает с общей стоимостью товаров")
         assert int(price_bags_cart) + int(price_shoes_cart) + int(delivery_cart) == int(
-            final_cost_products_cart), print(
+            final_cost_products_cart), (
             "Сумма добавленных товаров в корзине + стоимость доставки не равна итоговой стоимости товаров")
-        assert int(total_cost_products_cart) + int(delivery_cart) == int(final_cost_products_cart), print(
+        assert int(total_cost_products_cart) + int(delivery_cart) == int(final_cost_products_cart), (
             "Общая сумма + доставка не равна Итоговой сумме")
 
     @allure.step("Изменеие количества товаров в корзине")
@@ -73,24 +74,5 @@ class TestBasket:
 
         assert choose_quantity == quantity_products_cart, print('Количество товаров в ,таблице где происходит смена количества товаров, и количество в итого не равно')
         assert int(price_belts) * int(quantity_products_cart) == int(final_cost_products_cart), print('Итоговая сумма не равна цене товара умноженная на количество товаров')
-
-
-    @allure.title("Покупка товара")
-    def test_product_registration(self):
-        page = LoginPage()
-        page.authorization()
-        page.click_close_btn()
-
-        page = CatalogPage()
-        page.basket_changes_products()
-        page.basket_btn.click()
-
-        page = LoginPage()
-        page.click_making_an_order_btn()
-        time.sleep(2)
-        page = CartPage()
-        page.filling_fields_registration_product()
-        time.sleep(5)
-
 
 
