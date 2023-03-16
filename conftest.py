@@ -22,7 +22,7 @@ def setup_browser():
     options.add_argument("--lang=en-US")
     prefs = {"download.default_directory": f"{base_dir}/downloads"}
     options.add_experimental_option("prefs", prefs)
-    driver = webdriver.Chrome(executable_path="C:/Python310/chromedriver.exe", options=options)
+    driver = webdriver.Chrome(executable_path="C:/Python/chromedriver.exe", options=options)
     browser.set_driver(driver)
     driver.maximize_window()
     config.timeout = 10
