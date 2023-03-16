@@ -30,18 +30,24 @@ class CatalogPage(BasePage):
     favorites_btn = s("//a[contains(@href,'#favorites') and @class='btn-control']")
     choose_a_product_in_favorite = s("//img[@class='PreviewGoods__img']")
     first_card = s("(//a[@class='CatalogProduct__image-link'])[1]")
-    last_card = s("//a[@class= 'PreviewGoods__imageBox']/a")
+    last_card = s("//a[@href='/product/11471_7809_307-xaki']")
     menu_blazers = s("//a[@class = 'mainmenu-children__link' and span ='БЛЕЙЗЕРЫ']")
     product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]")
     menu_link_bags = s("//a[span= 'СУМКИ']")
+    choose_a_product_bags = s("//div[@class= 'CatalogProduct__title']/a")
     menu_link_shoes = s("//span[span= 'ОБУВЬ']")
     menu_subsection_shoes = s("//a[@class= 'mainmenu-children__link' and span = 'БОТИЛЬОНЫ']")
+    choose_a_product_shoes = s("(//a[@href = '/product/12598_9626_094-bezevyi'])[2]")
     menu_link_lingerie = s("//span[span= 'НИЖНЕЕ БЕЛЬЕ']")
     menu_subsection_all_models = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
+    choose_a_product_lingerie = s("(//a[@href= '/product/12463_8035_966-svetlyi_xaki'])[1]")
     first_product_in_catalog = s(
         "//button[contains(@class, 'isActive')]/ancestor::div[contains(@class, 'CatalogRow ')]//a")
+    choose_a_product_svetlyi_xaki = s("(//a[@href='/product/12718_9717_920-svetlyi_xaki'])[1]")
     menu_chapter_accessories = s("//span[span= 'АКСЕССУАРЫ']")
     menu_subsection_belts = s("//a[@class= 'mainmenu-children__link' and span = 'РЕМНИ']")
+    choose_a_product_belts = s("(//a[@href= '/product/12843_9898_293-cernyi'])[2]")
+
 
 
     @allure.step("Добавление в корзину")
@@ -109,21 +115,21 @@ class CatalogPage(BasePage):
         url_first_card = self.get_attribute(self.first_product_in_catalog, "href").partition('product/')[2]
         self.click(self.favorites_btn, "переход в избранное")
         time.sleep(1)
-        url_last_card = self.get_attribute(self.last_card, "href").partition('product/')[2]
+        url_last_card_catalog = self.get_attribute(self.choose_a_product_svetlyi_xaki, "href").partition('product/')[2]
 
-        assert url_first_card == url_last_card, print('Урл отличается')
+        assert url_first_card == url_last_card_catalog, print('Урл отличается')
 
     @allure.step("Добавление в корзину несколько товаров")
     def basket_multiple_products(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_bags, " Ссылка СУМКИ")
-        self.click(self.choose_a_product, "товар сумка")
+        self.click(self.choose_a_product_bags, "товар сумка")
         price_bags = self.get_element_text(self.product_price_text, 'цена сумки')
         self.click(self.add_to_cart, "добавить в корзину")
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_shoes, "Блок ТУФЛИ")
         self.click(self.menu_subsection_shoes, "Ссылка БОТИЛЬОНЫ")
-        self.click(self.choose_a_product, "Товар ботильоны")
+        self.click(self.choose_a_product_shoes, "Товар ботильоны")
         price_shoes = self.get_element_text(self.product_price_text, 'цена туфли')
         self.click(self.add_to_cart, "добавить в корзину")
 
@@ -134,7 +140,7 @@ class CatalogPage(BasePage):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_chapter_accessories, "Блок АКССЕСУАРЫ")
         self.click(self.menu_subsection_belts, "Раздел РЕМНИ")
-        self.click(self.choose_a_product, "Товар РЕМНИ")
+        self.click(self.choose_a_product_belts, "Товар РЕМНИ")
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
         price_belts = re.sub('[^0-9]', "",

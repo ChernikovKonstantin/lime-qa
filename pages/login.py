@@ -1,4 +1,3 @@
-import os
 import time
 
 import allure
@@ -24,7 +23,6 @@ class LoginPage(BasePage):
     product_size_text = s("//div[@class='SizeSelector__selected']")
     add_favorite_btn = s("//div[@class='actions__fav']")
     favorites_btn = s("//a[contains(@href,'#favorites') and @class='btn-control']")
-    making_an_order_btn = s("//button[contains(text(),'Перейти к оформлению')]")
 
     # Methods
     def login(self, email, password):
@@ -49,14 +47,10 @@ class LoginPage(BasePage):
     def authorization(self):
         self.click(self.account_btn, "Нажать на Личный кабинет")
         self.click(self.authorization_btn, "Нажать Войти")
-        self.set_text(self.email_input, os.getenv("test_user"), "Поле Email")
-        self.set_text(self.password_input, os.getenv("password"), "Поле Пароль")
+        self.set_text(self.email_input, "skurikhin.a@lime-shop.ru", "Поле Email")
+        self.set_text(self.password_input, "Work!1973", "Поле Пароль")
         self.click(self.authorization_btn, "Нажать Войти")
 
-
-    @allure.step("Оформить заказ")
-    def click_making_an_order_btn(self):
-        self.making_an_order_btn.click()
 
 
 

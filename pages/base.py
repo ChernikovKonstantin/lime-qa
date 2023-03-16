@@ -1,5 +1,5 @@
 import allure
-from selene import query
+from selene import query, be
 from selene.api import browser
 from selene.support.shared import browser
 from selenium.webdriver import ActionChains
@@ -8,6 +8,11 @@ from selenium.webdriver import ActionChains
 class BasePage:
     @staticmethod
     def open_url(url):
+        with allure.step(f"Открыть страницу {url}"):
+            browser.open_url(url)
+
+    @staticmethod
+    def open_url2(url):
         with allure.step(f"Открыть страницу {url}"):
             browser.open_url(url)
 
@@ -36,3 +41,14 @@ class BasePage:
         driver = browser.driver
         action = ActionChains(driver)
         action.move_to_element(element).perform()
+
+    @allure.step("Проверка отсутсвия элемента")
+    def wait_element_not_visible(self, locator):
+        browser.s(locator).should_not(be.visible)
+
+    @allure.step("Проверка наличия элемента")
+    def wait_element(self, locator):
+        browser.s(locator).should(be.visible)
+
+
+

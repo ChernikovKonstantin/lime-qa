@@ -9,14 +9,13 @@ from pages.base import BasePage
 
 
 class CartPage(BasePage):
-    # Locators
     title_cart_text = s("//div[@class='CartTable__name']")
     product_price_cart_text = s("//div[@class='CartTable__cost']")
     product_article_cart_text = s("(//div[@class='CartTable__color']/p)[2]")
     product_color_cart_text = s("(//div[@class='CartTable__color']/p)[1]")
     product_size_cart_text = s("//div[@class='SizeSelector__selected']")
-    product_bags_cart_text = s("(//div[@class='CartTable__cost']//span)[1]")
-    product_shoes_cart_text = s("(//div[@class='CartTable__cost']//span)[2]")
+    product_bags_cart_text = s("(//div[@class='CartTable__cost'])[1]")
+    product_shoes_cart_text = s("(//div[@class='CartTable__cost'])[2]")
     product_lingerie_cart_text = s("(//div[@class='CartTable__cost'])[3]")
     quantity_products_cart_text = s("//div[contains(text(),'Количество')]/following-sibling::div/span")
     total_cost_products_cart_text = s("//div[contains(text(),'Общая стоимость товаров')]/following-sibling::div/span")
@@ -27,14 +26,7 @@ class CartPage(BasePage):
     choose_quantity_text = s("//div[@class='DropdownList__container DropdownList__inline']")
     price_product_text = s("(//div[@class='CartTable__cost'])//following-sibling::div/span[1]")
     total_information_text = s("//div[@class= 'CartTable__sum']")
-    card_number_field = s("//input[@type='text' and @placeholder='Введите номер карты']")
-    validity_period_field = s("//input[@type='text' and @placeholder='Дата окончания срока действия']")
-    card_holder_field = s("//input[@type='text' and @placeholder='Владелец карты']")
-    security_code_field = s("//input[@type='text' and @placeholder='Код безопасности CVV2']")
-    to_pay_btn = s("//button[@class ='btn btn-block']")
-    success_btn = s("//button[@class = 'button button_primary']")
-    title_thank_you_page_text = s("")
-    # Methods
+
     @allure.step("Получение данных корзины: заголовок, цена, артикул, цвет, размер ")
     def get_cart_data(self):
         title_cart = self.get_element_text(self.title_cart_text, 'Заголовок в корзине')
@@ -49,8 +41,6 @@ class CartPage(BasePage):
     def get_cart_multidatabase(self):
         price_bags_cart = re.sub('[^0-9]', "",
                                  self.get_element_text(self.product_bags_cart_text, 'цена сумки в корзине'))
-
-
         price_shoes_cart = re.sub('[^0-9]', "",
                                   self.get_element_text(self.product_shoes_cart_text, 'цена туфли в корзине'))
         quantity_products_cart = re.sub('[^0-9]', "", self.get_element_text(self.quantity_products_cart_text,
@@ -89,6 +79,8 @@ class CartPage(BasePage):
             total_information = self.get_element_text(self.total_information_text,
                                                       'информация = цена*количество товаров')
 
+
+
         total_cost_products_cart = re.sub('[^0-9]', "", self.get_element_text(self.total_cost_products_cart_text,
                                                                               'общая стоимость товаров в корзине'))
         return price_product_cart, choose_quantity, quantity_products_cart, final_cost_products_cart, total_information, total_cost_products_cart
@@ -96,16 +88,3 @@ class CartPage(BasePage):
     @allure.step("Рандомный выбор количества")
     def click_random_quantity(self):
         random.choice(self.random_quantity).click()
-
-
-    @allure.step('Заполнение полей при оформлении товара')
-    def filling_fields_registration_product(self):
-        time.sleep(2)
-        self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
-        self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
-        self.set_text(self.card_holder_field, "tester", "Владелец карты")
-        self.set_text(self.security_code_field, "123", "Код безопасности")
-        self.to_pay_btn.click()
-        self.success_btn.click()
-        title_thank_you_page = self.get_element_text(self.title_cart_text, 'Заголовок в корзине')
-
