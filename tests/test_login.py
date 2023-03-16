@@ -33,6 +33,7 @@ class TestLogin:
         page = HomePage()
         page.click_account_btn()
 
+
         page = AccountPage()
         page.click_enter_btn()
         time.sleep(3)
