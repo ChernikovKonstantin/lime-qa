@@ -11,7 +11,7 @@ from pages.login import LoginPage
 
 @allure.feature("Тесты логина")
 @pytest.mark.usefixtures("setup")
-class TestLogin:
+class TestLogin():
 
 
     @staticmethod

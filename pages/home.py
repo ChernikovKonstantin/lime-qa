@@ -7,9 +7,6 @@ import allure
 from selene import wait
 from selene.api import browser
 from selene.api import *
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selene.support.shared import browser
 from pages.base import BasePage
 
 
@@ -18,7 +15,7 @@ class HomePage(BasePage):
     account_btn = s('a[href="/#lk"]')
     registration_btn = s("//button[contains(text(),'Зарегистрироваться')]")
     email_field = s("//input[@type='email' and @placeholder='E-mail']")
-    sphone_number_field = s("//input[@class= 'vti__input']")
+    phone_number_field = s("//input[@class= 'vti__input']")
     name_field = s("//input[@placeholder='Ваше имя']")
     surname_name_field = s("//input[@placeholder='Фамилия']")
     new_password_field = s("//input[@placeholder='Новый пароль']")
