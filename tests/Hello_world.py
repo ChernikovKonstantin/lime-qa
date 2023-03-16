@@ -22,3 +22,5 @@ class TestHelloWorld:
         time.sleep(10)
         page = LoginPage()
         page.check_logout_btn_is_visible()
+
+        #тест пуша

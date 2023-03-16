@@ -9,6 +9,7 @@ from pages.cart import CartPage
 from pages.catalog import CatalogPage
 
 
+
 @allure.feature("тесты корзины")
 @pytest.mark.usefixtures("setup")
 class TestBasket:

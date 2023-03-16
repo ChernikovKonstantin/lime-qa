@@ -77,14 +77,6 @@ class TestLogin:
         page.registration_field_email()
 
     @staticmethod
-    @allure.title("Проверка валидности поля email2")
-    def test_field_email2():
-        page = HomePage()
-        page.click_account_btn()
-        page.click_registration_btn()
-        page.registration_field_email2()
-
-    @staticmethod
     @allure.title("Проверка валидности поля номера телефона")
     def test_field_phone():
         page = HomePage()
@@ -99,33 +91,51 @@ class TestLogin:
         page.click_account_btn()
         page.click_registration_btn()
         page.registration_field_name()
+        #page.wait_element(page.message_error_email_text_var_string)
+        #page.wait_element("(//div[contains(text(),'Заполните поля')])")
+        print("end")
 
 
 
+    @staticmethod
+    @allure.title("Проверка валидности поля Ваша фамилия")
+    def test_field_surname():
+        page = HomePage()
+        page.click_account_btn()
+        page.click_registration_btn()
+        page.registration_field_surname()
 
+    @staticmethod
+    @allure.title("Проверка валидности поля Пароль")
+    def test_field_password():
+        page = HomePage()
+        page.click_account_btn()
+        page.click_registration_btn()
+        page.registration_field_password()
 
+    @staticmethod
+    @allure.title("Проверка валидности поля Повтор пароля")
+    def test_field_repeat_password():
+        page = HomePage()
+        page.click_account_btn()
+        page.click_registration_btn()
+        page.registration_field_repeat_password()
 
-       # page.click_registration_btn()
+    @staticmethod
+    @allure.title("Проверка совпадения паролей")
+    def test_matching_password():
+        page = HomePage()
+        page.click_account_btn()
+        page.click_registration_btn()
+        page.registration_field_matching_password()
 
-    # self.incorrectMailArray == [(self.set_text(self.email_field, 'test' + str(randint(0, 9999)) + '@test.ru', " почта"),
-    #                              self.set_text(self.email_field, 'test' + str(randint(0, 9999)) + 'test.ru', " почта")]
-    #
-    #  for (int i = 0; i < data.incorrectMailArray.length; i++) {
-    #      setText(newEvent.eventUrl, data.incorrectMailArray[i], "Ссылка на онлайн мероприятие");
-    #  clickEnter(newEvent.eventUrl);
-    #  waitingErrorField("Введите корректную ссылку. Пример: www.example.ru");
-    #  }
-    #
-
-    # publicString[]incorrectMailArray = {"123", "mail", "!@#$%†┘", "test@test", "тест@почта.рф", "test@ test.ru",
-    #                       " test@test.ru ", "test@test.ru ", "test@_test.ru", "test@test.ru_"};
-    #
-    #  self.set_text(self.email_field, 'test' + str(randint(0, 9999)) + '@test.ru', " почта")
-    #  self.set_text(self.email_field, 'test' + str(randint(0, 9999)) + 'test.ru', " почта")
-    #  self.set_text(self.email_field, 'test' + str(randint(0, 9999)) + '@test', " почта")
-    #  list = [self.set_text]
-    #  print(mail01)
-
+    @staticmethod
+    @allure.title("Проверка ссылки условий")
+    def test_link_conditions():
+        page = HomePage()
+        page.click_account_btn()
+        page.click_registration_btn()
+        page.registration_link_conditions()
 
 
 
@@ -137,7 +147,6 @@ class TestLogin:
         page.click_account_btn()
         page.click_registration_btn()
         page.click_registration_btn()
-
 
         list = page.get_text_error()
         print(list)

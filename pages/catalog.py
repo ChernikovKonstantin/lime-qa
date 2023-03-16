@@ -34,7 +34,7 @@ class CatalogPage(BasePage):
     menu_blazers = s("//a[@class = 'mainmenu-children__link' and span ='БЛЕЙЗЕРЫ']")
     product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]")
     menu_link_bags = s("//a[span= 'СУМКИ']")
-    choose_a_product_bags = s("(//a[@href= '/product/12759_9803_228-verbliuzii'])[2]")
+    choose_a_product_bags = s("//div[@class= 'CatalogProduct__title']/a")
     menu_link_shoes = s("//span[span= 'ОБУВЬ']")
     menu_subsection_shoes = s("//a[@class= 'mainmenu-children__link' and span = 'БОТИЛЬОНЫ']")
     choose_a_product_shoes = s("(//a[@href = '/product/12598_9626_094-bezevyi'])[2]")
