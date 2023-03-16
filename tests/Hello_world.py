@@ -23,4 +23,4 @@ class TestHelloWorld:
         page = LoginPage()
         page.check_logout_btn_is_visible()
 
-        #тест пуша
+        #тест пуша2
