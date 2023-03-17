@@ -75,22 +75,7 @@ class TestBasket:
         assert choose_quantity == quantity_products_cart, print('Количество товаров в ,таблице где происходит смена количества товаров, и количество в итого не равно')
         assert int(price_belts) * int(quantity_products_cart) == int(final_cost_products_cart), print('Итоговая сумма не равна цене товара умноженная на количество товаров')
 
-    @allure.title("Покупка товара")
-    def test_product_registration(self):
-        page = LoginPage()
-        page.authorization()
-        page.click_close_btn()
 
-        page = CatalogPage()
-        page.basket_changes_products()
-        page.basket_btn.click()
-
-        page = LoginPage()
-        page.click_making_an_order_btn()
-        time.sleep(2)
-        page = CartPage()
-        page.filling_fields_registration_product()
-        time.sleep(5)
 
 
 

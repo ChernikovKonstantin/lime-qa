@@ -1,5 +1,5 @@
 import allure
-from selene import query
+from selene import query, be
 from selene.api import browser
 from selene.support.shared import browser
 from selenium.webdriver import ActionChains

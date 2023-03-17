@@ -34,21 +34,22 @@ class TestPayment:
         time.sleep(5)
 
     @allure.title("Оплта картой + валидный промокод")
-    def test_product_registration(self):
-            page = LoginPage()
-            page.authorization()
-            page.click_close_btn()
+    def test_product_registration_cart_promo_code(self):
+        page = LoginPage()
+        page.authorization()
+        page.click_close_btn()
 
-            page = CatalogPage()
-            page.basket_changes_products()
-            page.basket_btn.click()
+        page = CatalogPage()
+        page.basket_changes_products()
+        page.basket_btn.click()
 
-            page = LoginPage()
-            page.click_making_an_order_btn()
-            time.sleep(2)
-            page = PaymentPage()
-            page.filling_fields_registration_product_promo_valid()
-            time.sleep(5)
+        page = LoginPage()
+        page.wait_element(page.making_an_order_btn_string)
+        page.click_making_an_order_btn()
+        time.sleep(2)
+        page = PaymentPage()
 
+        title_thank_you_page = page.filling_fields_registration_product_promo_valid()
 
-
+        print(title_thank_you_page)
+        assert title_thank_you_page == "СПАСИБО!", print("Ошибка сообщения. Текст ошибки: " + title_thank_you_page)
