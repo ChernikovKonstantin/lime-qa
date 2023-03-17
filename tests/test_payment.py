@@ -9,6 +9,7 @@ from pages.cart import CartPage
 from pages.catalog import CatalogPage
 from pages.home import HomePage
 from pages.login import LoginPage
+from pages.payment import PaymentPage
 
 
 @allure.feature("Тесты оплаты")
@@ -28,7 +29,7 @@ class TestPayment:
         page = LoginPage()
         page.click_making_an_order_btn()
         time.sleep(2)
-        page = CartPage()
+        page = PaymentPage()
         page.filling_fields_registration_product()
         time.sleep(5)
 
@@ -45,8 +46,8 @@ class TestPayment:
             page = LoginPage()
             page.click_making_an_order_btn()
             time.sleep(2)
-            page = CartPage()
-            page.filling_fields_registration_product()
+            page = PaymentPage()
+            page.filling_fields_registration_product_promo_valid()
             time.sleep(5)
 
 

@@ -29,7 +29,7 @@ class PaymentPage(BasePage):
         title_thank_you_page = self.get_element_text(self.title_cart_text, 'Заголовок в корзине')
 
     @allure.step('Заполнение полей при оформлении товара при оплате картой+валидный промокод')
-    def filling_fields_registration_product_(self):
+    def filling_fields_registration_product_promo_valid(self):
         time.sleep(2)
         self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
         self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
