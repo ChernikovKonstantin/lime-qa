@@ -5,6 +5,8 @@ import allure
 import pytest
 
 from pages.account import AccountPage
+from pages.cart import CartPage
+from pages.catalog import CatalogPage
 from pages.home import HomePage
 from pages.login import LoginPage
 
@@ -13,16 +15,39 @@ from pages.login import LoginPage
 @pytest.mark.usefixtures("setup")
 class TestPayment:
 
+    @allure.title("Покупка товара")
+    def test_product_registration(self):
+        page = LoginPage()
+        page.authorization()
+        page.click_close_btn()
 
-    @staticmethod
-    @allure.title("Оплата с промокодом")
-    def test_payment_promo():
-        page = HomePage()
-        page.click_account_btn()
-
-        page = AccountPage()
-        page.click_enter_btn()
+        page = CatalogPage()
+        page.basket_changes_products()
+        page.basket_btn.click()
 
         page = LoginPage()
-        page.login(email=os.getenv("test_user"), password=os.getenv("password"))
-        page.check_logout_btn_is_visible()
+        page.click_making_an_order_btn()
+        time.sleep(2)
+        page = CartPage()
+        page.filling_fields_registration_product()
+        time.sleep(5)
+
+    @allure.title("Оплта картой + валидный промокод")
+    def test_product_registration(self):
+            page = LoginPage()
+            page.authorization()
+            page.click_close_btn()
+
+            page = CatalogPage()
+            page.basket_changes_products()
+            page.basket_btn.click()
+
+            page = LoginPage()
+            page.click_making_an_order_btn()
+            time.sleep(2)
+            page = CartPage()
+            page.filling_fields_registration_product()
+            time.sleep(5)
+
+
+
