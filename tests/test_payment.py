@@ -72,7 +72,7 @@ class TestPayment:
 
         page = page.filling_fields_registration_product_promo_not_valid()
 
-        .wait_element(.promo_code_error_string)
+        page.wait_element(page.promo_code_error_string)
         page.wait_element(page.discount_string)
         page.wait_element(page.price_finally_block_cart_text_string)
         page.wait_element(page.icon_discount_percent_block_cart_text_string)
