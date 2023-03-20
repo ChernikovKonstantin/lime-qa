@@ -62,7 +62,7 @@ class TestLogin():
         page.click_account_btn()
         page.click_registration_btn()
         page.fill_registration_fields_none_mailing()
-        time.sleep(10)
+        time.sleep(3)
         page = LoginPage()
         page.check_logout_btn_is_visible()
 
@@ -91,9 +91,7 @@ class TestLogin():
         page.click_account_btn()
         page.click_registration_btn()
         page.registration_field_name()
-        #page.wait_element(page.message_error_email_text_var_string)
-        #page.wait_element("(//div[contains(text(),'Заполните поля')])")
-        print("end")
+
 
 
 
