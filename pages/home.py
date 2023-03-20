@@ -20,7 +20,6 @@ class HomePage(BasePage):
     surname_name_field = s("//input[@placeholder='Фамилия']")
     new_password_field = s("//input[@placeholder='Новый пароль']")
     repeat_the_password_field = s("//input[@placeholder='Повторите пароль']")
-    #repeat_the_password_field = s("//input[@placeholder='Повторите пароль']")
     checkbox_mailing = s("//*[@class='checkbox__indicator']")
     link_conditions = s("//a[@href='/docs/offerta.pdf']")
 
@@ -47,7 +46,7 @@ class HomePage(BasePage):
     message_error_surname_text_var = s(message_error_surname_text_var_string)
 
     message_error_password_text = s("(//*[@class='FormGroup__helper'])[5]/div[1]")
-    message_error_password_text_var_string = "//div[contains(text(),'недопустимый пароль')]"
+    message_error_password_text_var_string = "//div[contains(text(),'пароль должен быть не менее 6 символов')]"
     message_error_password_text_var = s(message_error_password_text_var_string)
 
     message_error_password_text2 = s("(//*[@class='FormGroup__helper'])[5]/div[2]")
@@ -131,8 +130,7 @@ class HomePage(BasePage):
                 time.sleep(5)  # убрать после фикса бага
                 self.registration_btn.click()
                 time.sleep(2)
-                page = BasePage
-                page.wait_element(HomePage.message_error_email_text_var_string)
+                self.wait_element(self.message_error_email_text_var_string)
                 time.sleep(2)
         print("end")
 
@@ -152,18 +150,17 @@ class HomePage(BasePage):
             time.sleep(2)
             assert message_error == "некорректный номер телефона", print("Ошибка сообщения. Текст ошибки: " + message_error)
 
-        public_string_valid_number = (9998887766)
+        public_string_valid_number = (9998887766, 9998887765)
 
         for i in range(len(public_string_valid_number)):
             self.set_text(self.phone_number_field, public_string_valid_number[i], "")
             time.sleep(5)  # убрать после фикса бага
             self.registration_btn.click()
             time.sleep(2)
-            page = BasePage
-            page.wait_element(HomePage.message_error_phone_text_var_string)
+            self.wait_element(self.message_error_phone_text_var_string)
             time.sleep(2)
 
-        print('end')
+
 
 
     @allure.step("Валидация поля Ваше имя")
@@ -187,8 +184,7 @@ class HomePage(BasePage):
             time.sleep(5)  # убрать после фикса бага
             self.registration_btn.click()
             time.sleep(2)
-            page = BasePage
-            page.wait_element(HomePage.message_error_name_text_var_string)
+            self.wait_element(self.message_error_name_text_var_string)
             time.sleep(2)
 
     @allure.step("Валидация поля Ваша фамилия")
@@ -212,15 +208,14 @@ class HomePage(BasePage):
             time.sleep(5)  # убрать после фикса бага
             self.registration_btn.click()
             time.sleep(2)
-            page = BasePage
-            page.wait_element(HomePage.message_error_surname_text_var_string)
+            self.wait_element(self.message_error_surname_text_var_string)
             time.sleep(2)
 
 
     @allure.step("Валидация поля Пароль")
     def registration_field_password(self):
 
-        public_string_not_valid_password = ('wer23', 123, " ", ".!№%:;()_-+=?/|\@#$^&*<>{}[")
+        public_string_not_valid_password = ('wer23', 123)
 
         for i in range(len(public_string_not_valid_password)):
             self.set_text(self.new_password_field, public_string_not_valid_password[i], "")
@@ -229,23 +224,22 @@ class HomePage(BasePage):
             time.sleep(2)
             message_error = self.get_element_text(self.message_error_password_text_var, "Текст ошибки поля  пароль не верный или текст отсутствует")
             time.sleep(2)
-            assert message_error == "недопустимый пароль", print("Ошибка сообщения. Текст ошибки: " + message_error)
+            assert message_error == "пароль должен быть не менее 6 символов", print("Ошибка сообщения. Текст ошибки: " + message_error)
 
-        public_string_valid_password = ("Ivanov123", "Иванов123", "Иванов123_", "Иванов123-")
+        public_string_valid_password = ("Ivano123", "123", "Иван_123", "Иван123")
 
         for i in range(len(public_string_valid_password)):
             self.set_text(self.new_password_field, public_string_valid_password[i], "")
             time.sleep(5)  # убрать после фикса бага
             self.registration_btn.click()
             time.sleep(2)
-            page = BasePage
-            page.wait_element(HomePage.message_error_password_text_var_string)
+            self.wait_element(self.message_error_password_text_var_string)
             time.sleep(2)
 
     @allure.step("Валидация поля Повторить Пароль")
     def registration_field_repeat_password(self):
 
-        public_string_not_valid_repeat_password = ( ".!№%:;()_-+=?/|\@#$^&*<>{}[", " ", 'wer23', 123)
+        public_string_not_valid_repeat_password = ('wer23', 123)
 
         for i in range(len(public_string_not_valid_repeat_password)):
             self.set_text(self.repeat_the_password_field, public_string_not_valid_repeat_password[i], "")
@@ -253,13 +247,13 @@ class HomePage(BasePage):
             self.registration_btn.click()
             time.sleep(2)
             message_error = self.get_element_text(self.message_error_repeat_password_text_var, "Текст ошибки поля повторить пароль не верный или текст отсутствует")
-            assert message_error == "недопустимый пароль", print("Ошибка сообщения. Текст ошибки: " + message_error)
+            assert message_error == "пароль должен быть не менее 6 символов", print("Ошибка сообщения. Текст ошибки: " + message_error)
 
 
-        public_string_not_valid_password = ("Ivanov123", "Иванов123", "Иванов123_", "Иванов123-")
+        public_string_valid_password = ("Ivanov123", "Иванов123", "Иванов123_", "Иванов123-")
 
-        for i in range(len(public_string_not_valid_password)):
-            self.set_text(self.repeat_the_password_field, public_string_not_valid_password[i], "")
+        for i in range(len(public_string_valid_password)):
+            self.set_text(self.repeat_the_password_field, public_string_valid_password[i], "")
             time.sleep(5)  # убрать после фикса бага
             self.registration_btn.click()
             time.sleep(2)

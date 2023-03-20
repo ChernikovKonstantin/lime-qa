@@ -33,3 +33,9 @@ class TestFavorites:
 
         page = CatalogPage()
         page.add_to_favorites_in_catalog()
+
+    @allure.step("Добавление в 'Избранное' из корзины")
+    def test_basket_changes_products(self):
+        page = LoginPage()
+        page.authorization()
+        page.click_close_btn()
