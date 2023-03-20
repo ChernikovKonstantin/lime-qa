@@ -25,7 +25,7 @@ class LoginPage(BasePage):
     add_favorite_btn = s("//div[@class='actions__fav']")
     favorites_btn = s("//a[contains(@href,'#favorites') and @class='btn-control']")
     making_an_order_btn = s("//button[contains(text(),'Перейти к оформлению')]")
-
+    making_an_order_btn_string = "//button[contains(text(),'Перейти к оформлению')]"
     # Methods
     def login(self, email, password):
         with allure.step(f"Войти как '{email}' '{password}'"):
