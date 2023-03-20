@@ -30,9 +30,6 @@ class PaymentPage(BasePage):
     price_finally_text = s('(//div[@class="CustomerCartSummary__value"])[2]/span')# Итого
 
 
-
-
-
     @allure.step('Заполнение полей при оформлении товара')
     def filling_fields_registration_product(self):
         time.sleep(2)
@@ -42,6 +39,9 @@ class PaymentPage(BasePage):
         self.set_text(self.security_code_field, "123", "Код безопасности")
         self.to_pay_btn.click()
         self.success_btn.click()
+        title_thank_you_page = self.get_element_text(self.title_thank_you_page_text, 'Заголовок на спасибо-странице - СПАСИБО')
+        return title_thank_you_page
+
         # title_thank_you_page = self.get_element_text(self.title_cart_text, 'Заголовок в корзине')
 
     @allure.step('Заполнение полей при оформлении товара при оплате картой+валидный')
@@ -54,38 +54,25 @@ class PaymentPage(BasePage):
         self.set_text(self.promo_code_field, "XHGFAH", "Промо код")
 
         # Проверка суммы корзины с промо
-
-
-
         price_finally_block_cart, price_without_discount, price_discount, price_finally = self.sum_order_with_promo()
-
         assert (round((int(price_without_discount[:-5])),-1)) == (round((int(price_finally_block_cart[:-5])),-1)) + \
                (round((int(price_discount[:-5])),-1)), print('Ошибка проверки: цена с промо в блоке корзина + сумма скидки = итого')
-
         print(price_without_discount)
-
-
         print("end")
-
-
         time.sleep(2)
-
         self.to_pay_btn.click()
         time.sleep(2)
         self.success_btn.click()
         time.sleep(2)
         title_thank_you_page = self.get_element_text(self.title_thank_you_page_text, '')
-
         return title_thank_you_page
 
     def sum_order_with_promo(self):
-
         self.wait_element(self.discount_string)
         price_finally_block_cart = self.get_element_text(self.price_finally_block_cart_text, '')
         #price_without_discount = round((int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text, 'Цена без промо')))), -1)
         price_without_discount = self.get_element_text(self.price_without_discount_text, 'Цена без промо')
         price_discount  = self.get_element_text(self.price_discount_text , '')
         price_finally = self.get_element_text(self.price_finally_text, '')
-
         return price_finally_block_cart, price_without_discount, price_discount, price_finally
 

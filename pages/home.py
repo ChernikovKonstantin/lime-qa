@@ -294,9 +294,3 @@ class HomePage(BasePage):
         print(url_link_conditions)
 
 
-
-
-
-
-
-
