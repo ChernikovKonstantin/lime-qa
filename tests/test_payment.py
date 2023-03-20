@@ -32,7 +32,6 @@ class TestPayment:
         page = PaymentPage()
         message = page.filling_fields_registration_product()
 
-        assert message == "СПАСИБО!" , print(
-                'Нужный текст "СПАСИБО" не присутствует')
+        assert message == "СПАСИБО!", print('Нужный текст "СПАСИБО" не присутствует')
 
 
