@@ -47,6 +47,7 @@ class CatalogPage(BasePage):
     menu_chapter_accessories = s("//span[span= 'АКСЕССУАРЫ']")
     menu_subsection_belts = s("//a[@class= 'mainmenu-children__link' and span = 'РЕМНИ']")
     choose_a_product_belts = s("(//a[@href= '/product/12843_9898_293-cernyi'])[2]")
+    choose_a_product_1399 = s('(//div[@class="CatalogProduct__title"])[4]/a')
 
 
 
@@ -133,7 +134,7 @@ class CatalogPage(BasePage):
         price_shoes = self.get_element_text(self.product_price_text, 'цена туфли')
         self.click(self.add_to_cart, "добавить в корзину")
 
-        return price_shoes, price_bags,
+        return price_shoes, price_bags
 
     @allure.step("Добавление товара в корзину")
     def basket_changes_products(self):
@@ -147,6 +148,17 @@ class CatalogPage(BasePage):
                                  self.get_element_text(self.product_price_text, 'Цена товара'))
 
         return price_belts
+
+    @allure.step("Добавление товара в корзину 1399 рублей")
+    def basket_changes_products_1399(self):
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_lingerie, "Блок Нижнее белье")
+        self.click(self.menu_subsection_all_models, "Подраздел Все модели")
+        self.click(self.choose_a_product_1399, "Товар с ценой 1399")
+        time.sleep(5)
+        self.click(self.add_to_cart, "добавить в корзину")
+        time.sleep(1)
+
 
 
 

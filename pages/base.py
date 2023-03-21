@@ -50,5 +50,15 @@ class BasePage:
     def wait_element(self, locator):
         browser.s(locator).should(be.visible)
 
+    @allure.step("Сравнение значений {expression1} и {expression2} ошибка {allureText}")
+    def assert_check_expressions(self, expression1, expression2, allureText):
+        assert expression1 == expression2, print(allureText)
+
+
+
+
+
+
+
 
 

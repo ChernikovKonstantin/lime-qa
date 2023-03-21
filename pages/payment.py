@@ -20,6 +20,11 @@ class PaymentPage(BasePage):
     to_pay_btn_string = "//button[@class ='btn btn-block']"
     success_btn = s("//button[@class = 'button button_primary']")
     title_thank_you_page_text = s("//div[contains(text(),'Спасибо!')]")
+    dropdown_quantity_product_on_payment = s("//div[@class='DropdownList__container DropdownList__inline']")
+    # dropdown_quantity_product = s("(//div[@class='SvgIcon'])[2]/child::*")
+    dropdown_quantity_product_select_5_on_payment = s("(//span[@class='DropdownList__title'])[5]")
+    dropdown_quantity_product_select_1_on_payment = s("(//span[@class='DropdownList__title'])[1]")
+
 
     # locators for promocode
 
@@ -103,3 +108,68 @@ class PaymentPage(BasePage):
         self.set_text(self.card_holder_field, "tester", "Владелец карты")
         self.set_text(self.security_code_field, "123", "Код безопасности")
         self.set_text(self.promo_code_field, "000000", "Не валидный Промокод")
+
+        self.wait_element(self.promo_code_error_string)
+        self.wait_element_not_visible(self.discount_string)
+        self.wait_element_not_visible(self.price_finally_block_cart_text_string)
+        self.wait_element_not_visible(self.icon_discount_percent_block_cart_text_string)
+
+        self.wait_element(self.to_pay_btn_string)
+        self.to_pay_btn.click()
+        self.wait_element(self.promo_code_error_string)
+
+    @allure.step('Проверка суммы заказа с учетом скидки 6000')
+    def sum_order_with_discount_6000(self):
+        self.wait_element(self.discount_string)
+        self.wait_element(self.icon_discount_percent_block_cart_text_string)
+        price_finally_block_cart = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_finally_block_cart_text, 'Получение итоговой суммы заказа из блока Корзина'))))
+        price_without_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text, 'Получение суммы заказа без промокода'))))
+        price_discount = round((int(re.sub('[^0-9]', "", self.get_element_text(self.price_discount_text, 'Сумма скидки по промокоду, с округлением в большую сторону')))),-1)
+        price_finally = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_finally_text, 'Получение итоговой суммы заказа'))))
+        icon_discount_percent_block_cart = (int(re.sub('[^0-9]', "", self.get_element_text(self.icon_discount_percent_block_cart_text, 'Получение процента скидки'))))
+        price_discount_icon = round(price_without_discount * (icon_discount_percent_block_cart / 100), -1)
+
+        #return price_finally_block_cart, price_without_discount, price_discount, price_finally, icon_discount_percent_block_cart, price_discount_icon
+
+        assert price_without_discount == price_finally + price_discount, print('Ошибка проверки: цена с промо  + сумма скидки = итого')
+
+        assert price_without_discount == price_finally_block_cart + price_discount, print('Ошибка проверки: цена с промо в блоке корзина + сумма скидки = итого')
+
+        assert price_finally_block_cart == price_without_discount - price_discount_icon, print('Ошибка проверки: цена с промо в блоке корзина =  итого х %промо')
+
+        print(price_without_discount)
+        print(price_finally_block_cart)
+        print(price_discount)
+        print(price_discount_icon)
+
+    @allure.step("Изменение количества товара на 1 единицу на экране оформления заказа")
+    def change_value_products_in_payment_1_unit(self):
+        self.dropdown_quantity_product_on_payment.click()
+        time.sleep(1)
+        self.dropdown_quantity_product_select_1_on_payment.click()
+
+    @allure.step("Изменение количества товара на 5 единиц на экране оформления заказа")
+    def change_value_products_in_payment_5_unit(self):
+        self.dropdown_quantity_product_on_payment.click()
+        time.sleep(1)
+        self.dropdown_quantity_product_select_5_on_payment.click()
+
+    @allure.step('Проверка при оплате картой + не валидный промо')
+    def filling_fields_registration_product_promo_not_valid(self):
+        self.wait_element(self.promo_code_error_string)
+        self.wait_element_not_visible(self.discount_string)
+        self.wait_element_not_visible(self.price_finally_block_cart_text_string)
+        self.wait_element_not_visible(self.icon_discount_percent_block_cart_text_string)
+
+        self.wait_element(self.to_pay_btn_string)
+        self.to_pay_btn.click()
+        self.wait_element(self.promo_code_error_string)
+
+    @allure.step('Проверка отсутсвия элементов скидки')
+    def check_wait_message_without_discount(self):
+        self.wait_element_not_visible(self.discount_string)
+        self.wait_element_not_visible(self.price_finally_block_cart_text_string)
+        self.wait_element_not_visible(self.icon_discount_percent_block_cart_text_string)
+
+
+

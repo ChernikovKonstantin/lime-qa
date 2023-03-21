@@ -26,6 +26,11 @@ class CartPage(BasePage):
     choose_quantity_text = s("//div[@class='DropdownList__container DropdownList__inline']")
     price_product_text = s("(//div[@class='CartTable__cost'])//following-sibling::div/span[1]")
     total_information_text = s("//div[@class= 'CartTable__sum']")
+    making_an_order_btn = s("//button[contains(text(),'Перейти к оформлению')]")
+    making_an_order_btn_string = "//button[contains(text(),'Перейти к оформлению')]"
+    dropdown_quantity_product = s("//div[@class='DropdownList__container DropdownList__inline']")
+    # dropdown_quantity_product = s("(//div[@class='SvgIcon'])[2]/child::*")
+    dropdown_quantity_product_select_5 = s("(//span[@class='DropdownList__title'])[5]")
 
 
     @allure.step("Получение данных корзины: заголовок, цена, артикул, цвет, размер ")
@@ -89,4 +94,16 @@ class CartPage(BasePage):
     @allure.step("Рандомный выбор количества")
     def click_random_quantity(self):
         random.choice(self.random_quantity).click()
+
+    @allure.step("Оформить заказ")
+    def click_making_an_order_btn(self):
+        self.making_an_order_btn.click()
+
+    @allure.step("Изменение количества товара на 5 единиц на экране Корзина")
+    def change_value_products_in_cart(self):
+        self.dropdown_quantity_product.click()
+        time.sleep(5)
+        self.dropdown_quantity_product_select_5.click()
+
+
 

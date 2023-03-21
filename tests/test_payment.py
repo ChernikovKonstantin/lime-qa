@@ -5,6 +5,7 @@ import allure
 import pytest
 
 from pages.account import AccountPage
+from pages.base import BasePage
 from pages.cart import CartPage
 from pages.catalog import CatalogPage
 from pages.home import HomePage
@@ -24,7 +25,7 @@ class TestPayment:
         page = CatalogPage()
         page.basket_changes_products()
         page.basket_btn.click()
-        page = LoginPage()
+        page = CartPage()
         page.click_making_an_order_btn()
         time.sleep(2)
         page = PaymentPage()
@@ -42,7 +43,7 @@ class TestPayment:
         page = CatalogPage()
         page.basket_changes_products()
         page.basket_btn.click()
-        page = LoginPage()
+        page = CartPage()
         page.wait_element(page.making_an_order_btn_string)
         page.click_making_an_order_btn()
         time.sleep(2)
@@ -64,19 +65,68 @@ class TestPayment:
         page.basket_changes_products()
         page.basket_btn.click()
 
-        page = LoginPage()
+        page = CartPage()
         page.wait_element(page.making_an_order_btn_string)
         page.click_making_an_order_btn()
         time.sleep(2)
         page = PaymentPage()
 
-        page = page.filling_fields_registration_product_promo_not_valid()
+        page.filling_fields_registration_product_promo_not_valid()
 
-        page.wait_element(page.promo_code_error_string)
-        page.wait_element(page.discount_string)
-        page.wait_element(page.price_finally_block_cart_text_string)
-        page.wait_element(page.icon_discount_percent_block_cart_text_string)
+    @allure.title("Проверка сравнения двух значений отображением шагах в аллюр")
+    def test_assert(self):
 
-        page.wait_element(page.to_pay_btn_string)
-        page.to_pay_btn.click()
+        page = PaymentPage()
+        exp1 = 5
+        exp2 = 4
+        page.assert_check_expressions(exp1, exp2, 'текст в ассерте')
+
+    @allure.title("Оплата картой заказа суммой более 6000 с формированием заказа в корзине")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/442&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=80")
+    def test_product_discount_cart_6000(self):
+        page = LoginPage()
+        page.authorization()
+        page.click_close_btn()
+
+        page = CatalogPage()
+        page.basket_changes_products_1399()
+        page.basket_btn.click()
+        time.sleep(1)
+
+        page = CartPage()
+
+        page.change_value_products_in_cart()
+        time.sleep(3)
+        page.wait_element(page.making_an_order_btn_string)
+        page.click_making_an_order_btn()
+        time.sleep(1)
+
+        page = PaymentPage()
+        page.sum_order_with_discount_6000()
+        page.change_value_products_in_payment_1_unit()
+        page.check_wait_message_without_discount()
+        page.change_value_products_in_payment_5_unit()
+        page.sum_order_with_discount_6000()
+
+        page.filling_fields_registration_product()
+        self.to_pay_btn.click()
+        time.sleep(2)
+        self.success_btn.click()
+        time.sleep(2)
+        title_thank_you_page = self.get_element_text(self.title_thank_you_page_text, '')
+        assert title_thank_you_page == "СПАСИБО!", print("Ошибка сообщения. Текст ошибки: " + title_thank_you_page)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
