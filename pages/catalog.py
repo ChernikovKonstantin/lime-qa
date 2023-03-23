@@ -12,6 +12,7 @@ from selene.support.shared import browser
 class CatalogPage(BasePage):
     # Locators
     hamburger_menu = s("//div[@class='icon']")
+    hamburger_menu_string = "//div[@class='icon']"
     menu_link_clothes = s("//span[span= 'Одежда']")
     menu_chapter = s("//a[span ='БРЮКИ']")
     menu_subsection = s("//a[@class = 'mainmenu-children__link' and span ='ЛЕГИНСЫ']")
@@ -151,11 +152,13 @@ class CatalogPage(BasePage):
 
     @allure.step("Добавление товара в корзину 1399 рублей")
     def basket_changes_products_1399(self):
+        time.sleep(5)
+        #self.wait_element(self.hamburger_menu_string)
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_lingerie, "Блок Нижнее белье")
         self.click(self.menu_subsection_all_models, "Подраздел Все модели")
         self.click(self.choose_a_product_1399, "Товар с ценой 1399")
-        time.sleep(5)
+        time.sleep(2)
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
 

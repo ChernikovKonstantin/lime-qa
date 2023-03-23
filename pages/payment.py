@@ -55,7 +55,7 @@ class PaymentPage(BasePage):
         # title_thank_you_page = self.get_element_text(self.title_cart_text, 'Заголовок в корзине')
 
     @allure.step('Проверка при оплате картой + валидный промо')
-    def filling_fields_registration_product_promo_valid(self):
+    def payment_promo_valid(self):
         time.sleep(3)
         self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
         self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
@@ -100,8 +100,38 @@ class PaymentPage(BasePage):
 
         return price_finally_block_cart, price_without_discount, price_discount, price_finally, icon_discount_percent_block_cart, price_discount_icon
 
+    @allure.step('Проверка при оплате картой + валидный промо_несколько товаров в корзине')
+    def payment_promo_valid_many_products(self):
+        time.sleep(3)
+        self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
+        self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
+        self.set_text(self.card_holder_field, "tester", "Владелец карты")
+        self.set_text(self.security_code_field, "123", "Код безопасности")
+        self.set_text(self.promo_code_field, "XHGFAH", "Промо код")
+
+        # Проверка суммы корзины с промо
+
+        price_finally_block_cart, price_without_discount, price_discount, \
+            price_finally, icon_discount_percent_block_cart, price_discount_icon = self.sum_order_with_promo()
+
+        assert price_without_discount == price_finally + price_discount, \
+            print('Ошибка проверки: цена с промо  + сумма скидки = итого')
+
+        assert price_finally == price_without_discount - price_discount_icon, \
+            print('Ошибка проверки: цена с промо в блоке корзина =  итого х %промо')
+        # (round((int(price_without_discount[:-5])), -1))
+
+        time.sleep(2)
+        self.to_pay_btn.click()
+        time.sleep(2)
+        self.success_btn.click()
+        time.sleep(2)
+        title_thank_you_page = self.get_element_text(self.title_thank_you_page_text, '')
+
+        return title_thank_you_page
+
     @allure.step('Проверка при оплате картой + не валидный промо')
-    def filling_fields_registration_product_promo_not_valid(self):
+    def payment_promo_not_valid(self):
         time.sleep(3)
         self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
         self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
@@ -154,8 +184,8 @@ class PaymentPage(BasePage):
         time.sleep(1)
         self.dropdown_quantity_product_select_5_on_payment.click()
 
-    @allure.step('Проверка при оплате картой + не валидный промо')
-    def filling_fields_registration_product_promo_not_valid(self):
+    @allure.step('Проверка полей скидок при оплате картой + не валидный промо')
+    def check_payment_promo_not_valid(self):
         self.wait_element(self.promo_code_error_string)
         self.wait_element_not_visible(self.discount_string)
         self.wait_element_not_visible(self.price_finally_block_cart_text_string)
@@ -170,6 +200,45 @@ class PaymentPage(BasePage):
         self.wait_element_not_visible(self.discount_string)
         self.wait_element_not_visible(self.price_finally_block_cart_text_string)
         self.wait_element_not_visible(self.icon_discount_percent_block_cart_text_string)
+
+    @allure.step('Цикл проверки промокодов')
+    def cycle_type_promo_code(self):
+
+        list_promo = ['LIMEPR', 'XHGFAH', 'SOTRUDN25']
+
+        for i in range(len(list_promo)):
+
+            self.set_text(self.promo_code_field, list_promo[i], "Установка промокода в поле")
+
+            time.sleep(2)
+
+            percent_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.icon_discount_percent_block_cart_text, 'Извлечение процента из элемента процент скидки'))))
+
+            price_without_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text, 'Получение суммы заказа без промо'))))
+
+            price_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_discount_text, 'Получение суммы скидки'))))
+
+            if percent_discount == 5:
+
+                self.assert_check_expressions(price_discount, (round((price_without_discount * 0.05), -1)),'Проверка скидки 5%')
+                #assert price_discount == round((price_without_discount * 0.05), -1)
+
+            elif percent_discount == 10:
+                self.assert_check_expressions(price_discount, (round((price_without_discount * 0.1), -1)),'Проверка скидки 10%')
+                #assert price_discount == round((price_without_discount * 0.1), -1)
+
+            elif percent_discount == 25:
+                self.assert_check_expressions(price_discount, (round((price_without_discount * 0.25), -1)),'Проверка скидки 25%')
+                #assert price_discount == round((price_without_discount * 0.25), -1)
+
+            else:
+                print('расчет скидки с промокодом  не верен')
+
+
+
+
+
+
 
 
 
