@@ -48,7 +48,26 @@ class TestPayment:
         page.click_making_an_order_btn()
         time.sleep(2)
         page = PaymentPage()
-        title_thank_you_page = page.filling_fields_registration_product_promo_valid()
+        title_thank_you_page = page.payment_promo_valid()
+        print(title_thank_you_page)
+
+        assert title_thank_you_page == "СПАСИБО!", print("Ошибка сообщения. Текст ошибки: " + title_thank_you_page)
+
+    @allure.title("Оплата картой + валидный промокод, несколько товаров в корзине")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/445")
+    def test_product_registration_cart_promo_code_many_products(self):
+        page = LoginPage()
+        page.authorization()
+        page.click_close_btn()
+        page = CatalogPage()
+        page.basket_multiple_products()
+        page.basket_btn.click()
+        page = CartPage()
+        page.wait_element(page.making_an_order_btn_string)
+        page.click_making_an_order_btn()
+        time.sleep(2)
+        page = PaymentPage()
+        title_thank_you_page = page.payment_promo_valid_many_products()
         print(title_thank_you_page)
 
         assert title_thank_you_page == "СПАСИБО!", print("Ошибка сообщения. Текст ошибки: " + title_thank_you_page)
@@ -71,7 +90,7 @@ class TestPayment:
         time.sleep(2)
         page = PaymentPage()
 
-        page.filling_fields_registration_product_promo_not_valid()
+        page.payment_promo_not_valid()
 
     @allure.title("Проверка сравнения двух значений отображением шагах в аллюр")
     def test_assert(self):
@@ -117,7 +136,28 @@ class TestPayment:
         assert title_thank_you_page == "СПАСИБО!", print("Ошибка сообщения. Текст ошибки: " + title_thank_you_page)
 
 
+    @allure.title("Проверка применения скидок")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/444")
+    def test_discount(self):
 
+
+        page = LoginPage()
+        page.authorization()
+        page.click_close_btn()
+
+        page = CatalogPage()
+        page.basket_changes_products_1399()
+        page.basket_btn.click()
+        time.sleep(1)
+
+        page = CartPage()
+        page.wait_element(page.making_an_order_btn_string)
+        time.sleep(1)
+        page.change_value_products_in_cart()
+        page.click_making_an_order_btn()
+
+        page = PaymentPage()
+        page.cycle_type_promo_code()
 
 
 
