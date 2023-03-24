@@ -1,5 +1,6 @@
 import os
 import time
+from this import s
 
 import allure
 import pytest
@@ -16,6 +17,9 @@ from pages.payment import PaymentPage
 @allure.feature("Тесты оплаты")
 @pytest.mark.usefixtures("setup")
 class TestPayment:
+
+
+
 
     @allure.title("Покупка товара")
     def test_product_registration(self):
@@ -136,17 +140,23 @@ class TestPayment:
         assert title_thank_you_page == "СПАСИБО!", print("Ошибка сообщения. Текст ошибки: " + title_thank_you_page)
 
 
-    @allure.title("Проверка применения скидок")
+    @allure.title("Проверка применения скидок для заказа > 6000")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/444")
     def test_discount(self):
-
 
         page = LoginPage()
         page.authorization()
         page.click_close_btn()
 
         page = CatalogPage()
-        page.basket_changes_products_1399()
+        page.basket_btn.click()
+
+        page = CartPage()
+        page.cart_delete()
+        page.open_url(os.getenv('base_url'))
+
+        page = CatalogPage()
+        page.basket_multiple_products()
         page.basket_btn.click()
         time.sleep(1)
 
@@ -156,8 +166,44 @@ class TestPayment:
         page.change_value_products_in_cart()
         page.click_making_an_order_btn()
 
+
         page = PaymentPage()
         page.cycle_type_promo_code()
+
+    @allure.title("Оплата картой, ошибка оплаты")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/451")
+    def test_check_payment_card_error(self):
+        page = PaymentPage()
+        page.preview_payment()
+
+        page.click(page.type_of_delivery_courier, "Выбор типа доставки Курьер")
+        page.click(page.type_of_payment_card, "Выбор типа оплаты Карта")
+
+        page.wait_element(page.to_pay_btn_string)
+        page.click(page.to_pay_btn, "Нажать кнопку Оплатить заказ")
+
+        page.wait_element(page.success_btn_fault_string)
+        page.click(page.success_btn_fault, "Нажать кнопку Неудача на странице тестовой оплаты")
+        time.sleep(5)
+
+        error = page.get_element_text(page.error_card_payment, 'Получить текст ошибки оплаты на странице оформления заказа')
+        error_text = "ОПЛАТА НЕ ПРОШЛА: Свяжитесь с вашим банком или воспользуйтесь другой картой"
+        page.assert_check_expressions(error,error_text,'Не отображается ошибка некорректной оплаты')
+
+
+
+
+#title_cart = self.get_element_text(self.title_cart_text, 'Заголовок в корзине')
+
+
+
+
+
+
+
+
+
+
 
 
 

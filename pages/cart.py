@@ -6,6 +6,8 @@ import allure
 from selene.api import *
 
 from pages.base import BasePage
+from pages.catalog import CatalogPage
+from pages.login import LoginPage
 
 
 class CartPage(BasePage):
@@ -31,6 +33,11 @@ class CartPage(BasePage):
     dropdown_quantity_product = s("//div[@class='DropdownList__container DropdownList__inline']")
     # dropdown_quantity_product = s("(//div[@class='SvgIcon'])[2]/child::*")
     dropdown_quantity_product_select_5 = s("(//span[@class='DropdownList__title'])[5]")
+    button_del = s('//div[@class="SvgIcon IButtonIcon"]/child::*')
+    empty_cart_text = s("//p[contains(text(),'В вашей корзине нет покупок')]")
+    block_product = ss("//div[@class='CartTable__row']")
+    button_closed_cart = s("//button[@class='IButton IButtonClose ViewCart__closer']")
+
 
 
     @allure.step("Получение данных корзины: заголовок, цена, артикул, цвет, размер ")
@@ -101,9 +108,48 @@ class CartPage(BasePage):
 
     @allure.step("Изменение количества товара на 5 единиц на экране Корзина")
     def change_value_products_in_cart(self):
-        self.dropdown_quantity_product.click()
+        self.click(self.dropdown_quantity_product, "Клик дропдаун выбора количества товаров")
         time.sleep(5)
-        self.dropdown_quantity_product_select_5.click()
+        self.click(self.dropdown_quantity_product_select_5, "Клик в дропдауне количества товара 5 единиц")
+    @allure.title("Очистка корзины")
+    def cart_delete(self):
+        # # page = LoginPage()
+        # # page.authorization()
+        # # page.click_close_btn()
+        #
+        # page = CatalogPage()
+        # page.basket_multiple_products()
+        #
+        # page.basket_multiple_products()
+        # page.basket_btn.click()
+        # time.sleep(5)
+
+        try:
+            for i in range(len(self.block_product)):
+                self.button_del.click()
+                time.sleep(1)
+            #self.button_closed_cart().click()
+
+
+        except:
+            pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

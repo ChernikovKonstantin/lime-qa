@@ -54,7 +54,7 @@ class TestBasket:
         assert int(total_cost_products_cart) + int(delivery_cart) == int(final_cost_products_cart), print(
             "Общая сумма + доставка не равна Итоговой сумме")
 
-    @allure.step("Изменеие количества товаров в корзине")
+    @allure.step("Изменение количества товаров в корзине")
     def test_basket_changes_products(self):
         page = CatalogPage()
         price_belts = page.basket_changes_products()

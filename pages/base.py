@@ -57,6 +57,26 @@ class BasePage:
 
 
 
+    @allure.step("Поиск количества одинаковых элементов")
+    def search_same_elements(self, element):
+        '''
+        Docstring: выполнение поиска количества одинаковых элементов на странице
+        :param element: локатор
+        :return: количество элементов, число
+        '''
+        elements = browser.all(element)
+        count = 0
+        for element in elements:
+            count += 1
+            print(elements)
+
+        return count
+
+
+
+
+
+
 
 
 

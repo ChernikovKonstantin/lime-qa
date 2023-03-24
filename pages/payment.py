@@ -6,6 +6,9 @@ import allure
 from selene.api import be, have, s
 
 from pages.base import BasePage
+from pages.cart import CartPage
+from pages.catalog import CatalogPage
+from pages.login import LoginPage
 
 
 class PaymentPage(BasePage):
@@ -19,11 +22,32 @@ class PaymentPage(BasePage):
     to_pay_btn = s("//button[@class ='btn btn-block']")
     to_pay_btn_string = "//button[@class ='btn btn-block']"
     success_btn = s("//button[@class = 'button button_primary']")
+    success_btn_fault = s("//button[@class='button button_secondary']")
+    success_btn_fault_string = "//button[@class='button button_secondary']"
+
     title_thank_you_page_text = s("//div[contains(text(),'Спасибо!')]")
     dropdown_quantity_product_on_payment = s("//div[@class='DropdownList__container DropdownList__inline']")
     # dropdown_quantity_product = s("(//div[@class='SvgIcon'])[2]/child::*")
     dropdown_quantity_product_select_5_on_payment = s("(//span[@class='DropdownList__title'])[5]")
     dropdown_quantity_product_select_1_on_payment = s("(//span[@class='DropdownList__title'])[1]")
+    error_card_payment = s('// div[contains(text(), "ОПЛАТА НЕ ПРОШЛА: Свяжитесь с вашим банком или воспользуйтесь другой картой")]')
+
+
+
+    #locators_delivery
+
+    type_of_delivery_courier = s("//span[contains(text(), 'Доставка курьером')]")
+    type_of_delivery_self = s("//span[contains(text(), 'Самовывоз из магазина')]")
+    type_of_delivery_pic_point = s("//span[contains(text(), 'Пункты выдачи')]")
+    point_self_and_pic_point_delivery = s("//div[@class='PickPointSelector__item']")
+
+    # locators_type_payment
+    type_of_payment_card = s("//span[contains(text(), 'Оплата картой онлайн')]")
+    type_of_payment_gift_card = s("//span[contains(text(), 'Подарочной картой')]")
+    type_of_payment_receiving = s("//span[contains(text(), 'При получении')]")
+
+
+
 
 
     # locators for promocode
@@ -233,6 +257,31 @@ class PaymentPage(BasePage):
 
             else:
                 print('расчет скидки с промокодом  не верен')
+
+    @allure.step('Авторизация, заполнение корзины, заполнение полей оформления заказа')
+    def preview_payment(self):
+
+        page = LoginPage()
+        page.authorization()
+        page.click(page.close_btn, "Закрыть профиль")
+
+        page = CatalogPage()
+        page.basket_changes_products()
+        page.click(page.basket_btn, "Переход в корзину")
+
+        page = CartPage()
+        page.wait_element(page.making_an_order_btn_string)
+        page.click(page.making_an_order_btn, "Клик кнопку оформления заказа")
+
+        self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
+        self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
+        self.set_text(self.card_holder_field, "tester", "Владелец карты")
+        self.set_text(self.security_code_field, "123", "Код безопасности")
+
+
+
+
+
 
 
 

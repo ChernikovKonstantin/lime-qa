@@ -11,7 +11,9 @@ from selene.support.shared import browser
 
 class CatalogPage(BasePage):
     # Locators
-    hamburger_menu = s("//div[@class='icon']")
+    #hamburger_menu = s("//div[@class='icon']")
+    hamburger_menu = s("// *[ @ id = 'AppNavbar'] / div[1] / div[1] / div")
+
     hamburger_menu_string = "//div[@class='icon']"
     menu_link_clothes = s("//span[span= 'Одежда']")
     menu_chapter = s("//a[span ='БРЮКИ']")
@@ -127,6 +129,12 @@ class CatalogPage(BasePage):
         self.click(self.menu_link_bags, " Ссылка СУМКИ")
         self.click(self.choose_a_product, "товар сумка")
         price_bags = self.get_element_text(self.product_price_text, 'цена сумки')
+        self.click(self.add_to_cart, "добавить в корзину")
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_shoes, "Блок ТУФЛИ")
+        self.click(self.menu_subsection_shoes, "Ссылка БОТИЛЬОНЫ")
+        self.click(self.choose_a_product, "Товар ботильоны")
+        price_shoes = self.get_element_text(self.product_price_text, 'цена туфли')
         self.click(self.add_to_cart, "добавить в корзину")
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_shoes, "Блок ТУФЛИ")
