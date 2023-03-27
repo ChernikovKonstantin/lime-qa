@@ -4,6 +4,7 @@ import re
 
 import allure
 from selene.api import be, have, s
+from selene.support.shared.jquery_style import ss
 
 from pages.base import BasePage
 from pages.cart import CartPage
@@ -22,6 +23,7 @@ class PaymentPage(BasePage):
     to_pay_btn = s("//button[@class ='btn btn-block']")
     to_pay_btn_string = "//button[@class ='btn btn-block']"
     success_btn = s("//button[@class = 'button button_primary']")
+    success_btn_string = "//button[@class = 'button button_primary']"
     success_btn_fault = s("//button[@class='button button_secondary']")
     success_btn_fault_string = "//button[@class='button button_secondary']"
 
@@ -31,6 +33,15 @@ class PaymentPage(BasePage):
     dropdown_quantity_product_select_5_on_payment = s("(//span[@class='DropdownList__title'])[5]")
     dropdown_quantity_product_select_1_on_payment = s("(//span[@class='DropdownList__title'])[1]")
     error_card_payment = s('// div[contains(text(), "ОПЛАТА НЕ ПРОШЛА: Свяжитесь с вашим банком или воспользуйтесь другой картой")]')
+    #error_card_not_money = s('//div[contains(text(),"ОПЛАТА НЕ ПРОШЛА: Недостаточно средств на карте"]')
+    error_card_not_money_string = '//div[@class="CustomerCartSummary__error"]'
+    error_card_not_not_valid_card = '//div[contains (text(), "Неправильный номер карты")]'
+    block_product = ss("//div[@class='CartTable__row']")
+    message_out_of_stock = ss('//p[contains(text(), "Нет в наличии")]')
+    button_del = s('//div[@class="SvgIcon IButtonIcon"]/child::*')
+    button_del2 = s("//p[@class='CartTable__error']/ancestor::div[@class='CartTable__name']/following-sibling::button//div[@class='SvgIcon IButtonIcon']/child::*")
+
+
 
 
 
@@ -40,11 +51,13 @@ class PaymentPage(BasePage):
     type_of_delivery_self = s("//span[contains(text(), 'Самовывоз из магазина')]")
     type_of_delivery_pic_point = s("//span[contains(text(), 'Пункты выдачи')]")
     point_self_and_pic_point_delivery = s("//div[@class='PickPointSelector__item']")
+    button_choise_point = s('//button[@class="btn btn-block"]')
 
     # locators_type_payment
     type_of_payment_card = s("//span[contains(text(), 'Оплата картой онлайн')]")
     type_of_payment_gift_card = s("//span[contains(text(), 'Подарочной картой')]")
     type_of_payment_receiving = s("//span[contains(text(), 'При получении')]")
+    string_data_card = '//div[contains(text(), "Данные вашей карты visa/mastercard/мир")]'
 
 
 
@@ -96,7 +109,7 @@ class PaymentPage(BasePage):
             print('Ошибка проверки: цена с промо  + сумма скидки = итого')
 
         assert price_without_discount == price_finally_block_cart + price_discount, \
-            print('Ошибка проверки: цена с промо в блоке корзина + сумма скидки = итого')
+        print('Ошибка проверки: цена с промо в блоке корзина + сумма скидки = итого')
 
         assert price_finally_block_cart == price_without_discount - price_discount_icon, \
             print('Ошибка проверки: цена с промо в блоке корзина =  итого х %промо')
@@ -264,15 +277,16 @@ class PaymentPage(BasePage):
         page = LoginPage()
         page.authorization()
         page.click(page.close_btn, "Закрыть профиль")
-        time.sleep(5)
+        time.sleep(2)
+
         page = CatalogPage()
         page.click(page.basket_btn, "Переход в корзину")
 
         page = CartPage()
         page.cart_delete()
 
-        time.sleep(5)
-        page.open_url('https://lime:lime123@lmdev.ru/')
+        time.sleep(1)
+        page.open_url(os.getenv('base_url'))
 
         page = CatalogPage()
         page.basket_changes_products()
@@ -286,6 +300,23 @@ class PaymentPage(BasePage):
         self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
         self.set_text(self.card_holder_field, "tester", "Владелец карты")
         self.set_text(self.security_code_field, "123", "Код безопасности")
+
+    @allure.step("Проверка наличия товара")
+    def check_product_for_order(self):
+
+        try:
+            #if len(self.message_out_of_stock) > 0:
+            for i in range(len(self.message_out_of_stock)):
+                #elem_text = self.get_element_text(self.message_out_of_stock, ' сообщение Товара нет в наличии')
+                #if elem_text == 'Товара нет в наличии':
+                self.click(self.button_del2, " кнопку удаления заказа")
+                time.sleep(1)
+
+            #self.button_closed_cart().click()
+        except:
+            pass
+
+
 
 
 

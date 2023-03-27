@@ -21,37 +21,31 @@ class TestPayment:
 
 
 
-    @allure.title("Покупка товара")
-    def test_product_registration(self):
-        page = LoginPage()
-        page.authorization()
-        page.click_close_btn()
-        page = CatalogPage()
-        page.basket_changes_products()
-        page.basket_btn.click()
-        page = CartPage()
-        page.click_making_an_order_btn()
-        time.sleep(2)
-        page = PaymentPage()
-        message = page.filling_fields_registration_product()
-        assert message == "СПАСИБО!", print('Нужный текст "СПАСИБО" не присутствует')
-        page.filling_fields_registration_product()
-        time.sleep(5)
-
     @allure.title("Оплата картой + валидный промокод")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/441")
     def test_product_registration_cart_promo_code(self):
         page = LoginPage()
         page.authorization()
         page.click_close_btn()
+
         page = CatalogPage()
-        page.basket_changes_products()
+        page.click(page.basket_btn, "Переход в корзину")
+
+        page = CartPage()
+        page.cart_delete()
+        time.sleep(1)
+
+        page.open_url(os.getenv('base_url'))
+        page = CatalogPage()
+        page.basket_changes_products_1399()
         page.basket_btn.click()
         page = CartPage()
         page.wait_element(page.making_an_order_btn_string)
         page.click_making_an_order_btn()
-        time.sleep(2)
+        time.sleep(5)
+
         page = PaymentPage()
+        page.check_product_for_order()
         title_thank_you_page = page.payment_promo_valid()
         print(title_thank_you_page)
 
@@ -63,6 +57,12 @@ class TestPayment:
         page = LoginPage()
         page.authorization()
         page.click_close_btn()
+
+        page = CartPage()
+        page.cart_delete()
+        time.sleep(1)
+        page.open_url(os.getenv('base_url'))
+
         page = CatalogPage()
         page.basket_multiple_products()
         page.basket_btn.click()
@@ -79,7 +79,7 @@ class TestPayment:
 
     @allure.title("Оплата картой +  не валидный промокод")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/443")
-    def test_product_registration_cart_promo_code(self):
+    def test_product_registration_cart_not_valid_promo_code(self):
         page = LoginPage()
         page.authorization()
         page.click_close_btn()
@@ -190,23 +190,152 @@ class TestPayment:
         error_text = "ОПЛАТА НЕ ПРОШЛА: Свяжитесь с вашим банком или воспользуйтесь другой картой"
         page.assert_check_expressions(error,error_text,'Не отображается ошибка некорректной оплаты')
 
-    # @allure.title("Оплата подарочной картой, доставка курьером+ добавить новый адрес")
-    # @allure.link("https://lmdev.testrail.io/index.php?/cases/view/452")
-    # def test_pay_gift_card_courier_change_delivery(self):
+    @allure.title("Оплата подарочной картой, доставка курьером+ добавить новый адрес")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/452")
 
-    # @allure.title("Оплата подарочной картой(не достаточно средств), доставка курьером")
-    # @allure.link("https://lmdev.testrail.io/index.php?/cases/view/466")
-    # def test_pay_gift_card_courier_not_money(self):
+    @allure.title("Оплата подарочной картой(не достаточно средств), доставка курьером")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/466")
 
-    # @allure.title("Оплата подарочной картой(НЕ ВАЛИДНАЯ КАРТА), доставка курьером")
-    # @allure.link("https://lmdev.testrail.io/index.php?/cases/view/453")
-    # def test_pay_gift_card_not_valid_courier(self):
+    @allure.title("Оплата подарочной картой(НЕ ВАЛИДНАЯ КАРТА), доставка курьером")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/453")
+
     @allure.title("Оплата при получении, доставка курьером")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/454")
     def test_pay_receiving_courier(self):
 
-        page = PaymentPage
+        page = PaymentPage()
         page.preview_payment()
+        page.click(page.type_of_delivery_courier, 'Выбор типа доставки Доставка курьером')
+        page.click(page.type_of_payment_receiving, 'Выбор типа оплаты При получении')
+        page.wait_element_not_visible(page.string_data_card)
+
+        page.click(page.to_pay_btn, 'Клик кнопку Оплатить')
+        title_thank_you_page = page.get_element_text(page.title_thank_you_page_text, 'Сообщение об успешной покупке')
+        page.assert_check_expressions(title_thank_you_page, "СПАСИБО!", 'Ошибка! Оплата не выполнена.')
+
+    @allure.title("Оплата банковской картой, самовывоз")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/455")
+    def test_pay_card_self(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
+
+        page.click(page.to_pay_btn, 'Клик кнопку Оплатить')
+        page.wait_element(page.success_btn_string)
+        page.click(page.success_btn, 'кнопка Успешно')
+        title_thank_you_page = page.get_element_text(page.title_thank_you_page_text, 'Получить текст сообщения об успешной покупке')
+        page.assert_check_expressions(title_thank_you_page, "СПАСИБО!", 'Ошибка! Оплата не выполнена.')
+
+
+    @allure.title("Оплата банковской картой(недостаточно средств), самовывоз")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/456")
+    def test_pay_card_self_not_money(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
+        page.set_text(page.card_number_field, "4012 8888 8888 1881", " тестовый номер карты  с ошибкой Недостаточно средств")
+        page.click(page.to_pay_btn, 'Клик кнопку Оплатить')
+        page.wait_element(page.success_btn_string)
+        page.click(page.success_btn, 'кнопка Успешно')
+
+        page.wait_element(page.error_card_not_money_string)
+
+    @allure.title("Оплата банковской картой(не существующая карта), самовывоз")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/457")
+    def test_pay_card_not_valid_sel(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
+        page.set_text(page.card_number_field, "4012 8888 8888 1882", " Не валидный номер карты")
+        page.click(page.to_pay_btn, 'Клик кнопку Оплатить')
+
+        page.wait_element_not_visible(page.success_btn_string)
+        page.wait_element(page.error_card_not_not_valid_card)
+
+    @allure.title("Оплата подарочной картой(не существующая карта), самовывоз")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/458")
+
+    @allure.title("Оплата подарочной картой(недостаточно средств), самовывоз")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/465")
+
+    @allure.title("Оплата подарочной картой, самовывоз")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/460")
+
+    @allure.title("Оплата банковской картой + подарочная карта+ промкод, самовывоз")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/459")
+
+    @allure.title("Оплата банковской картой, ПВЗ ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/461")
+    def test_pay_card_pick_point(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+        page.click(page.to_pay_btn, 'Клик кнопку Оплатить')
+
+        page.wait_element(page.success_btn_string)
+        page.click(page.success_btn, 'кнопка Успешно')
+        title_thank_you_page = page.get_element_text(page.title_thank_you_page_text, 'Получить текст сообщения об успешной покупке')
+        page.assert_check_expressions(title_thank_you_page, "СПАСИБО!", 'Ошибка! Оплата не выполнена.')
+
+    @allure.title("Оплата банковской картой(недостаточно средств), ПВЗ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/462")
+    def test_pay_card_pick_point_not_money(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+        page.set_text(page.card_number_field, "4012 8888 8888 1881", " тестовый номер карты  с ошибкой Недостаточно средств")
+        page.click(page.to_pay_btn, 'Клик кнопку Оплатить')
+        page.wait_element(page.success_btn_string)
+        page.click(page.success_btn, 'кнопка Успешно')
+
+        page.wait_element(page.error_card_not_money_string)
+
+    @allure.title("Оплата банковской картой(не существующая карта), ПВЗ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/462")
+    def test_pay_card_not_valid_pick_point(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+        page.set_text(page.card_number_field, "4012 8888 8888 1882", " Не валидный номер карты")
+        page.click(page.to_pay_btn, 'Клик кнопку Оплатить')
+
+        page.wait_element_not_visible(page.success_btn_string)
+        page.wait_element(page.error_card_not_not_valid_card)
+
+    @allure.title("Оплата подарочной картой, ПВЗ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/464")
+
+    @allure.title("Оплата подарочной картой(не существующая карта), ПВЗ ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/467")
+
+    @allure.title("Оплата подарочной картой(недостаточно средств), ПВЗ ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/468")
+
+    @allure.title("Оплата банковской картой + подарочная карта+ промкод, ПВЗ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/469")
+    def zaglushka(self):
+        print('zaglishka')
+
+
+
+
+
+
+
+
+
 
 
 
