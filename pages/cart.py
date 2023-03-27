@@ -31,6 +31,11 @@ class CartPage(BasePage):
     dropdown_quantity_product = s("//div[@class='DropdownList__container DropdownList__inline']")
     # dropdown_quantity_product = s("(//div[@class='SvgIcon'])[2]/child::*")
     dropdown_quantity_product_select_5 = s("(//span[@class='DropdownList__title'])[5]")
+    add_favorite_btn = s("//button[@class = 'btn btn-link']")
+    first_card = s("(//div[@class='CartTable__cell CartTable__preview'])/a")
+    last_card = s("//a[@class= 'PreviewGoods__imageBox']/a")
+
+
 
 
     @allure.step("Получение данных корзины: заголовок, цена, артикул, цвет, размер ")
@@ -99,11 +104,19 @@ class CartPage(BasePage):
     def click_making_an_order_btn(self):
         self.making_an_order_btn.click()
 
+
     @allure.step("Изменение количества товара на 5 единиц на экране Корзина")
     def change_value_products_in_cart(self):
         self.dropdown_quantity_product.click()
         time.sleep(5)
         self.dropdown_quantity_product_select_5.click()
+
+    @allure.step("добавление в избранное из корзины")
+    def adding_to_favorites_from_the_cart(self):
+        self.click(self.add_favorite_btn, "Добавка в избранное")
+        self.open_url("https://nuxt-01.qa.lmdev.ru/#favorites")
+
+
 
 
 

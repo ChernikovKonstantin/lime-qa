@@ -32,11 +32,11 @@ class BasePage:
     def get_attribute(self, element, attribute):
         return element.get_attribute(attribute)
 
-    @allure.step("Получение аттрибута")
+    @allure.step("Получение урл")
     def get_url(self):
         return browser.driver.current_url
 
-    @allure.step("Получение аттрибута")
+    @allure.step("Перемещение к элементу")
     def move_to(self, element):
         driver = browser.driver
         action = ActionChains(driver)
