@@ -258,12 +258,21 @@ class PaymentPage(BasePage):
             else:
                 print('расчет скидки с промокодом  не верен')
 
-    @allure.step('Авторизация, заполнение корзины, заполнение полей оформления заказа')
+    @allure.step('Авторизация с очисткой корзины, заполнение корзины, заполнение полей оформления заказа')
     def preview_payment(self):
 
         page = LoginPage()
         page.authorization()
         page.click(page.close_btn, "Закрыть профиль")
+        time.sleep(5)
+        page = CatalogPage()
+        page.click(page.basket_btn, "Переход в корзину")
+
+        page = CartPage()
+        page.cart_delete()
+
+        time.sleep(5)
+        page.open_url('https://lime:lime123@lmdev.ru/')
 
         page = CatalogPage()
         page.basket_changes_products()

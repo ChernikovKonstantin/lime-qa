@@ -15,7 +15,7 @@ class LoginPage(BasePage):
     enter_btn = s('button[type="submit"]')
     logout_btn = s('//button[contains(.,"Выйти")]')
     error_message = s(".snack-bar")
-    account_btn = s('a[href="/#lk"]')
+    account_btn = s("div#AppNavbar a[href='/#lk']")
     authorization_btn = s("//button[contains(text(),'Войти')]")
     close_btn = s("//button[@class = 'IButton IButtonClose ViewModal__closer']")
     product_price_text = s("//div[@class='product__price']")
@@ -47,6 +47,7 @@ class LoginPage(BasePage):
 
     @allure.step("Авторизации пользователя")
     def authorization(self):
+
         self.click(self.account_btn, "Нажать на Личный кабинет")
         self.click(self.authorization_btn, "Нажать Войти")
         self.set_text(self.email_input, os.getenv("test_user"), "Поле Email")

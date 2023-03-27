@@ -190,6 +190,30 @@ class TestPayment:
         error_text = "ОПЛАТА НЕ ПРОШЛА: Свяжитесь с вашим банком или воспользуйтесь другой картой"
         page.assert_check_expressions(error,error_text,'Не отображается ошибка некорректной оплаты')
 
+    # @allure.title("Оплата подарочной картой, доставка курьером+ добавить новый адрес")
+    # @allure.link("https://lmdev.testrail.io/index.php?/cases/view/452")
+    # def test_pay_gift_card_courier_change_delivery(self):
+
+    # @allure.title("Оплата подарочной картой(не достаточно средств), доставка курьером")
+    # @allure.link("https://lmdev.testrail.io/index.php?/cases/view/466")
+    # def test_pay_gift_card_courier_not_money(self):
+
+    # @allure.title("Оплата подарочной картой(НЕ ВАЛИДНАЯ КАРТА), доставка курьером")
+    # @allure.link("https://lmdev.testrail.io/index.php?/cases/view/453")
+    # def test_pay_gift_card_not_valid_courier(self):
+    @allure.title("Оплата при получении, доставка курьером")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/454")
+    def test_pay_receiving_courier(self):
+
+        page = PaymentPage
+        page.preview_payment()
+
+
+
+
+
+
+
 
 
 
