@@ -193,6 +193,7 @@ class TestPayment:
 
 
 
+
 #title_cart = self.get_element_text(self.title_cart_text, 'Заголовок в корзине')
 
 
