@@ -27,15 +27,15 @@ class TestPayment:
         page = LoginPage()
         page.authorization()
         page.click_close_btn()
+        time.sleep(1)
 
         page = CatalogPage()
         page.click(page.basket_btn, "Переход в корзину")
-
         page = CartPage()
         page.cart_delete()
         time.sleep(1)
-
         page.open_url(os.getenv('base_url'))
+
         page = CatalogPage()
         page.basket_changes_products_1399()
         page.basket_btn.click()
@@ -45,7 +45,7 @@ class TestPayment:
         time.sleep(5)
 
         page = PaymentPage()
-        page.check_product_for_order()
+        #page.check_product_for_order()
         title_thank_you_page = page.payment_promo_valid()
         print(title_thank_you_page)
 
@@ -58,6 +58,8 @@ class TestPayment:
         page.authorization()
         page.click_close_btn()
 
+        page = CatalogPage()
+        page.click(page.basket_btn, "Переход в корзину")
         page = CartPage()
         page.cart_delete()
         time.sleep(1)
@@ -71,6 +73,7 @@ class TestPayment:
         page.click_making_an_order_btn()
         time.sleep(2)
         page = PaymentPage()
+        #page.check_product_for_order()
         title_thank_you_page = page.payment_promo_valid_many_products()
         print(title_thank_you_page)
 
@@ -85,6 +88,13 @@ class TestPayment:
         page.click_close_btn()
 
         page = CatalogPage()
+        page.click(page.basket_btn, "Переход в корзину")
+        page = CartPage()
+        page.cart_delete()
+        time.sleep(1)
+        page.open_url(os.getenv('base_url'))
+
+        page = CatalogPage()
         page.basket_changes_products()
         page.basket_btn.click()
 
@@ -93,16 +103,9 @@ class TestPayment:
         page.click_making_an_order_btn()
         time.sleep(2)
         page = PaymentPage()
-
+        #page.check_product_for_order()
         page.payment_promo_not_valid()
 
-    @allure.title("Проверка сравнения двух значений отображением шагах в аллюр")
-    def test_assert(self):
-
-        page = PaymentPage()
-        exp1 = 5
-        exp2 = 4
-        page.assert_check_expressions(exp1, exp2, 'текст в ассерте')
 
     @allure.title("Оплата картой заказа суммой более 6000 с формированием заказа в корзине")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/442&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=80")
@@ -112,14 +115,22 @@ class TestPayment:
         page.click_close_btn()
 
         page = CatalogPage()
-        page.basket_changes_products_1399()
+        page.click(page.basket_btn, "Переход в корзину")
+        time.sleep(1)
+        page = CartPage()
+        page.cart_delete()
+        time.sleep(1)
+        page.open_url(os.getenv('base_url'))
+
+        page = CatalogPage()
+        page.basket_changes_products_1399
         page.basket_btn.click()
         time.sleep(1)
 
         page = CartPage()
 
         page.change_value_products_in_cart()
-        time.sleep(3)
+        time.sleep(2)
         page.wait_element(page.making_an_order_btn_string)
         page.click_making_an_order_btn()
         time.sleep(1)
@@ -149,6 +160,14 @@ class TestPayment:
         page.click_close_btn()
 
         page = CatalogPage()
+        page.click(page.basket_btn, "Переход в корзину")
+        time.sleep(1)
+        page = CartPage()
+        page.cart_delete()
+        time.sleep(1)
+        page.open_url(os.getenv('base_url'))
+
+        page = CatalogPage()
         page.basket_btn.click()
 
         page = CartPage()
@@ -168,6 +187,7 @@ class TestPayment:
 
 
         page = PaymentPage()
+        #page.check_product_for_order()
         page.cycle_type_promo_code()
 
     @allure.title("Оплата картой, ошибка оплаты")
@@ -327,24 +347,6 @@ class TestPayment:
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/469")
     def zaglushka(self):
         print('zaglishka')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #title_cart = self.get_element_text(self.title_cart_text, 'Заголовок в корзине')

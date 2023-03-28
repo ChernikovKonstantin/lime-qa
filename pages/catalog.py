@@ -40,6 +40,8 @@ class CatalogPage(BasePage):
     choose_a_product_bags = s("//div[@class= 'CatalogProduct__title']/a")
     menu_link_shoes = s("//span[span= 'ОБУВЬ']")
     menu_subsection_shoes = s("//a[@class= 'mainmenu-children__link' and span = 'БОТИЛЬОНЫ']")
+    menu_subsection_shoes_01_all_models = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
+
     choose_a_product_shoes = s("(//a[@href = '/product/12598_9626_094-bezevyi'])[2]")
     menu_link_lingerie = s("//span[span= 'НИЖНЕЕ БЕЛЬЕ']")
     menu_subsection_all_models = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
@@ -169,6 +171,11 @@ class CatalogPage(BasePage):
         time.sleep(2)
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
+
+    def select_section_menu(self):
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_shoes, "Секция Обувь")
+        self.click(self.menu_subsection_shoes_01_all_models, "Раздел Все модели")
 
 
 

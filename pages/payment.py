@@ -307,12 +307,9 @@ class PaymentPage(BasePage):
         try:
             #if len(self.message_out_of_stock) > 0:
             for i in range(len(self.message_out_of_stock)):
-                #elem_text = self.get_element_text(self.message_out_of_stock, ' сообщение Товара нет в наличии')
-                #if elem_text == 'Товара нет в наличии':
-                self.click(self.button_del2, " кнопку удаления заказа")
-                time.sleep(1)
 
-            #self.button_closed_cart().click()
+                self.click(self.button_del2, " кнопку удаления заказа")
+                time.sleep(2)
         except:
             pass
 
