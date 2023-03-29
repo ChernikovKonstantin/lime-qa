@@ -15,11 +15,11 @@ from pages.login import LoginPage
 from pages.payment import PaymentPage
 
 
-@allure.feature("Тесты фильтрации")
+@allure.feature("Тесты фильтров")
 @pytest.mark.usefixtures("setup")
 class TestFilters:
 
-    @allure.title("Тест цикла")
+    @allure.title("Тест цикла проверки цвета Лоферов")
     @allure.link("https://lmdev.testrail.io")
     def test_cycle(self):
 
@@ -30,16 +30,24 @@ class TestFilters:
 
         page = CatalogPage()
         page.click(page.hamburger_menu, "гамбургер-меню")
-        time.sleep(2)
         page.click(page.menu_link_shoes, "раздел Обувь")
-        time.sleep(2)
         page.click(page.menu_subsection_shoes, "подраздел Лоферы")
-        time.sleep(2)
 
         page = FilterPage()
+        page.wait_element(page.button_filter_string)
+        time.sleep(1)
         page.click(page.button_filter, ' кнопка фильтра')
+        time.sleep(3)
         page.cycle()
+    @allure.title("Тест фильтра по АПИ")
+    @allure.link("https://lmdev.testrail.io")
+    def test_api(self):
+        #page = LoginPage()
+        #page.authorization()
 
+        page = FilterPage()
+        response = page.rest_api()
+        print(response)
 
 
 
