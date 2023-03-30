@@ -4,6 +4,7 @@ import re
 
 import allure
 import requests
+
 from selene import driver
 from selene.api import be, have, s
 from selene.support.shared import browser
@@ -53,16 +54,24 @@ class FilterPage(BasePage):
                     browser.driver.back()
                 self.click(self.button_filter, ' кнопка фильтра')
 
-        @allure.step("Тест фильтра апи")
-        def rest_api(self):
+        @allure.step("Json_установленного фильтра")
+        def rest_api(self,):
+
             base_url = os.getenv('base_url')[:8]+os.getenv('base_url')[21:] + 'api/section/apply/all_shoes' + '?color=19'
-            print(base_url)
             response = requests.get(base_url)
-            print(response)
 
             return response.json()
 
 
+
+        @allure.step("Json параметров фильтров по типу товара Лоферы ")
+        def type_filters(self):
+            base_url = os.getenv('base_url')[:8] + os.getenv('base_url')[
+                                                   21:] + 'api/section/filters/loafers'
+
+            response_type_filter = requests.get(base_url)
+
+            return response_type_filter.json()
 
 
 
