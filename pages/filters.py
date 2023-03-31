@@ -35,6 +35,8 @@ class FilterPage(BasePage):
         cards_product_in_result_search = ss('//img[@class]')
         card_product_in_result_search = s('//img[@class]')
         card_product_color_string = s('//div[@class= "ColorSelector__title"]')
+        cards_product_color_string_filter = ss('//div[@class = "CatalogProduct__title"]/child::*')
+        card_product_color_string_filter = s('//div[@class = "CatalogProduct__title"]/child::*')
 
 
 
@@ -55,7 +57,7 @@ class FilterPage(BasePage):
                 self.click(self.button_filter, ' кнопка фильтра')
 
         @allure.step("Json_установленного фильтра")
-        def rest_api(self,):
+        def filter_json(self):
 
             base_url = os.getenv('base_url')[:8]+os.getenv('base_url')[21:] + 'api/section/apply/all_shoes' + '?color=19'
             response = requests.get(base_url)
@@ -73,9 +75,14 @@ class FilterPage(BasePage):
 
             return response_type_filter.json()
 
-
-
-
+        @allure.step("Цикл перебора цветов фильтра Лоферы ")
+        def cycle_check_bocks_color(self):
+            # for i in range(len(self.elements_block_color)):
+            self.click(self.elements_block_color[i], " чекбокс выбора цвета")
+            time.sleep(5)
+            color_filter = self.get_element_text(self.element_block_color, ' цвет чекбокса фильтра').lower()
+            self.click(self.elements_block_color[i], " чекбокс выбора цвета")
+            return color_filter
 
 
 

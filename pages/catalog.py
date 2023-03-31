@@ -41,6 +41,8 @@ class CatalogPage(BasePage):
     menu_link_shoes = s("//span[span= 'ОБУВЬ']")
     menu_subsection_shoes = s("//a[@class= 'mainmenu-children__link' and span = 'БОТИЛЬОНЫ']")
     menu_subsection_shoes_01_all_models = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
+    menu_subsection_shoes_lofers = s("//a[@class= 'mainmenu-children__link' and span = 'ЛОФЕРЫ']")
+    menu_section_shoes = s("//span[@class= 'mainmenu__link has-children delimiter' and span = 'ОБУВЬ']")
 
     choose_a_product_shoes = s("(//a[@href = '/product/12598_9626_094-bezevyi'])[2]")
     menu_link_lingerie = s("//span[span= 'НИЖНЕЕ БЕЛЬЕ']")
