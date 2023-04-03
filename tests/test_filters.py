@@ -52,7 +52,7 @@ class TestFilters:
         page = FilterPage()
         #page.wait_element(page.button_filter_string)
         time.sleep(1)
-
+        page.click(page.button_filter, ' кнопка фильтра')
 
         request_type_filter = page.type_filters()
         for i in range(len(request_type_filter['colors'])):
@@ -71,8 +71,10 @@ class TestFilters:
             url_color = os.getenv('base_url')[:8] + os.getenv('base_url')[21:] + 'api/section/apply/loafers' + '?color=' + filter_color_id
 
             request_color = requests.get(url_color).json()
+            status_checkbox = page.get_attribute(page.checkbox_block_color_attrib, 'value')
+            if status_checkbox == "true":
+                page.click(page.elements_block_color[i-1], ' сброс состояния чекбокса')
 
-            page.click(page.button_filter, ' кнопка фильтра')
             page.click(page.elements_block_color[i], " чекбокс выбора цвета")
             #page.click(page.button_filter_closed, " кнопка закрытия фильтра")
 
@@ -95,7 +97,9 @@ class TestFilters:
                 page.assert_check_expressions(filter_color_json, filter_color_name, ' цвет товара в фильтре не соответсвует цвету товара в запросе api' )
                 page.assert_check_expressions(filter_color_name_product_json, filter_color_name_product, ' имя товара не соответствует цвету')
                 page = FilterPage()
-            page.click(page.elements_block_color[i], " чекбокс выбора цвета")
+
+
+                #page.get_attribute(page.checkbox_block_color_attrib[i], "value")
 
 
 

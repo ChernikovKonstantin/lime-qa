@@ -32,6 +32,7 @@ class FilterPage(BasePage):
         elements_block_color = ss('//div[@class="filter-group__options columns"]//span[@class="checkbox__text"]')
         element_block_color = s('//div[@class="filter-group__options columns"]//span[@class="checkbox__text"]')
         checkbox_block_color = s('//div[@class="filter-group__options columns"]//span[@class="checkbox__indicator"]')
+        checkbox_block_color_attrib = s('//input[@class = "checkbox__element"]')
         cards_product_in_result_search = ss('//img[@class]')
         card_product_in_result_search = s('//img[@class]')
         card_product_color_string = s('//div[@class= "ColorSelector__title"]')
@@ -83,6 +84,12 @@ class FilterPage(BasePage):
             color_filter = self.get_element_text(self.element_block_color, ' цвет чекбокса фильтра').lower()
             self.click(self.elements_block_color[i], " чекбокс выбора цвета")
             return color_filter
+
+        @allure.step("Получение статуса чекбокса ")
+        def get_checkbox_status(self):
+            return self.get_attribute(self.checkbox_block_color_attrib, 'value')
+
+
 
 
 
