@@ -54,6 +54,10 @@ class BasePage:
     def assert_check_expressions(self, expression1, expression2, allureText):
         assert expression1 == expression2, print(allureText)
 
+    @allure.step("Проверка совпадения текста {expression1} в {expression2}")
+    def assert_check_coincidence(self, expression1, expression2, allureText):
+        assert expression1 in expression2, print(allureText)
+
 
 
 
