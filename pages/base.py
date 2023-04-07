@@ -28,15 +28,15 @@ class BasePage:
     def click(self, element, text):
         element.click()
 
-    @allure.step("Получение аттрибута")
+    @allure.step("Получение атрибута")
     def get_attribute(self, element, attribute):
         return element.get_attribute(attribute)
 
-    @allure.step("Получение аттрибута")
+    @allure.step("Получение атрибута")
     def get_url(self):
         return browser.driver.current_url
 
-    @allure.step("Получение аттрибута")
+    @allure.step("Получение атрибута")
     def move_to(self, element):
         driver = browser.driver
         action = ActionChains(driver)
@@ -53,6 +53,10 @@ class BasePage:
     @allure.step("Сравнение значений {expression1} и {expression2}")
     def assert_check_expressions(self, expression1, expression2, allureText):
         assert expression1 == expression2, print(allureText)
+
+    @allure.step("Проверка совпадения текста {expression1} в {expression2}")
+    def assert_check_coincidence(self, expression1, expression2, allureText):
+        assert expression1 in expression2, print(allureText)
 
 
 

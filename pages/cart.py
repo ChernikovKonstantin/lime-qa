@@ -109,20 +109,10 @@ class CartPage(BasePage):
     @allure.step("Изменение количества товара на 5 единиц на экране Корзина")
     def change_value_products_in_cart(self):
         self.click(self.dropdown_quantity_product, "Клик дропдаун выбора количества товаров")
-        time.sleep(5)
+        time.sleep(2)
         self.click(self.dropdown_quantity_product_select_5, "Клик в дропдауне количества товара 5 единиц")
     @allure.title("Очистка корзины")
     def cart_delete(self):
-        # # page = LoginPage()
-        # # page.authorization()
-        # # page.click_close_btn()
-        #
-        # page = CatalogPage()
-        # page.basket_multiple_products()
-        #
-        # page.basket_multiple_products()
-        # page.basket_btn.click()
-        # time.sleep(5)
 
         try:
             for i in range(len(self.block_product)):
