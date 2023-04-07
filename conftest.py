@@ -59,3 +59,6 @@ def pytest_exception_interact():
             allure.attach(json.dumps(console_log), name="Логи консоли", attachment_type=allure.attachment_type.JSON)
         except:
             pass
+
+# @pytest.mark()
+# def mark():

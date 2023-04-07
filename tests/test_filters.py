@@ -42,20 +42,35 @@ class TestFilters:
         time.sleep(3)
         page.cycle()
 
-    @allure.title("Тест фильтра по АПИ")
+    @allure.title("Тест фильтра Ботильоны")
     @allure.link("https://lmdev.testrail.io")
     def test_api(self):
         page = CatalogPage()
         page.click(page.hamburger_menu, "гамбургер-меню")
         page.click(page.menu_section_shoes, "раздел Обувь")
-        page.click(page.menu_subsection_shoes_botil, "подраздел Лоферы")
+        page.click(page.menu_subsection_shoes_botil, "подраздел Ботильоны>")
 
         page = FilterPage()
         time.sleep(1)
         page.click(page.button_filter, ' кнопка фильтра')
 
+        page.cycle_check_boots()
 
-        page.cycle_type_filters()
+
+    @allure.title("Тест фильтра Лоферы")
+    @allure.link("https://lmdev.testrail.io")
+    def test_api2(self):
+        page = CatalogPage()
+        page.click(page.hamburger_menu, "гамбургер-меню")
+        page.click(page.menu_section_shoes, "раздел Обувь")
+        page.click(page.menu_subsection_shoes_lofers, "подраздел Лоферы>")
+
+        page = FilterPage()
+        time.sleep(1)
+        page.click(page.button_filter, ' кнопка фильтра')
+
+        page.cycle_check_loafers()
+
 
         #page.cycle_check_color()
 

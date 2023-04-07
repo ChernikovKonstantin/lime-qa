@@ -27,10 +27,11 @@ class TestPayment:
         page = LoginPage()
         page.authorization()
         page.click_close_btn()
-        time.sleep(1)
+        time.sleep(2)
 
         page = CatalogPage()
         page.click(page.basket_btn, "Переход в корзину")
+        time.sleep(1)
         page = CartPage()
         page.cart_delete()
         time.sleep(1)
@@ -45,7 +46,7 @@ class TestPayment:
         time.sleep(5)
 
         page = PaymentPage()
-        #page.check_product_for_order()
+        page.check_product_for_order()
         title_thank_you_page = page.payment_promo_valid()
         print(title_thank_you_page)
 
@@ -57,12 +58,13 @@ class TestPayment:
         page = LoginPage()
         page.authorization()
         page.click_close_btn()
+        time.sleep(2)
 
         page = CatalogPage()
         page.click(page.basket_btn, "Переход в корзину")
+        time.sleep(1)
         page = CartPage()
         page.cart_delete()
-        time.sleep(1)
         page.open_url(os.getenv('base_url'))
 
         page = CatalogPage()
@@ -73,7 +75,7 @@ class TestPayment:
         page.click_making_an_order_btn()
         time.sleep(2)
         page = PaymentPage()
-        #page.check_product_for_order()
+        page.check_product_for_order()
         title_thank_you_page = page.payment_promo_valid_many_products()
         print(title_thank_you_page)
 
@@ -86,16 +88,18 @@ class TestPayment:
         page = LoginPage()
         page.authorization()
         page.click_close_btn()
+        time.sleep(2)
 
         page = CatalogPage()
         page.click(page.basket_btn, "Переход в корзину")
+        time.sleep(1)
         page = CartPage()
         page.cart_delete()
-        time.sleep(1)
         page.open_url(os.getenv('base_url'))
 
         page = CatalogPage()
         page.basket_changes_products()
+        time.sleep(1)
         page.basket_btn.click()
 
         page = CartPage()
@@ -103,7 +107,7 @@ class TestPayment:
         page.click_making_an_order_btn()
         time.sleep(2)
         page = PaymentPage()
-        #page.check_product_for_order()
+        page.check_product_for_order()
         page.payment_promo_not_valid()
 
 
@@ -113,17 +117,17 @@ class TestPayment:
         page = LoginPage()
         page.authorization()
         page.click_close_btn()
+        time.sleep(2)
 
         page = CatalogPage()
         page.click(page.basket_btn, "Переход в корзину")
         time.sleep(1)
         page = CartPage()
         page.cart_delete()
-        time.sleep(1)
         page.open_url(os.getenv('base_url'))
 
         page = CatalogPage()
-        page.basket_changes_products_1399
+        page.basket_changes_products_1399()
         page.basket_btn.click()
         time.sleep(1)
 
@@ -143,13 +147,13 @@ class TestPayment:
         page.sum_order_with_discount_6000()
 
         page.filling_fields_registration_product()
+        page.check_product_for_order()
         self.to_pay_btn.click()
         time.sleep(2)
         self.success_btn.click()
         time.sleep(2)
         title_thank_you_page = self.get_element_text(self.title_thank_you_page_text, '')
         assert title_thank_you_page == "СПАСИБО!", print("Ошибка сообщения. Текст ошибки: " + title_thank_you_page)
-
 
     @allure.title("Проверка применения скидок для заказа > 6000")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/444")
@@ -158,6 +162,7 @@ class TestPayment:
         page = LoginPage()
         page.authorization()
         page.click_close_btn()
+        time.sleep(2)
 
         page = CatalogPage()
         page.click(page.basket_btn, "Переход в корзину")
@@ -167,15 +172,9 @@ class TestPayment:
         time.sleep(1)
         page.open_url(os.getenv('base_url'))
 
+        time.sleep(1)
         page = CatalogPage()
-        page.basket_btn.click()
-
-        page = CartPage()
-        page.cart_delete()
-        page.open_url(os.getenv('base_url'))
-
-        page = CatalogPage()
-        page.basket_multiple_products()
+        page.basket_changes_products_1399()
         page.basket_btn.click()
         time.sleep(1)
 
@@ -183,11 +182,12 @@ class TestPayment:
         page.wait_element(page.making_an_order_btn_string)
         time.sleep(1)
         page.change_value_products_in_cart()
+        time.sleep(1)
         page.click_making_an_order_btn()
-
+        time.sleep(1)
 
         page = PaymentPage()
-        #page.check_product_for_order()
+        page.check_product_for_order()
         page.cycle_type_promo_code()
 
     @allure.title("Оплата картой, ошибка оплаты")
@@ -206,9 +206,13 @@ class TestPayment:
         page.click(page.success_btn_fault, "Нажать кнопку Неудача на странице тестовой оплаты")
         time.sleep(5)
 
+        page.wait_element(page.error_card_payment_string)
         error = page.get_element_text(page.error_card_payment, 'Получить текст ошибки оплаты на странице оформления заказа')
         error_text = "ОПЛАТА НЕ ПРОШЛА: Свяжитесь с вашим банком или воспользуйтесь другой картой"
         page.assert_check_expressions(error,error_text,'Не отображается ошибка некорректной оплаты')
+
+
+
 
     @allure.title("Оплата подарочной картой, доставка курьером+ добавить новый адрес")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/452")
@@ -218,6 +222,9 @@ class TestPayment:
 
     @allure.title("Оплата подарочной картой(НЕ ВАЛИДНАЯ КАРТА), доставка курьером")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/453")
+
+
+
 
     @allure.title("Оплата при получении, доставка курьером")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/454")
@@ -248,7 +255,6 @@ class TestPayment:
         title_thank_you_page = page.get_element_text(page.title_thank_you_page_text, 'Получить текст сообщения об успешной покупке')
         page.assert_check_expressions(title_thank_you_page, "СПАСИБО!", 'Ошибка! Оплата не выполнена.')
 
-
     @allure.title("Оплата банковской картой(недостаточно средств), самовывоз")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/456")
     def test_pay_card_self_not_money(self):
@@ -277,6 +283,9 @@ class TestPayment:
 
         page.wait_element_not_visible(page.success_btn_string)
         page.wait_element(page.error_card_not_not_valid_card)
+
+
+
 
     @allure.title("Оплата подарочной картой(не существующая карта), самовывоз")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/458")
@@ -321,7 +330,7 @@ class TestPayment:
         page.wait_element(page.error_card_not_money_string)
 
     @allure.title("Оплата банковской картой(не существующая карта), ПВЗ")
-    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/462")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/463&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=90")
     def test_pay_card_not_valid_pick_point(self):
         page = PaymentPage()
         page.preview_payment()
@@ -333,6 +342,8 @@ class TestPayment:
 
         page.wait_element_not_visible(page.success_btn_string)
         page.wait_element(page.error_card_not_not_valid_card)
+
+
 
     @allure.title("Оплата подарочной картой, ПВЗ")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/464")
@@ -349,7 +360,7 @@ class TestPayment:
         print('zaglishka')
 
 
-#title_cart = self.get_element_text(self.title_cart_text, 'Заголовок в корзине')
+
 
 
 

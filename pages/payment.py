@@ -33,6 +33,8 @@ class PaymentPage(BasePage):
     dropdown_quantity_product_select_5_on_payment = s("(//span[@class='DropdownList__title'])[5]")
     dropdown_quantity_product_select_1_on_payment = s("(//span[@class='DropdownList__title'])[1]")
     error_card_payment = s('// div[contains(text(), "ОПЛАТА НЕ ПРОШЛА: Свяжитесь с вашим банком или воспользуйтесь другой картой")]')
+    error_card_payment_string = '// div[contains(text(), "ОПЛАТА НЕ ПРОШЛА: Свяжитесь с вашим банком или воспользуйтесь другой картой")]'
+
     #error_card_not_money = s('//div[contains(text(),"ОПЛАТА НЕ ПРОШЛА: Недостаточно средств на карте"]')
     error_card_not_money_string = '//div[@class="CustomerCartSummary__error"]'
     error_card_not_not_valid_card = '//div[contains (text(), "Неправильный номер карты")]'
@@ -189,25 +191,22 @@ class PaymentPage(BasePage):
     def sum_order_with_discount_6000(self):
         self.wait_element(self.discount_string)
         self.wait_element(self.icon_discount_percent_block_cart_text_string)
-        price_finally_block_cart = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_finally_block_cart_text, 'Получение итоговой суммы заказа из блока Корзина'))))
-        price_without_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text, 'Получение суммы заказа без промокода'))))
+        price_result_block_cart = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_finally_block_cart_text, 'Получение итоговой суммы заказа из блока Корзина'))))
+        total_price = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text, 'Получение суммы заказа без промокода'))))
         price_discount = round((int(re.sub('[^0-9]', "", self.get_element_text(self.price_discount_text, 'Сумма скидки по промокоду, с округлением в большую сторону')))),-1)
-        price_finally = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_finally_text, 'Получение итоговой суммы заказа'))))
+        price_result = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_finally_text, 'Получение итоговой суммы заказа'))))
         icon_discount_percent_block_cart = (int(re.sub('[^0-9]', "", self.get_element_text(self.icon_discount_percent_block_cart_text, 'Получение процента скидки'))))
-        price_discount_icon = round(price_without_discount * (icon_discount_percent_block_cart / 100), -1)
+        price_discount_icon = round(total_price * (icon_discount_percent_block_cart / 100), -1)
+
 
         #return price_finally_block_cart, price_without_discount, price_discount, price_finally, icon_discount_percent_block_cart, price_discount_icon
 
-        assert price_without_discount == price_finally + price_discount, print('Ошибка проверки: цена с промо  + сумма скидки = итого')
 
-        assert price_without_discount == price_finally_block_cart + price_discount, print('Ошибка проверки: цена с промо в блоке корзина + сумма скидки = итого')
+        self.assert_check_expressions((price_result + price_discount),total_price, print('Ошибка проверки: цена с промо  + сумма скидки = итого'))
+        self.assert_check_expressions((price_result_block_cart + price_discount), total_price, print('Ошибка проверки: цена с промо в блоке корзина + сумма скидки = итого'))
+        self.assert_check_expressions((total_price - price_discount_icon), price_result_block_cart, print('Ошибка проверки: цена с промо в блоке корзина =  итого х %промо'))
 
-        assert price_finally_block_cart == price_without_discount - price_discount_icon, print('Ошибка проверки: цена с промо в блоке корзина =  итого х %промо')
 
-        print(price_without_discount)
-        print(price_finally_block_cart)
-        print(price_discount)
-        print(price_discount_icon)
 
     @allure.step("Изменение количества товара на 1 единицу на экране оформления заказа")
     def change_value_products_in_payment_1_unit(self):
@@ -245,6 +244,8 @@ class PaymentPage(BasePage):
 
         for i in range(len(list_promo)):
 
+
+
             self.set_text(self.promo_code_field, list_promo[i], "Установка промокода в поле")
 
             time.sleep(2)
@@ -281,7 +282,7 @@ class PaymentPage(BasePage):
 
         page = CatalogPage()
         page.click(page.basket_btn, "Переход в корзину")
-
+        time.sleep(1)
         page = CartPage()
         page.cart_delete()
 
@@ -289,7 +290,7 @@ class PaymentPage(BasePage):
         page.open_url(os.getenv('base_url'))
 
         page = CatalogPage()
-        page.basket_changes_products()
+        page.basket_changes_products_1399()
         page.click(page.basket_btn, "Переход в корзину")
 
         page = CartPage()

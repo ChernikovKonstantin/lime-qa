@@ -28,15 +28,15 @@ class BasePage:
     def click(self, element, text):
         element.click()
 
-    @allure.step("Получение аттрибута")
+    @allure.step("Получение атрибута")
     def get_attribute(self, element, attribute):
         return element.get_attribute(attribute)
 
-    @allure.step("Получение аттрибута")
+    @allure.step("Получение атрибута")
     def get_url(self):
         return browser.driver.current_url
 
-    @allure.step("Получение аттрибута")
+    @allure.step("Получение атрибута")
     def move_to(self, element):
         driver = browser.driver
         action = ActionChains(driver)
