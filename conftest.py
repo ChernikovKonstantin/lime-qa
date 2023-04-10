@@ -5,7 +5,9 @@ import allure
 import pytest
 from selene import config
 from selene.api import browser
+
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 from data import base_dir
 from pages.base import BasePage
@@ -22,11 +24,12 @@ def setup_browser():
     options.add_argument("--lang=en-US")
     prefs = {"download.default_directory": f"{base_dir}/downloads"}
     options.add_experimental_option("prefs", prefs)
-    driver = webdriver.Chrome(executable_path="C:/Python/chromedriver.exe", options=options)
+    driver = webdriver.Chrome(executable_path="C:/Python310/chromedriver.exe", options=options)
     browser.set_driver(driver)
     driver.maximize_window()
     config.timeout = 10
     BasePage().open_url(os.getenv("base_url"))
+    #browser.find_element(By.XPATH, '//span[@class="btn btn-block btn-outline height40px"]').click() клик кнопки локали при зхапуске
     return driver
 
 
@@ -56,3 +59,6 @@ def pytest_exception_interact():
             allure.attach(json.dumps(console_log), name="Логи консоли", attachment_type=allure.attachment_type.JSON)
         except:
             pass
+
+# @pytest.mark()
+# def mark():

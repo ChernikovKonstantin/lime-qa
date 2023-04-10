@@ -16,6 +16,8 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Успешная авторизация")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/441")
+
     def test_login_success():
         page = HomePage()
         page.click_account_btn()
