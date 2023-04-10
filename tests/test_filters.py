@@ -72,39 +72,6 @@ class TestFilters:
         page.cycle_check_loafers()
 
 
-        #page.cycle_check_color()
-
-
-        # request_type_filter = page.type_filters()
-        #
-        # for i in range(len(request_type_filter)):
-        #     type_filter = list(request_type_filter.keys())[i][:-1]
-        #
-        #
-        #     for i in range(len(request_type_filter['colors'])):
-        #         filter_color_id = str(request_type_filter['colors'][i]['id'])
-        #         filter_color_name = str(request_type_filter['colors'][i]['name'])
-        #
-        #         url_color = os.getenv('base_url') + 'api/section/apply/loafers' + '?' + type_filter + '=' + filter_color_id
-        #         request_color = requests.get(url_color).json()
-        #
-        #         status_checkbox = page.get_attribute(page.checkbox_block_color_attrib, 'value')
-        #         if status_checkbox == "true":
-        #             page.click(page.elements_block_color[i-1], ' сброс состояния чекбокса')
-        #         page.click(page.elements_block_color[i], " чекбокс выбора цвета")
-        #
-        #         for i in range(len(request_color['items'][0]['cells'])):
-        #
-        #             filter_color_name_product = page.get_element_text(page.cards_product_color_string_filter[i], ' название товара').capitalize()
-        #
-        #             filter_color_json = request_color['items'][0]['cells'][i]['entity']['models'][0]['color']['name']
-        #             filter_color_name_product_json = request_color['items'][0]['cells'][i]['entity']['name']
-        #
-        #             time.sleep(2)
-        #             page = BasePage()
-        #             page.assert_check_coincidence(filter_color_name, filter_color_json, ' цвет товара в фильтре не соответсвует цвету товара в запросе api' )
-        #             page.assert_check_expressions(filter_color_name_product_json, filter_color_name_product, ' имя товара не соответствует цвету')
-        #             page = FilterPage()
 
 
 
