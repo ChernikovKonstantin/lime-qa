@@ -58,6 +58,10 @@ class BasePage:
     def assert_check_coincidence(self, expression1, expression2, allureText):
         assert expression1 in expression2, print(allureText)
 
+    @allure.step("Проверка числового значения в пределах {value_from} в {value_to}")
+    def assert_check_range(self, value_from, value_to, value_check,  allureText):
+        assert value_check>=value_from and value_check <= value_to, print(allureText)
+
 
 
 

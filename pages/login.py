@@ -15,7 +15,7 @@ class LoginPage(BasePage):
     enter_btn = s('button[type="submit"]')
     logout_btn = s('//button[contains(.,"Выйти")]')
     error_message = s(".snack-bar")
-    account_btn = s("div#AppNavbar a[href='/#lk']")
+    account_btn = s("div#AppNavbar a[href='/ru_ru#lk']")
     authorization_btn = s("//button[contains(text(),'Войти')]")
     close_btn = s("//button[@class = 'IButton IButtonClose ViewModal__closer']")
     product_price_text = s("//div[@class='product__price']")

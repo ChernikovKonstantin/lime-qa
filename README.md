@@ -25,3 +25,9 @@
 `cd tests/allure-results`
 
 `allure serve .`
+
+Запуск тестов по маркерам:
+аннотация `@pytest.mark.order(#)`
+терминальный запуск `pytest -m order` 
+
+
