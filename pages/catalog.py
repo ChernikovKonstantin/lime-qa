@@ -13,19 +13,17 @@ class CatalogPage(BasePage):
     # Locators
     #hamburger_menu = s("//div[@class='icon']")
     hamburger_menu = s("// *[ @ id = 'AppNavbar'] / div[1] / div[1] / div")
-
     hamburger_menu_string = "//div[@class='icon']"
     menu_link_clothes = s("//span[span= 'Одежда']")
     menu_chapter = s("//a[span ='БРЮКИ']")
     menu_subsection = s("//a[@class = 'mainmenu-children__link' and span ='ЛЕГИНСЫ']")
     choose_a_product = s("//a[@class='CatalogProduct__image-link']//img")
     choose_a_product_str = "//a[@class='CatalogProduct__image-link']//img"
-
     add_to_cart = s("//button[@class ='btn btn-cart']")
     basket_btn = s("//a[@href ='/cart' and @class='btn-control']")
     colors_selector = ss("//div[@class='ColorSelector__imageBox']")
     drop_down_size = s("//div[@class='SizeSelector__header']")
-    sizes_list = ss("//span[@class='SizeSelector__title']")
+    sizes_list = ss("//div[contains(@class,'SizeSelector__option') and not(contains(@class, 'disabled'))]//span[@class='SizeSelector__title']")
     title_text = s("//h1[@class='product__title']")
     product_price_text = s("//div[@class='product__price']")
     product_article_text = s("//div[@class='product__article']")
@@ -45,9 +43,7 @@ class CatalogPage(BasePage):
     menu_subsection_shoes_01_all_models = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
     menu_subsection_shoes_lofers = s("//a[@class= 'mainmenu-children__link' and span = 'ЛОФЕРЫ']")
     menu_subsection_shoes_botil = s("//a[@class= 'mainmenu-children__link' and span = 'БОТИЛЬОНЫ']")
-
     menu_section_shoes = s("//span[@class= 'mainmenu__link has-children delimiter' and span = 'ОБУВЬ']")
-
     choose_a_product_shoes = s("(//a[@href = '/product/12598_9626_094-bezevyi'])[2]")
     menu_link_lingerie = s("//span[span= 'НИЖНЕЕ БЕЛЬЕ']")
     menu_subsection_all_models = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
@@ -59,6 +55,8 @@ class CatalogPage(BasePage):
     menu_subsection_belts = s("//a[@class= 'mainmenu-children__link' and span = 'РЕМНИ']")
     choose_a_product_belts = s("(//a[@href= '/product/12843_9898_293-cernyi'])[2]")
     choose_a_product_1399 = s('(//div[@class="CatalogProduct__title"])[4]/a')
+    price_blocks = ss("//div[@class='CardProduct__side']//div[contains(@class,'product__price')]")
+    price_sale = s('//div[@class="product__price sale"]')
 
 
 
@@ -76,10 +74,14 @@ class CatalogPage(BasePage):
         time.sleep(1)
 
         title = self.get_element_text(self.title_text, 'Заголовок')
-        price = self.get_element_text(self.product_price_text, 'Цена')
+        # price = self.get_element_text(self.product_price_text, 'Цена')
         article = self.get_element_text(self.product_article_text, 'Артикул')
         color = self.get_element_text(self.product_color_text, 'Цвет')
         size = self.get_element_text(self.product_size_text, 'Размер')
+        if len(self.price_blocks) > 1:
+            price = self.get_element_text(self.price_sale, 'Цена')
+        else:
+            price = self.get_element_text(self.product_price_text, 'Цена')
 
         return title, price, article, color, size
 

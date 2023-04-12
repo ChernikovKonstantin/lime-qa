@@ -12,7 +12,7 @@ from pages.login import LoginPage
 
 class CartPage(BasePage):
     title_cart_text = s("//div[@class='CartTable__name']")
-    product_price_cart_text = s("//div[@class='CartTable__cost']")
+    product_price_cart_text = ss("//div[contains(@class,'CartTable__cost')]//span[not(contains(@class, 'old'))and not(contains(@class, 'percent'))]")
     product_article_cart_text = s("(//div[@class='CartTable__color']/p)[2]")
     product_color_cart_text = s("(//div[@class='CartTable__color']/p)[1]")
     product_size_cart_text = s("//div[@class='SizeSelector__selected']")
@@ -43,7 +43,7 @@ class CartPage(BasePage):
     @allure.step("Получение данных корзины: заголовок, цена, артикул, цвет, размер ")
     def get_cart_data(self):
         title_cart = self.get_element_text(self.title_cart_text, 'Заголовок в корзине')
-        price_cart = self.get_element_text(self.product_price_cart_text, 'Цена в корзине').lower()
+        price_cart = self.get_element_text(self.product_price_cart_text[0], 'Цена в корзине').lower()
         article_cart = self.get_element_text(self.product_article_cart_text, 'Артикул в корзине')
         color_cart = self.get_element_text(self.product_color_cart_text, 'Цвет в корзине').lower()
         size_cart = self.get_element_text(self.product_size_cart_text, 'Размер в корзине')

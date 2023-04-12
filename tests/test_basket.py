@@ -30,7 +30,7 @@ class TestBasket:
         assert article_cart in article, print('Артикул товара в карточке и корзине отличаются')
         assert color_cart in color, print('Цвет товара в карточке и корзине отличаются')
         assert size == size_cart, print('Размер товара в карточке и корзине отличаются')
-        time.sleep(1)
+
 
     @staticmethod
     @allure.title("Добавление в корзину несколько товаров")
