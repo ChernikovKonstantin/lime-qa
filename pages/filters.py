@@ -101,101 +101,108 @@ class FilterPage(BasePage):
         response_type_filter = requests.get(base_url).json()
         type_filter = list(response_type_filter.keys())
 
-        #
-        # for i in range(len(response_type_filter['colors'])):
-        #     filter_color_id = str(response_type_filter['colors'][i]['id'])
-        #     filter_color_name = str(response_type_filter['colors'][i]['name'])
-        #
-        #     url_color = os.getenv('base_url') + 'api/section/apply/' + product + '?' + type_filter[0][:-1] + '=' + filter_color_id
-        #     #url_color = os.getenv('base_url')[:8] + os.getenv('base_url')[21:] + 'api/section/apply/' + product + '?' + type_filter[0][:-1] + '=' + filter_color_id
-        #     request_color = requests.get(url_color).json()
-        #
-        #     checkbox_text = self.get_element_text(self.elements_block_color[i], " чекбокс выбора цвета").lower()
-        #
-        #     check_product_in_filters = len(request_color['items'])
-        #     if check_product_in_filters == 0:
-        #         continue
-        #
-        #     self.click(self.elements_block_color[i], " чекбокс выбора цвета")
-        #     time.sleep(3)
-        #
-        #
-        #
-        #     for i in range(len(request_color['items'][0]['cells'])):
-        #
-        #         filter_color_name_product = self.get_element_text(self.cards_product_color_string_filter[i], ' название товара').capitalize()
-        #
-        #         filter_color_json = request_color['items'][0]['cells'][i]['entity']['models'][0]['color']['name']
-        #         time.sleep(2)
-        #         filter_color_name_product_json = request_color['items'][0]['cells'][i]['entity']['name']
-        #         time.sleep(2)
-        #
-        #         page = BasePage()
-        #         page.assert_check_coincidence(checkbox_text, filter_color_json, ' цвет товара в фильтре не соответсвует цвету товара в запросе api')
-        #         page.assert_check_expressions(filter_color_name_product_json, filter_color_name_product, ' имя товара по фильтру не соответсвует имени товара из json' + filter_color_name_product_json + filter_color_name_product)
-        #
-        #
-        #     status_checkbox1 = self.get_attribute(self.checkboxes_block_color_attrib[i-1], 'value')
-        #     if status_checkbox1 == "true":
-        #         self.click(self.checkboxes_block_color_click[i - 1], ' сброс состояния чекбокса')
-        #
-        #     time.sleep(2)
-        #
-        #
-        # for i in range(len(response_type_filter['prices'])):
-        #     filter_price_name = str(response_type_filter['prices'][i]['name'])
-        #     filter_price_from = str(response_type_filter['prices'][i]['from'])
-        #     filter_price_to = str(response_type_filter['prices'][i]['to'])
-        #
-        #     url = os.getenv('base_url') + 'api/section/apply/' + product + '?' + type_filter[1][:-1] + '[]' + '=' + filter_price_from + ',' + filter_price_to
-        #     request_price = requests.get(url).json()
-        #
-        #     checkbox_text = self.get_element_text(self.checkboxes_block_price_click[i], " чекбокс выбора цвета").lower()
-        #     checkbox_price_from = checkbox_text.partition("-")[0]
-        #     if checkbox_price_from == "ДО":
-        #         checkbox_price_from = "0"
-        #     checkbox_price_to= checkbox_text.partition("-")[2]
-        #
-        #     self.click(self.checkboxes_block_price_click[i], " чекбокс выбора фильтра цены")
-        #
-        #     check_product_in_filters = len(request_price['items'])
-        #
-              # if check_product_in_filters == 0:
-              #       continue
-        #
-        #     time.sleep(2)
-        #
-        #
-        #
-        #     for i in range(len(request_price['items'][0]['cells'])):
-        #         filter_price_name_product = self.get_element_text(self.cards_product_color_string_filter[i], ' название товара').capitalize()
-        #
-        #         filter_price_json = request_price['items'][0]['cells'][i]['entity']['models'][0]['skus'][0]['price']
-        #         time.sleep(2)
-        #         filter_price_name_product_json = request_price['items'][0]['cells'][i]['entity']['name']
-        #         time.sleep(2)
-        #
-        #         page = BasePage()
-        #
-        #         page.assert_check_range(int(checkbox_price_from), int(checkbox_price_to), filter_price_json, ' цвет товара в фильтре не соответсвует цвету товара в запросе api')
-        #         page.assert_check_expressions(filter_price_name_product_json, filter_price_name_product, ' имя товара по фильтру не соответсвует имени товара из json')
-        #
-        #
-        #
-        #
-        #     status_checkbox_price = self.get_attribute(self.checkboxes_block_price_attrb[i], 'value')
-        #     if status_checkbox_price  == "true":
-        #         self.click(self.checkboxes_block_price_click[i], ' сброс состояния чекбокса')
-        #
-        #     status_checkbox_price1 = self.get_attribute(self.checkboxes_block_price_attrb[i - 1], 'value')
-        #     if status_checkbox_price1  == "true":
-        #         self.click(self.checkboxes_block_price_click[i-1], ' сброс состояния чекбокса')
-        #     status_checkbox_price2 = self.get_attribute(self.checkboxes_block_price_attrb[i - 2], 'value')
-        #     if status_checkbox_price2  == "true":
-        #         self.click(self.checkboxes_block_price_click[i-2], ' сброс состояния чекбокса')
-        #     status_checkbox_price3 = self.get_attribute(self.checkboxes_block_price_attrb[i - 3], 'value')
-        #     if status_checkbox_price3  == "true":
-        #         self.click(self.checkboxes_block_price_click[i-3], ' сброс состояния чекбокса')
+
+        for i in range(len(response_type_filter['colors'])):
+            filter_color_id = str(response_type_filter['colors'][i]['id'])
+            filter_color_name = str(response_type_filter['colors'][i]['name'])
+
+            url_color = os.getenv('base_url') + 'api/section/apply/' + product + '?' + type_filter[0][:-1] + '=' + filter_color_id
+            #url_color = os.getenv('base_url')[:8] + os.getenv('base_url')[21:] + 'api/section/apply/' + product + '?' + type_filter[0][:-1] + '=' + filter_color_id
+            request_color = requests.get(url_color).json()
+
+            checkbox_text = self.get_element_text(self.elements_block_color[i], " чекбокс выбора цвета").lower()
+
+            check_product_in_filters = len(request_color['items'])
+            if check_product_in_filters == 0:
+                self.click(self.elements_block_color[i], " чекбокс выбора цвета")
+                continue
+
+            self.click(self.elements_block_color[i], " чекбокс выбора цвета")
+            time.sleep(3)
+
+
+
+            for j in range(len(request_color['items'][0]['cells'])):
+
+                filter_color_name_product = self.get_element_text(self.cards_product_color_string_filter[j], ' название товара').capitalize()
+
+                filter_color_json = request_color['items'][0]['cells'][j]['entity']['models'][0]['color']['name']
+                time.sleep(2)
+                filter_color_name_product_json = request_color['items'][0]['cells'][j]['entity']['name']
+                time.sleep(2)
+
+                page = BasePage()
+                page.assert_check_coincidence(checkbox_text, filter_color_json, ' цвет товара в фильтре не соответсвует цвету товара в запросе api')
+                page.assert_check_expressions(filter_color_name_product_json, filter_color_name_product, ' имя товара по фильтру не соответсвует имени товара из json' + filter_color_name_product_json + filter_color_name_product)
+
+
+            status_checkbox1 = self.get_attribute(self.checkboxes_block_color_attrib[i-1], 'value')
+            if status_checkbox1 == "true":
+                self.click(self.checkboxes_block_color_click[i - 1], ' сброс состояния чекбокса')
+
+            time.sleep(2)
+
+
+        for i in range(len(response_type_filter['prices'])):
+            filter_price_name = str(response_type_filter['prices'][i]['name'])
+            filter_price_from = str(response_type_filter['prices'][i]['from'])
+            filter_price_to = str(response_type_filter['prices'][i]['to'])
+
+            url = os.getenv('base_url') + 'api/section/apply/' + product + '?' + type_filter[1][:-1] + '[]' + '=' + filter_price_from + ',' + filter_price_to
+            request_price = requests.get(url).json()
+
+            checkbox_text = self.get_element_text(self.checkboxes_block_price_click[i], " чекбокс выбора цвета").lower()
+
+
+            if checkbox_text.partition(" ")[0] == "до":
+                checkbox_price_from = "0"
+                checkbox_price_to = checkbox_text.partition(" ")[2]
+            else:
+                checkbox_price_from = checkbox_text.partition("-")[0]
+                checkbox_price_to = checkbox_text.partition("-")[2]
+
+
+            self.click(self.checkboxes_block_price_click[i], " чекбокс выбора фильтра цены")
+
+            check_product_in_filters = len(request_price['items'])
+
+            if check_product_in_filters == 0:
+                self.click(self.checkboxes_block_price_click[i], " чекбокс выбора фильтра цены")
+                continue
+
+            time.sleep(2)
+
+
+
+            for j in range(len(request_price['items'][0]['cells'])):
+                filter_price_name_product = self.get_element_text(self.cards_product_color_string_filter[j], ' название товара').capitalize()
+
+                filter_price_json = request_price['items'][0]['cells'][j]['entity']['models'][0]['skus'][0]['price']
+                time.sleep(2)
+                filter_price_name_product_json = request_price['items'][0]['cells'][j]['entity']['name']
+                time.sleep(2)
+
+                page = BasePage()
+
+                page.assert_check_range(int(checkbox_price_from), int(checkbox_price_to), filter_price_json, ' цвет товара в фильтре не соответсвует цвету товара в запросе api')
+                page.assert_check_expressions(filter_price_name_product_json, filter_price_name_product, ' имя товара по фильтру не соответсвует имени товара из json')
+
+
+
+
+            status_checkbox_price = self.get_attribute(self.checkboxes_block_price_attrb[i], 'value')
+            if status_checkbox_price  == "true":
+                self.click(self.checkboxes_block_price_click[i], ' сброс состояния чекбокса')
+
+            status_checkbox_price1 = self.get_attribute(self.checkboxes_block_price_attrb[i - 1], 'value')
+            if status_checkbox_price1  == "true":
+                self.click(self.checkboxes_block_price_click[i-1], ' сброс состояния чекбокса')
+            status_checkbox_price2 = self.get_attribute(self.checkboxes_block_price_attrb[i - 2], 'value')
+            if status_checkbox_price2  == "true":
+                self.click(self.checkboxes_block_price_click[i-2], ' сброс состояния чекбокса')
+            status_checkbox_price3 = self.get_attribute(self.checkboxes_block_price_attrb[i - 3], 'value')
+            if status_checkbox_price3  == "true":
+                self.click(self.checkboxes_block_price_click[i-3], ' сброс состояния чекбокса')
 
         for i in range(len(response_type_filter['sizes'])):
             filter_size_id = str(response_type_filter['sizes'][i]['id'])
