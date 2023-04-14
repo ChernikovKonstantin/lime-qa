@@ -144,14 +144,9 @@ class CatalogPage(BasePage):
         self.click(self.menu_link_shoes, "Блок ТУФЛИ")
         self.click(self.menu_subsection_shoes, "Ссылка БОТИЛЬОНЫ")
         self.click(self.choose_a_product, "Товар ботильоны")
-        price_shoes = self.get_element_text(self.product_price_text, 'цена туфли')
         self.click(self.add_to_cart, "добавить в корзину")
-        self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_shoes, "Блок ТУФЛИ")
-        self.click(self.menu_subsection_shoes, "Ссылка БОТИЛЬОНЫ")
-        self.click(self.choose_a_product, "Товар ботильоны")
         price_shoes = self.get_element_text(self.product_price_text, 'цена туфли')
-        self.click(self.add_to_cart, "добавить в корзину")
+
 
         return price_shoes, price_bags
 

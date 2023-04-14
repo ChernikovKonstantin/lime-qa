@@ -20,7 +20,9 @@ class TestLogin():
 
     def test_login_success():
         page = HomePage()
+
         time.sleep(2)
+
         page.click_account_btn()
 
         page = AccountPage()

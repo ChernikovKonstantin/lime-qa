@@ -12,8 +12,9 @@ from pages.base import BasePage
 
 class HomePage(BasePage):
     # Locators
-    #account_btn = s("//a[@class='btn-control'  and @href='/ru_ru/#lk']/div/child::*")
-    account_btn = s("(//div[@class='SearchBox btn-control SearchBox_closed']//following-sibling::a)[1]")
+
+    account_btn = s("//a[@href = '/ru_ru#lk' and @class = 'btn-control']")
+
     registration_btn = s("//button[contains(text(),'Зарегистрироваться')]")
     email_field = s("//input[@type='email' and @placeholder='E-mail']")
     phone_number_field = s("//input[@class= 'vti__input']")
