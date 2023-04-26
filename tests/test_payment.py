@@ -70,7 +70,6 @@ class TestPayment:
         page.cart_delete()
         page.open_url(os.getenv('base_url'))
 
-
         page = CatalogPage()
         page.basket_multiple_products()
         page.basket_btn.click()
