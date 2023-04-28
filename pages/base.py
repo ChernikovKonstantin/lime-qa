@@ -3,6 +3,7 @@ from selene import query, be
 from selene.api import browser
 from selene.support.shared import browser
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 
 class BasePage:
@@ -65,6 +66,16 @@ class BasePage:
     @allure.step("Проверка числового значения в пределах {value_from} в {value_to}")
     def assert_check_range(self, value_from, value_to, value_check,  allureText):
         assert value_check>=value_from and value_check <= value_to, print(allureText)
+
+    @allure.step("Нажать Enter")
+    def push_enter(self, element, fieldName):
+        element.send_keys(Keys.ENTER)
+
+    @allure.step("Назад в браузере")
+    def browser_back(self):
+        browser.driver.back()
+
+
 
 
 

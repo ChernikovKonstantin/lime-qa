@@ -27,5 +27,14 @@ class TestSmoke:
     def test_main_screen(self):
         page = SmokePage()
         #page.cycle_banners()
-        page.video()
+        #page.video()
+        #page.main_menu()
+        # page.catalog_menu_link()
+        # page.catalog_menu_parents_link_clothes()
+        # page.catalog_menu_parents_link_lingerie()
+        # page.catalog_menu_parents_link_accessories()
+        # page.catalog_menu_parents_link_shoes()
+        # page.catalog_menu_parents_link_special_offer()
+        page.catalog_menu_parents_link_campaigns()
+
 
