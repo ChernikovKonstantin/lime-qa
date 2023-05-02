@@ -67,7 +67,7 @@ class CartPage(BasePage):
 
         return price_bags_cart, price_shoes_cart, quantity_products_cart, total_cost_products_cart, final_cost_products_cart, delivery_cart
 
-    @allure.step("Изменеие количества  товаров и проверка измененной общей стоимости")
+    @allure.step("Изменение количества  товаров и проверка измененной общей стоимости")
     def basket_changes_products_in_cart(self):
         self.click(self.choose_quantity_in_cart, "Количество в корзине")
         self.click_random_quantity()

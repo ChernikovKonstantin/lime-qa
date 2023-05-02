@@ -54,6 +54,7 @@ class HomePage(BasePage):
     message_error_password_text2 = s("(//*[@class='FormGroup__helper'])[5]/div[2]")
 
     message_error_repeat_password_text = s("(//*[@class='FormGroup__helper'])[6]/div[1]")
+    message_error_repeat_password_text_smoke = s("(//*[@class='FormGroup__helper'])[3]/div[1]")
     message_error_repeat_password_text_var_string = "//div[contains(text(),'недопустимый пароль')]"
     message_error_repeat_password_text_var = s(message_error_repeat_password_text_var_string)
 
@@ -84,6 +85,15 @@ class HomePage(BasePage):
         time.sleep(10)
         self.registration_btn.click()
 
+    @allure.step("Заполнение полей регистрации Smoke")
+    def fill_registration_fields_smoke(self):
+        self.set_text(self.email_field, 'qwer', " почта")
+        self.set_text(self.phone_number_field, "+7", " номер телефона")
+        self.set_text(self.new_password_field, "123456789", " НОВЫЙ ПАРОЛЬ")
+        self.set_text(self.repeat_the_password_field, "12345678", " ПОДТВЕРДИТЕ ПАРОЛЬ")
+        time.sleep(10)
+        self.registration_btn.click()
+
     @allure.step("Заполнение всех полей регистрации со снятием чек-бокса рассылки")
     def fill_registration_fields_none_mailing(self):
         self.set_text(self.email_field, 'test' + str(randint(0, 9999)) + '@test.ru', " почта")
@@ -111,6 +121,14 @@ class HomePage(BasePage):
         return message_error_email, message_error_email2, message_error_phone, message_error_phone2, message_error_name, \
             message_error_surname, message_error_password, message_error_password2, message_error_repeat_password, \
             message_error_repeat_password2
+
+    @allure.step("Ошибки полей формы регистрации Smoke")
+    def get_text_error_smoke(self):
+        message_error_email = self.get_element_text(self.message_error_email_text, "")
+        message_error_phone = self.get_element_text(self.message_error_phone_text, "")
+        message_error_repeat_password_smoke = self.get_element_text(self.message_error_repeat_password_text_smoke, "")
+
+        return message_error_email, message_error_phone, message_error_repeat_password_smoke
 
     @allure.step("Валидация поля Email")
     def registration_field_email(self):

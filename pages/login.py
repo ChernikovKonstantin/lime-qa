@@ -13,6 +13,7 @@ class LoginPage(BasePage):
     email_input = s('input[placeholder="Введите e-mail"]')
     password_input = s('input[type="password"]')
     enter_btn = s('button[type="submit"]')
+    #enter_btn = s('//div[@class ="FormGroup__control"]')
     logout_btn = s('//button[contains(.,"Выйти")]')
     error_message = s(".snack-bar")
     account_btn = s("div#AppNavbar a[href='/ru_ru#lk']")
@@ -31,7 +32,9 @@ class LoginPage(BasePage):
         with allure.step(f"Войти как '{email}' '{password}'"):
             self.email_input.set_value(email)
             self.password_input.set_value(password)
+            #self.enter_btn.click()
             self.enter_btn.should(be.enabled).click()
+
 
     @allure.step("Проверить что кнопка Выйти отображается")
     def check_logout_btn_is_visible(self):
