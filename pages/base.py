@@ -33,11 +33,11 @@ class BasePage:
     def get_attribute(self, element, attribute):
         return element.get_attribute(attribute)
 
-    @allure.step("Получение атрибута")
+    @allure.step("Получение текущего url")
     def get_url(self):
         return browser.driver.current_url
 
-    @allure.step("Получение атрибута")
+    @allure.step("Перемещение к элементу")
     def move_to(self, element):
         driver = browser.driver
         action = ActionChains(driver)
@@ -59,7 +59,7 @@ class BasePage:
     def assert_check_not_expressions(self, expression1, expression2, allureText):
         assert expression1 != expression2, print(allureText)
 
-    @allure.step("Проверка совпадения текста {expression1} в {expression2}")
+    @allure.step("Проверка наличия текста {expression1} в {expression2}")
     def assert_check_coincidence(self, expression1, expression2, allureText):
         assert expression1 in expression2, print(allureText)
 

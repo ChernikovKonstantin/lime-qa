@@ -163,7 +163,7 @@ class CatalogPage(BasePage):
 
         return price_belts
 
-    @allure.step("Добавление товара в корзину 1399 рублей")
+    @allure.step("Добавление товара в корзину 1999 рублей")
     def basket_changes_products_1399(self):
         time.sleep(5)
         #self.wait_element(self.hamburger_menu_string)
