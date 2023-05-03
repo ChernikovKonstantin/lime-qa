@@ -35,7 +35,12 @@ class SmokePage(BasePage):
     button_search = s("//button[@class='SearchBox__button']")
     input_search = s("//input[@type = 'text']")
     input_search_active = s("//input[@type = 'text' and @class='SearchBox__input active']")
+    input_search_active_full =s("//input[@type = 'text' and @class='SearchBox__input fill active']")
     input_search_active_string = "//input[@type = 'text' and @class='SearchBox__input active']"
+    product_in_result_search = s("//div[@class = 'CatalogProduct__title']")
+    product_in_result_search_string = "//div[@class = 'CatalogProduct__title']"
+    products_in_result_search = ss("//div[@class = 'CatalogProduct__title']/a")
+    product_article = s("//div[@class='product__article']")
 
     button_favourites = s("(//div[@class='SvgIcon'])[2]")
     string_message_favourites_01 = s("//div[@class='headline-4']")
@@ -142,12 +147,34 @@ class SmokePage(BasePage):
             self.wait_element(self.logo_string)
 
     @allure.step('Переходы по разделам главного меню')
-    def main_menu(self):
+    def main_menu_search(self):
         self.click(self.button_search, " поиск")
-        self.wait_element(self.input_search_active_string)
+        self.wait_element_assure(self.input_search_active)
         self.set_text(self.input_search_active, '6498-375', " инпут поиска")
+        self.push_enter(self.input_search_active_full, " инпут поиска")
+        self.wait_element_assure(self.product_in_result_search)
 
-        #не работает поиск, доделать проверку после правки
+        for i in range(len(self.products_in_result_search)):
+            self.click(self.products_in_result_search[i], " продукт в результатах поиска")
+            self.wait_element_assure(self.product_in_result_search)
+            article_text = self.get_element_text(self.product_article, " артикул товара")
+            article = article_text.partition(" ")[2]
+            self.assert_check_expressions(article, "6498-375", " значение артикула не соответствует")
+            self.browser_back()
+            self.wait_element_assure(self.product_in_result_search)
+
+        self.field_clear(self.input_search_active_full, " инпут поиска")
+        self.set_text(self.input_search_active_full, 'ожерелье', " инпут поиска")
+        self.push_enter(self.input_search_active_full, " инпут поиска")
+
+        self.wait_element_assure(self.product_in_result_search)
+        for y in range(len(self.products_in_result_search)):
+            product_text = self.get_element_text(self.products_in_result_search[y], " название товара Ожерелье").lower()
+            print(product_text)
+            self.assert_check_coincidence("ожерел", product_text, " некорреткный вывод результатов поиска")
+
+    @allure.step('Переходы по разделам главного меню')
+    def main_menu(self):
 
         self.click(self.button_favourites, " избранное")
         message_fav = self.get_element_text(self.string_message_favourites_01, " строка экрана избранное").replace("\n", " ")

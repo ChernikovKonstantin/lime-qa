@@ -36,7 +36,8 @@ class TestSmoke:
     @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=121")
     def test_main_screen_main_menu(self):
         page = SmokePage()
-        page.main_menu()
+        page.main_menu_search()
+        #page.main_menu()
 
 
     @allure.title("Главная страница меню каталога")
@@ -57,11 +58,11 @@ class TestSmoke:
     @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=122")
     def test_profile(self):
         page = SmokePage()
-        # page.user_login_not_valid()
-        # page.click(page.button_close_screen, " закрыть экран входа\регистрации")
-        # page.user_login()
-        # page.user_registration_not_valid()
-        #page.user_registration_and_first_lk()
+        page.user_login_not_valid()
+        page.click(page.button_close_screen, " закрыть экран входа\регистрации")
+        page.user_login()
+        page.user_registration_not_valid()
+        page.user_registration_and_first_lk()
         page.user_profile_with_order()
 
 
