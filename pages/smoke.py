@@ -14,7 +14,11 @@ from pages.home import HomePage
 from pages.login import LoginPage
 from selene.api import browser
 
+from pages.payment import PaymentPage
+
+
 class SmokePage(BasePage):
+
     # locators main page
     banners_main_image = ss("//div[@class = 'slide' and @style != 'cursor: pointer;']")
     video_main_image = s("//video")
@@ -26,7 +30,7 @@ class SmokePage(BasePage):
     all_bunners = ss("//div[@class='slide']")
     logo_string = "(//div[@class='logo'])[2]"
 
-    # locators button
+    # button main menu
 
     button_search = s("//button[@class='SearchBox__button']")
     input_search = s("//input[@type = 'text']")
@@ -76,6 +80,21 @@ class SmokePage(BasePage):
     link_contacts_string = "//a[@href = '/contacts' and contains(text(), 'Контакты')]"
     link_about_string = "//a[@href = '/about' and contains(text(), 'Компания')]"
     link_shops_string = "//a[@href = '/shops' and contains(text(), 'Магазины')]"
+
+    # locators registration screen
+
+    message_registration_screen_string = "//div[contains(text(), 'Личные данные')]"
+    button_change_password_string = "//button[contains(text(), 'Изменить пароль')]"
+    button_save_changes_string = "//button[contains(text(), 'Сохранить изменения')]"
+    message_mailing_string = "//span[contains(text(), 'Я хочу получать новостную рассылку')]"
+    button_delete_accaunt_string ="//a[contains(text(), 'Удалить аккаунт')]"
+    button_logout_account_string = "//button[contains(text(), 'Выйти')]"
+    orders_string = "//div[@class = 'PreviewOrders__item']"
+    message_orders_string = "//strong[contains(text(), 'Мои заказы')]"
+    message_number_order = s("//div[@class = 'OrderComplete__note']/div")
+    message_number_order_lk = s("//div[@class = 'PreviewOrders']/following-sibling::div")
+
+
 
 
     # ОСНОВНОЙ ЭКРАН
@@ -401,8 +420,8 @@ class SmokePage(BasePage):
         assert list_errors[1] == ('некорректный номер телефона'), print('Некорректный текст ошибки регистрации')
         assert list_errors[2] == ('введенные пароли не совпадают'), print('Некорректный текст ошибки регистрации')
 
-    @allure.step('Регистрация с валидными данными')
-    def user_registration(self):
+    @allure.step('Регистрация с валидными данными + Первый вход в профиль')
+    def user_registration_and_first_lk(self):
         page = HomePage()
 
         page.click_account_btn()
@@ -411,8 +430,66 @@ class SmokePage(BasePage):
         page = LoginPage()
         page.check_logout_btn_is_visible()
 
-    # @allure.step('Первый вход в профиль')
-    # def user_first_lk(self):
+        self.wait_element(self.message_registration_screen_string)
+        self.wait_element(self.button_change_password_string)
+        self.wait_element(self.button_save_changes_string)
+        self.wait_element(self.message_mailing_string)
+        self.wait_element(self.button_delete_accaunt_string)
+        self.wait_element(self.button_logout_account_string)
+
+    @allure.step('Мои данные (профиль с покупками)')
+    def user_profile_with_order(self):
+
+        page = PaymentPage()
+        page.preview_payment()
+        page.check_product_for_order()
+        page.to_pay_btn.click()
+        time.sleep(2)
+        page.success_btn.click()
+
+
+        #number_order = self.get_element_text(self.message_number_order, " стрка с номером заказа")
+        number_order = (re.sub('[^0-9]', "", self.get_element_text(self.message_number_order, ' сумма заказа после оформления')))
+
+
+        self.click(self.button_lk, " личный кабинет")
+
+        self.wait_element(self.message_registration_screen_string)
+        self.wait_element(self.button_change_password_string)
+        self.wait_element(self.button_save_changes_string)
+        self.wait_element(self.message_mailing_string)
+        self.wait_element(self.button_delete_accaunt_string)
+        self.wait_element(self.button_logout_account_string)
+        self.wait_element(self.message_orders_string)
+        time.sleep(5)
+        self.wait_element(self.orders_string)
+
+
+        number_ord = (re.sub('[^0-9]', "", self.get_element_text(self.message_number_order_lk, ' сумма заказа в личном кабинете')))
+        number_order_lk = number_ord[:-12]
+
+        self.assert_check_expressions(number_order, number_order_lk, " оформленный заказ отсутсвует в личном кабинете")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

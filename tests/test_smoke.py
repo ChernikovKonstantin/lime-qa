@@ -59,9 +59,11 @@ class TestSmoke:
         page = SmokePage()
         # page.user_login_not_valid()
         # page.click(page.button_close_screen, " закрыть экран входа\регистрации")
-        #page.user_login()
-        #page.user_registration_not_valid()
-        page.user_registration()
+        # page.user_login()
+        # page.user_registration_not_valid()
+        #page.user_registration_and_first_lk()
+        page.user_profile_with_order()
+
 
 
 

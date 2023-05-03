@@ -291,7 +291,10 @@ class PaymentPage(BasePage):
 
         page = CatalogPage()
         page.basket_changes_products_1399()
+        page.basket_multiple_products()
         page.click(page.basket_btn, "Переход в корзину")
+
+        self.check_product_for_order()
 
         page = CartPage()
         page.wait_element(page.making_an_order_btn_string)
