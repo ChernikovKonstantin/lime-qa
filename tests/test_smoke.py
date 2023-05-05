@@ -65,6 +65,19 @@ class TestSmoke:
         page.user_registration_and_first_lk()
         page.user_profile_with_order()
 
+    @allure.title("Экран поиска")
+    @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=123")
+    def test_search(self):
+        page = SmokePage()
+        page.search_successful_text()
+        page.search_successful_article()
+        page.search_not_result()
+
+    @allure.title("Оплата и оформление заказа")
+    @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=123")
+    def test_payment(self):
+        page = SmokePage()
+        page.test_product_registration_cart_promo_code()
 
 
 

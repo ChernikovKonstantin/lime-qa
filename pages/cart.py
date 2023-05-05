@@ -113,6 +113,9 @@ class CartPage(BasePage):
         self.click(self.dropdown_quantity_product_select_5, "Клик в дропдауне количества товара 5 единиц")
     @allure.title("Очистка корзины")
     def cart_delete(self):
+        time.sleep(3)
+        self.wait_element_assure(self.block_product)
+
 
         try:
             for i in range(len(self.block_product)):

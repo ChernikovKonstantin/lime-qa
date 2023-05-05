@@ -136,8 +136,10 @@ class TestPayment:
         page.basket_btn.click()
         time.sleep(1)
 
-        page = CartPage()
+        page = PaymentPage()
+        page.check_product_for_order()
 
+        page = CartPage()
         page.change_value_products_in_cart()
         time.sleep(2)
         page.wait_element(page.making_an_order_btn_string)
@@ -152,7 +154,7 @@ class TestPayment:
         page.sum_order_with_discount_6000()
 
         page.filling_fields_registration_product()
-        page.check_product_for_order()
+
         self.to_pay_btn.click()
         time.sleep(2)
         self.success_btn.click()

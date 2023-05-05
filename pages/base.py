@@ -80,7 +80,7 @@ class BasePage:
     def push_enter(self, element, fieldName):
         element.send_keys(Keys.ENTER)
 
-    @allure.step("Нажать Enter")
+    @allure.step("Нажать Backspace")
     def push_backspace(self, element, fieldName):
         element.send_keys(Keys.BACKSPACE)
 

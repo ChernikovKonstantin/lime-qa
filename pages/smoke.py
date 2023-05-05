@@ -41,6 +41,7 @@ class SmokePage(BasePage):
     product_in_result_search_string = "//div[@class = 'CatalogProduct__title']"
     products_in_result_search = ss("//div[@class = 'CatalogProduct__title']/a")
     product_article = s("//div[@class='product__article']")
+    message_search_not_result = s("//div[contains(text(), 'По вашему запросу ничего не найдено')]")
 
     button_favourites = s("(//div[@class='SvgIcon'])[2]")
     string_message_favourites_01 = s("//div[@class='headline-4']")
@@ -146,7 +147,7 @@ class SmokePage(BasePage):
             #self.move_to(self.all_bunners[i])
             self.wait_element(self.logo_string)
 
-    @allure.step('Переходы по разделам главного меню')
+    @allure.step('Поиск в главном меню')
     def main_menu_search(self):
         self.click(self.button_search, " поиск")
         self.wait_element_assure(self.input_search_active)
@@ -166,7 +167,7 @@ class SmokePage(BasePage):
         self.field_clear(self.input_search_active_full, " инпут поиска")
         self.set_text(self.input_search_active_full, 'ожерелье', " инпут поиска")
         self.push_enter(self.input_search_active_full, " инпут поиска")
-
+        time.sleep(3)
         self.wait_element_assure(self.product_in_result_search)
         for y in range(len(self.products_in_result_search)):
             product_text = self.get_element_text(self.products_in_result_search[y], " название товара Ожерелье").lower()
@@ -496,6 +497,59 @@ class SmokePage(BasePage):
         number_order_lk = number_ord[:-12]
 
         self.assert_check_expressions(number_order, number_order_lk, " оформленный заказ отсутсвует в личном кабинете")
+
+    @allure.step('Поиск по тексту')
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/881")
+    def search_successful_text(self):
+        self.click(self.button_search, " поиск")
+        self.wait_element_assure(self.input_search_active)
+        self.set_text(self.input_search_active, 'ожерелье', " инпут поиска")
+        self.push_enter(self.input_search_active_full, " инпут поиска")
+        time.sleep(3)
+        self.wait_element_assure(self.product_in_result_search)
+        for i in range(len(self.products_in_result_search)):
+            product_text = self.get_element_text(self.products_in_result_search[i], " название товара Ожерелье").lower()
+            print(product_text)
+            self.assert_check_coincidence("ожерел", product_text, " некорреткный вывод результатов поиска")
+
+    @allure.step('Поиск по артикулу')
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/882")
+    def search_successful_article(self):
+        #self.click(self.button_search, " поиск")
+        self.wait_element_assure(self.input_search_active_full)
+        self.set_text(self.input_search_active_full, '6498-375', " инпут поиска")
+        self.push_enter(self.input_search_active_full, " инпут поиска")
+        self.wait_element_assure(self.product_in_result_search)
+
+        for i in range(len(self.products_in_result_search)):
+            self.click(self.products_in_result_search[i], " продукт в результатах поиска")
+            self.wait_element_assure(self.product_in_result_search)
+            article_text = self.get_element_text(self.product_article, " артикул товара")
+            article = article_text.partition(" ")[2]
+            self.assert_check_expressions(article, "6498-375", " значение артикула не соответствует")
+            self.browser_back()
+            self.wait_element_assure(self.product_in_result_search)
+
+    @allure.step('Поиск без результата')
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/883")
+    def search_not_result(self):
+        #self.click(self.button_search, " поиск")
+        self.wait_element_assure(self.input_search_active_full)
+        self.set_text(self.input_search_active_full, 'фуфайка', " инпут поиска")
+        self.push_enter(self.input_search_active_full, " инпут поиска")
+        self.wait_element_assure(self.message_search_not_result)
+
+    @allure.step('Оплата. Карта + валидный промокод')
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/903")
+    def test_product_registration_cart_promo_code(self):
+
+        page = PaymentPage()
+        page.preview_payment()
+        #page.enter_valid_promo()
+        page.cycle_type_promo_code()
+        title_thank_you_page = page.pay_order()
+
+        assert title_thank_you_page == "СПАСИБО!", print("Ошибка сообщения. Текст ошибки: " + title_thank_you_page)
 
 
 

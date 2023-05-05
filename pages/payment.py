@@ -249,6 +249,7 @@ class PaymentPage(BasePage):
             self.set_text(self.promo_code_field, list_promo[i], "Установка промокода в поле")
 
             time.sleep(2)
+            self.wait_element_assure(self.icon_discount_percent_block_cart_text)
 
             percent_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.icon_discount_percent_block_cart_text, 'Извлечение процента из элемента процент скидки'))))
 
@@ -258,40 +259,42 @@ class PaymentPage(BasePage):
 
             if percent_discount == 5:
 
-                self.assert_check_expressions(price_discount, (round((price_without_discount * 0.05), -1)),'Проверка скидки 5%')
+                self.assert_check_expressions(price_discount, (round((price_without_discount * 0.05), -1)),' не пройдена Проверка скидки 5%')
                 #assert price_discount == round((price_without_discount * 0.05), -1)
 
             elif percent_discount == 10:
-                self.assert_check_expressions(price_discount, (round((price_without_discount * 0.1), -1)),'Проверка скидки 10%')
+                self.assert_check_expressions(price_discount, (round((price_without_discount * 0.1), -1)),' не пройдена Проверка скидки 10%')
                 #assert price_discount == round((price_without_discount * 0.1), -1)
 
             elif percent_discount == 25:
-                self.assert_check_expressions(price_discount, (round((price_without_discount * 0.25), -1)),'Проверка скидки 25%')
+                self.assert_check_expressions(price_discount, (round((price_without_discount * 0.25), -1)),' не пройденаПроверка скидки 25%')
                 #assert price_discount == round((price_without_discount * 0.25), -1)
 
             else:
                 print('расчет скидки с промокодом  не верен')
 
-    @allure.step('Авторизация с очисткой корзины, заполнение корзины, заполнение полей оформления заказа')
+    @allure.step('Авторизация с очисткой корзины, заполнение корзины 1 товаром, заполнение полей оформления заказа')
     def preview_payment(self):
 
         page = LoginPage()
         page.authorization()
+        page.wait_element_assure(page.close_btn)
         page.click(page.close_btn, "Закрыть профиль")
-        time.sleep(2)
+
 
         page = CatalogPage()
+        page.wait_element_assure(page.basket_btn)
         page.click(page.basket_btn, "Переход в корзину")
-        time.sleep(1)
+
         page = CartPage()
         page.cart_delete()
 
-        time.sleep(1)
+
         page.open_url(os.getenv('base_url'))
 
         page = CatalogPage()
         page.basket_changes_products_1399()
-        page.basket_multiple_products()
+        #page.basket_multiple_products()
         page.click(page.basket_btn, "Переход в корзину")
 
         self.check_product_for_order()
@@ -316,6 +319,27 @@ class PaymentPage(BasePage):
                 time.sleep(2)
         except:
             pass
+
+    @allure.step("Заполнение поля валидным промокодом")
+    def enter_valid_promo(self):
+        self.set_text(self.promo_code_field, "XHGFAH", "Промо код")
+
+    @allure.step("Оплата при заполненных полях")
+    def pay_order(self):
+
+        self.wait_element_assure(self.to_pay_btn)
+        self.click(self.to_pay_btn, "кнопка оплаты")
+
+        self.wait_element_assure(self.success_btn)
+        self.click(self.success_btn, " кнопка опалты Удачно")
+
+        self.wait_element_assure(self.title_thank_you_page_text)
+
+        title_thank_you_page = self.get_element_text(self.title_thank_you_page_text, " получение текста элемента")
+
+        return title_thank_you_page
+
+
 
 
 
