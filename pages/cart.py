@@ -116,13 +116,12 @@ class CartPage(BasePage):
         time.sleep(3)
         self.wait_element_assure(self.block_product)
 
-
         try:
             for i in range(len(self.block_product)):
-                self.button_del.click()
                 time.sleep(1)
-            #self.button_closed_cart().click()
+                self.click(self.button_del, " удалить товары в корзине")
 
+            #self.button_closed_cart().click()
 
         except:
             pass

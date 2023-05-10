@@ -60,6 +60,8 @@ class CatalogPage(BasePage):
     menu_subsection_belts = s("//a[@class= 'mainmenu-children__link' and span = 'РЕМНИ']")
     choose_a_product_belts = s("(//a[@href= '/product/12843_9898_293-cernyi'])[2]")
     choose_a_product_1399 = s('//div[@class="CatalogProduct__title"]/a')
+    choose_a_product_loafers = s('//a[contains (text(), "Лоферы из кожи шевро")]')
+    menu_subsection_shoes_all = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
 
 
 
@@ -172,6 +174,23 @@ class CatalogPage(BasePage):
         self.click(self.menu_subsection_body, "Подраздел Все модели")
         self.click(self.choose_a_product_1399, "Товар с ценой 1999")
         time.sleep(2)
+        self.click(self.add_to_cart, "добавить в корзину")
+        time.sleep(1)
+
+    @allure.step("Добавление нескольких товаров в корзину")
+    def basket_add_many_products(self):
+
+
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_lingerie, "Блок Нижнее белье")
+        self.click(self.menu_subsection_body, "Подраздел Все модели")
+        self.click(self.choose_a_product_1399, "Товар с ценой 1999")
+        self.click(self.add_to_cart, "добавить в корзину")
+        time.sleep(1)
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_shoes, "Блок ТУФЛИ")
+        self.click(self.menu_subsection_shoes_all, "Ссылка ВСЕ МОДЕЛИ")
+        self.click(self.choose_a_product_loafers, "Товар лоферы")
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
 

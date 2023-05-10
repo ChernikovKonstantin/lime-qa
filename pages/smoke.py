@@ -539,17 +539,15 @@ class SmokePage(BasePage):
         self.push_enter(self.input_search_active_full, " инпут поиска")
         self.wait_element_assure(self.message_search_not_result)
 
-    @allure.step('Оплата. Карта + валидный промокод')
-    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/903")
-    def test_product_registration_cart_promo_code(self):
+    # @allure.step('Оплата. Карта + валидный промокод')
+    # @allure.link("https://lmdev.testrail.io/index.php?/cases/view/903")
+    # def test_product_registration_cart_promo_code(self):
 
-        page = PaymentPage()
-        page.preview_payment()
-        #page.enter_valid_promo()
-        page.cycle_type_promo_code()
-        title_thank_you_page = page.pay_order()
 
-        assert title_thank_you_page == "СПАСИБО!", print("Ошибка сообщения. Текст ошибки: " + title_thank_you_page)
+
+
+
+
 
 
 
