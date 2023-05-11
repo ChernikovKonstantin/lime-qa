@@ -168,11 +168,137 @@ class TestSmoke:
         page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
         page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
-        page.wait_element_assure(self.to_pay_btn)
-        page.click(self.to_pay_btn, "кнопка оплаты")
+        page.wait_element_assure(page.to_pay_btn)
+        page.click(page.to_pay_btn, "кнопка оплаты")
 
-        #нужно разобраться - можно ли перекидывать на сторонний сервис?
+        #нужно разобраться - можно ли перекидывать на сторонний сервис? по факту перекидывает, но после нажатияь успешно перекидывает в корзину
         page.wait_element(page.error_card_not_money_string)
+
+    @allure.title("Оплата банковской картой(не существующая карта), самовывоз")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/915")
+    def test_card_self_no_valid_card(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.set_text(page.card_number_field, "4012 8888 8888 1882",
+                      " тестовый номер карты  с ошибкой Недостаточно средств")
+        page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
+        page.wait_element(page.error_card_not_not_valid_card)
+        page.wait_element_assure(page.to_pay_btn)
+        page.click(page.to_pay_btn, "кнопка оплаты")
+
+        page.wait_element_not_visible(page.success_btn_string)
+        page.wait_element(page.error_card_not_not_valid_card)
+
+    @allure.title("Оплата банковской картой, ПВЗ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/920")
+    def test_pay_card_pick_point(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+        page.pay_order()
+
+    @allure.title("Оплата банковской картой(недостаточно средств), ПВЗ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/921")
+    def test_pay_card_no_many_pick_point(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.set_text(page.card_number_field, "4012 8888 8888 1881",
+                      " тестовый номер карты  с ошибкой Недостаточно средств")
+        page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+        page.wait_element_assure(page.to_pay_btn)
+        page.click(page.to_pay_btn, "кнопка оплаты")
+
+        # нужно разобраться - можно ли перекидывать на сторонний сервис? по факту перекидывает, но после нажатияь успешно перекидывает в корзину
+        page.wait_element(page.error_card_not_money_string)
+
+    @allure.title("Оплата банковской картой(не существующая карта), ПВЗ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/922")
+    def test_pay_card_not_valid_pick_point(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.set_text(page.card_number_field, "4012 8888 8888 1882",
+                      " тестовый номер карты  с ошибкой Недостаточно средств")
+        page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+        page.wait_element(page.error_card_not_not_valid_card)
+        page.wait_element_assure(page.to_pay_btn)
+        page.click(page.to_pay_btn, "кнопка оплаты")
+
+        page.wait_element_not_visible(page.success_btn_string)
+        page.wait_element(page.error_card_not_not_valid_card)
+
+    @allure.title("Проверка добавление товара в избранное из каталога (Неавторизованный пользователь)")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/885&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=125")
+    def test_add_fav_anonim(self):
+
+        page = CatalogPage()
+        page.select_section_menu_shoes_all()
+        time.sleep(1)
+        page = SmokePage()
+        page.add_favourites_catalog()
+        value_fav = page.check_element_fav_menu()
+
+        page = BasePage()
+        page.assert_check_expressions("1", value_fav, " не верное количество товаров в иконке избранное")
+
+
+    @allure.title("Проверка удаления товара из Избранного (Авторизованный пользователь)")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/886")
+    def test_add_del_fav_user(self):
+
+        page = SmokePage()
+        page.user_login()
+        page.click(page.button_close_screen_login, " закрыть экран профиля")
+
+        page = CatalogPage()
+        page.favoutites_clear()
+        page.select_section_menu_shoes_all()
+        page = SmokePage()
+        page.add_favourites_catalog()
+
+        page = CatalogPage()
+        page.select_section_menu_lingerie_all()
+        page = SmokePage()
+        page.add_favourites_catalog()
+        time.sleep(1)
+
+        value_fav = page.check_element_fav_menu()
+        page = BasePage()
+        page.assert_check_expressions("2", value_fav, " не верное количество товаров в иконке избранное")
+
+        page = SmokePage()
+        page.del_favourites_cart_product()
+        value_fav = page.check_element_fav_menu()
+        page.check_del_product_fav_screen()
+        page = BasePage()
+        page.assert_check_expressions("1", value_fav, " не верное количество товаров в иконке избранное")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

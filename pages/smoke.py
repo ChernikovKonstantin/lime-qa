@@ -15,6 +15,7 @@ from pages.login import LoginPage
 from selene.api import browser
 
 from pages.payment import PaymentPage
+from selene.support.shared import browser
 
 
 class SmokePage(BasePage):
@@ -99,6 +100,28 @@ class SmokePage(BasePage):
     message_orders_string = "//strong[contains(text(), 'Мои заказы')]"
     message_number_order = s("//div[@class = 'OrderComplete__note']/div")
     message_number_order_lk = s("//div[@class = 'PreviewOrders']/following-sibling::div")
+
+    # favourities
+
+    icon_favourities_full = s("//a[@disabled='disabled']")
+    #icon_favourities_01 =s("//a[contains(text(), 'Избранное')]/span[contains(text(), '1')]")
+    #icon_favourities_01 = s("//a[contains(text(), 'Избранное')]")
+    #icon_favourities_01 = s("//a[contains(text(), 'Лоферы из кожи шевро')]")
+    icon_favourities_01 = s("(//span[@class='badge'])[1]")
+    #icon_favourities_01 = s("//a[@href='/ru_ru/catalog/all_shoes#favorites']")
+    icon_favourities_01_string = "//a[contains(text(), 'Избранное')]/span[contains(text(), '1')]"
+    icon_fav_catalog = s("//button[@class='IButton CatalogProduct__bookmark isHover']")
+
+    product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]")
+    title_product_in_cart = s("//h1[@class='product__title']")
+
+
+
+
+
+
+
+
 
 
 
@@ -539,9 +562,69 @@ class SmokePage(BasePage):
         self.push_enter(self.input_search_active_full, " инпут поиска")
         self.wait_element_assure(self.message_search_not_result)
 
-    # @allure.step('Оплата. Карта + валидный промокод')
-    # @allure.link("https://lmdev.testrail.io/index.php?/cases/view/903")
-    # def test_product_registration_cart_promo_code(self):
+
+
+    @allure.step('Добавление в избранное из каталога')
+    def add_favourites_catalog(self):
+
+        page = CatalogPage()
+        time.sleep(3)
+        self.wait_element_assure(self.product_in_result_search)
+        page.move_to(browser.driver.find_element_by_xpath("//a[@class='CatalogProduct__image-link']//img"))
+        self.click(self.icon_fav_catalog, " элемент избранного в каталоге")
+
+    @allure.step('Проверка элемента избранное в меню')
+    def check_element_fav_menu(self):
+        time.sleep(1)
+        self.wait_element_assure(self.icon_favourities_01)
+        value_fav = self.get_element_text(self.icon_favourities_01, " получить значение элемента избранное")
+        return value_fav
+
+    @allure.step('Удаление из избранного в карточке')
+    def del_favourites_cart_product(self):
+        page = CatalogPage()
+        page.click(page.favorites_btn, " избранное")
+        page.click(page.product_in_favourites_screen)
+        page.wait_element_assure(page.add_favorite_btn)
+        page.click(page.add_favorite_btn, " удалить товар из избранного")
+
+    @allure.step('Проверка отсутсвия товара после удаления на экране Избранное (из карточки товара)')
+    def check_del_product_fav_screen(self):
+
+        title_del_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
+        page = CatalogPage()
+        page.click(page.favorites_btn, " избранное")
+        page.click(page.product_in_favourites_screen)
+        title_not_del_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
+        self.assert_check_not_expressions(title_del_fav, title_not_del_fav, " товар не удален из избранного")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # @allure.step('Добавление в избранное из карточки несколько товаров')
+    # def add_favourites_cart_product(self):
+    #
+    # @allure.step('Удаление из избранного через каталог')
+    # def del_favourites_catalog(self):
+    #
+    # @allure.step('Удаление из избранного в карточке')
+    # def del_favourites_cart_product(self):
+
+
+
+
+
+
 
 
 

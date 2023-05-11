@@ -63,6 +63,11 @@ class CatalogPage(BasePage):
     choose_a_product_loafers = s('//a[contains (text(), "Лоферы из кожи шевро")]')
     menu_subsection_shoes_all = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
 
+    icon_favourities_full = s("//a[@disabled='disabled']")
+    product_in_favourites_screen = s("//img[@class = 'PreviewGoods__img']")
+    products_in_favourites_screen = ss("//img[@class = 'PreviewGoods__img']")
+    button_close_fav = s("//div[@class='SvgIcon IButtonIcon']")
+
 
 
     @allure.step("Добавление в корзину")
@@ -118,6 +123,9 @@ class CatalogPage(BasePage):
 
         assert url_first_card == url_last_card, print('Урл отличается')
 
+
+
+
     @allure.step("Добавление в избранное из каталога")
     def add_to_favorites_in_catalog(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
@@ -133,6 +141,9 @@ class CatalogPage(BasePage):
         url_last_card = self.get_attribute(self.last_card, "href").partition('product/')[2]
 
         assert url_first_card == url_last_card, print('Урл отличается')
+
+
+
 
     @allure.step("Добавление в корзину несколько товаров")
     def basket_multiple_products(self):
@@ -194,10 +205,43 @@ class CatalogPage(BasePage):
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
 
-    def select_section_menu(self):
+    @allure.step("Переход в каталог Обувь Все модели")
+    def select_section_menu_shoes_all(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_shoes, "Секция Обувь")
         self.click(self.menu_subsection_shoes_01_all_models, "Раздел Все модели")
+
+    @allure.step("Переход в каталог Нижнее белье  Все модели")
+    def select_section_menu_lingerie_all(self):
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_lingerie, "Блок Нижнее белье")
+        self.click(self.menu_subsection_body, "Подраздел Все модели")
+
+    @allure.title("Очистка избранного")
+    def favoutites_clear(self):
+
+       #self.wait_element_assure(self.block_product)
+        self.click(self.favorites_btn, " избранное")
+        time.sleep(3)
+
+        try:
+            for i in range(len(self.products_in_favourites_screen)):
+                time.sleep(1)
+                self.click(self.product_in_favourites_screen, " превью товара на экране избранного")
+                self.wait_element_assure(self.add_favorite_btn)
+                self.click(self.add_favorite_btn, " удалить товар из избранного")
+                time.sleep(1)
+                self.click(self.favorites_btn, " избранное")
+
+
+            self.click(self.button_close_fav, " закрыть экран избранного")
+
+        except:
+            pass
+
+
+
+
 
 
 

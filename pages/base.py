@@ -20,6 +20,8 @@ class BasePage:
         with allure.step(f"Открыть страницу {url}"):
             browser.open_url(url)
 
+
+
     @allure.step("Взять текст из элемента '{allureText}'")
     def get_element_text(self, element, allureText):
         return element.get(query.text)
