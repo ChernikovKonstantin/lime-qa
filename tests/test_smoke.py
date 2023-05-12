@@ -15,6 +15,7 @@ from pages.home import HomePage
 from pages.login import LoginPage
 from pages.payment import PaymentPage
 from pages.smoke import SmokePage
+from selene.support.shared import browser
 
 
 @allure.feature("Смоук тест")
@@ -37,7 +38,7 @@ class TestSmoke:
     def test_main_screen_main_menu(self):
         page = SmokePage()
         page.main_menu_search()
-        #page.main_menu()
+        page.main_menu()
 
 
     @allure.title("Главная страница меню каталога")
@@ -52,7 +53,94 @@ class TestSmoke:
         page.catalog_menu_parents_link_special_offer()
         page.catalog_menu_parents_link_campaigns()
 
-    # ПРОФИЛЬ
+    @allure.title("Главная страница бургер меню")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/1599")
+    def test_burger_menu(self):
+        page = SmokePage()
+        page.click(page.hamburger_menu, " гамбургер меню")
+        page.wait_element_assure(page.dark_screen)
+        page.wait_element_assure(page.block_catalog)
+        page.wait_element_assure(page.cart)
+        page.wait_element_assure(page.help)
+        page.wait_element_assure(page.cart_bonus)
+        page.wait_element_assure(page.account_or_name_user)
+        page.click(page.hamburger_menu_close, " закрыть гамбургер меню")
+
+        page.user_login()
+        page.click(page.button_close_screen, " закрыть экран входа\регистрации")
+
+        page = CartPage()
+        page.cart_delete()
+        page = CatalogPage()
+        page.favoutites_clear()
+        page.click(page.hamburger_menu, " гамбургер меню")
+
+        page = SmokePage()
+        page.wait_element_assure(page.block_catalog)
+        page.wait_element_assure(page.cart)
+        page.wait_element_assure(page.help)
+        page.wait_element_assure(page.cart_bonus)
+        page.wait_element_assure(page.account_or_name_user)
+        name_menu = page.get_element_text(page.account_or_name_user, " получить имя пользователя").upper()
+        page.click(page.hamburger_menu_close, " закрыть гамбургер меню")
+
+        page = HomePage()
+        page.click(page.account_btn, " элемент аккаунта в меню")
+        name_acc = browser.driver.execute_script("return document.querySelector('input[placeholder=Имя]').value").upper()
+        surname_acc = browser.driver.execute_script("return document.querySelector('input[placeholder=Фамилия]').value").upper()
+        name_account = name_acc + " " + surname_acc
+
+        page.assert_check_expressions(name_menu, name_account, " имя пользователя не совпадает с именем пользователя в бургер меню")
+
+    @allure.title("Экран Каталог(Бургер-меню) / Раздел без подразделов")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/1599")
+    def test_burger_menu_check_products(self):
+        page = CatalogPage()
+        page.select_section_menu_bags()
+        page = SmokePage()
+        page.wait_element_hidden(page.block_catalog)
+        time.sleep(1)
+        url = page.get_url()
+        page.assert_check_coincidence("catalog/sumki", url, " переход в каталог не выполнен")
+        page.wait_element_assure(page.catalog_image)
+
+    @allure.title("Проверка выпадающего меню каталога Одежда. Раздел с вложенными подразделами")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/1600")
+    def test_burger_menu_check_products_sections(self):
+        page = SmokePage()
+        page.click(page.hamburger_menu, " гамбургер меню")
+        page.wait_element_assure(page.dark_screen)
+        page.click(page.category_parents_clothes, " категория ОДЕЖДА")
+        page.click_random_cat()
+        page.click(page.category_parents_clothes, " закрыть категория ОДЕЖДА")
+        page.click(page.hamburger_menu_close, " закрыть гамбургер меню")
+
+        page.user_login()
+        page.click(page.button_close_screen, " закрыть экран входа\регистрации")
+
+        page.click(page.hamburger_menu, " гамбургер меню")
+        page.wait_element_assure(page.dark_screen)
+        page.click(page.category_parents_clothes, " категория ОДЕЖДА")
+        page.click_random_cat()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # ПРОФИЛЬ
 
     @allure.title("Профиль пользователя")
     @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=122")
@@ -146,8 +234,6 @@ class TestSmoke:
         page.click(page.type_of_payment_receiving, 'Выбор типа оплаты При получении')
         page.wait_element_not_visible(page.string_data_card)
         page.pay_order_post_payment()
-
-
 
     @allure.title("Оплата банковской картой самовывоз")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/913")
@@ -249,7 +335,7 @@ class TestSmoke:
         page.assert_check_expressions("1", value_fav, " не верное количество товаров в иконке избранное")
 
 
-    @allure.title("Проверка удаления товара из Избранного (Авторизованный пользователь)")
+    @allure.title("Проверка добавления и удаления  товара из Избранного (Авторизованный пользователь)")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/886")
     def test_add_del_fav_user(self):
 
@@ -279,6 +365,65 @@ class TestSmoke:
         page.check_del_product_fav_screen()
         page = BasePage()
         page.assert_check_expressions("1", value_fav, " не верное количество товаров в иконке избранное")
+
+    @allure.title("Избранное / перейти в карточку товара")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/888")
+    def test_add_del_fav_user(self):
+        page = SmokePage()
+        page.user_login()
+        page.click(page.button_close_screen_login, " закрыть экран профиля")
+
+        page = CatalogPage()
+        page.favoutites_clear()
+        page.select_section_menu_shoes_all()
+        page = SmokePage()
+        page.add_favourites_cart()
+        page.check_add_fav()
+
+    @allure.title("Проверка добавления и удаления  товара из Избранного (Авторизованный пользователь)")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/887")
+    def test_add_del_fav_user(self):
+        page = SmokePage()
+        page.user_login()
+        page.click(page.button_close_screen_login, " закрыть экран профиля")
+
+        page = CatalogPage()
+        page.favoutites_clear()
+        page.select_section_menu_shoes_all()
+        page = SmokePage()
+        page.add_favourites_catalog()
+
+        value_fav = page.check_element_fav_menu()
+        page = BasePage()
+        page.assert_check_expressions("1", value_fav, " не верное количество товаров в иконке избранное")
+
+        page = CatalogPage()
+        page.select_section_menu_shoes_all()
+        page = SmokePage()
+        page.del_favourites_catalog()
+
+
+        page = SmokePage()
+        value_fav = page.check_element_fav_empty_menu()
+        page.assert_check_expressions("", value_fav, " избранное не пустое")
+
+        page = SmokePage()
+        page.check_full_screen_fav()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

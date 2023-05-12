@@ -65,6 +65,7 @@ class CatalogPage(BasePage):
 
     icon_favourities_full = s("//a[@disabled='disabled']")
     product_in_favourites_screen = s("//img[@class = 'PreviewGoods__img']")
+    product_in_favourites_screen_string = "//img[@class = 'PreviewGoods__img']"
     products_in_favourites_screen = ss("//img[@class = 'PreviewGoods__img']")
     button_close_fav = s("//div[@class='SvgIcon IButtonIcon']")
 
@@ -83,6 +84,7 @@ class CatalogPage(BasePage):
         self.click_random_size()
         time.sleep(1)
 
+
         title = self.get_element_text(self.title_text, 'Заголовок')
         price = self.get_element_text(self.product_price_text, 'Цена')
         article = self.get_element_text(self.product_article_text, 'Артикул')
@@ -100,6 +102,10 @@ class CatalogPage(BasePage):
         self.drop_down_size.click()
         time.sleep(2)
         random.choice(self.sizes_list).click()
+
+
+
+
 
     @allure.step("Добавление в избранное")
     def add_to_favorite(self):
@@ -216,6 +222,12 @@ class CatalogPage(BasePage):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_lingerie, "Блок Нижнее белье")
         self.click(self.menu_subsection_body, "Подраздел Все модели")
+
+    @allure.step("Переход в каталог Сумки")
+    def select_section_menu_bags(self):
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_bags, "Блок Сумки")
+
 
     @allure.title("Очистка избранного")
     def favoutites_clear(self):

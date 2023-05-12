@@ -16,6 +16,7 @@ from selene.api import browser
 
 from pages.payment import PaymentPage
 from selene.support.shared import browser
+import random
 
 
 class SmokePage(BasePage):
@@ -25,6 +26,7 @@ class SmokePage(BasePage):
     video_main_image = s("//video")
     block_icon_string = "//div[@class='App isHomepage page-index isAppNotify isEmptyCart']"
     first_catalog_image = s("(//picture/img)[1]")
+    catalog_image = s("//picture/img")
     first_catalog_video = s("(//video[@class='d-none d-md-block'])[1]")
     first_catalog_video_attribute = s("(//video[@class='d-none d-md-block'])[1]//child::*")
     #interesnaia_construkciya = s(//span[contains(@class,"mainmenu__link has-children")])
@@ -39,6 +41,7 @@ class SmokePage(BasePage):
     input_search_active_full =s("//input[@type = 'text' and @class='SearchBox__input fill active']")
     input_search_active_string = "//input[@type = 'text' and @class='SearchBox__input active']"
     product_in_result_search = s("//div[@class = 'CatalogProduct__title']")
+
     product_in_result_search_string = "//div[@class = 'CatalogProduct__title']"
     products_in_result_search = ss("//div[@class = 'CatalogProduct__title']/a")
     product_article = s("//div[@class='product__article']")
@@ -69,6 +72,7 @@ class SmokePage(BasePage):
     # locators burger and catalog
 
     hamburger_menu = s("(//div[@class='hamburger-menu burger'])[2]")
+    hamburger_menu_close = s("//div[@class = 'hamburger-menu burger open']")
     hamburger_menu_string = "(//div[@class='hamburger-menu burger'])[2]"
     categoryes_link = ss("//li[@class='mainmenu__item']/a")
     category_parents_clothes = s("(//li[@class='mainmenu__item']/span)[1]")
@@ -79,6 +83,15 @@ class SmokePage(BasePage):
     category_parents_campaigns = s("(//li[@class='mainmenu__item']/span)[6]")
     categoryes_sub = ss("//li[@class='mainmenu__item']/ul/li/a")
     categoryes_sub_sub = ss("//ul[@class='mainmenu-children mainmenu__children']/li/ul/li/a")
+
+    block_catalog = s("//nav[@class='mainmenu']")
+    cart = s("//span[@title = 'Ваша корзина пуста']")
+    favourites = s("//a[@href='/cart' and @class='usermenu__link']")
+    help = s("//a[@href='/help' and @class='usermenu__link']")
+    cart_bonus = s("//a[@href='/ru_ru#gift' and @class='usermenu__link']")
+    account_or_name_user = s("//a[@href='/ru_ru#lk' and @class='usermenu__link']")
+    dark_screen = s("//html[@style='overflow: hidden;']")
+
 
     #locators login screen
 
@@ -103,7 +116,7 @@ class SmokePage(BasePage):
 
     # favourities
 
-    icon_favourities_full = s("//a[@disabled='disabled']")
+    icon_favourities_empty = s("(//span[@class='badge'])[1]")
     #icon_favourities_01 =s("//a[contains(text(), 'Избранное')]/span[contains(text(), '1')]")
     #icon_favourities_01 = s("//a[contains(text(), 'Избранное')]")
     #icon_favourities_01 = s("//a[contains(text(), 'Лоферы из кожи шевро')]")
@@ -111,9 +124,12 @@ class SmokePage(BasePage):
     #icon_favourities_01 = s("//a[@href='/ru_ru/catalog/all_shoes#favorites']")
     icon_favourities_01_string = "//a[contains(text(), 'Избранное')]/span[contains(text(), '1')]"
     icon_fav_catalog = s("//button[@class='IButton CatalogProduct__bookmark isHover']")
+    icon_fav_catalog_active = s("//button[@class='IButton CatalogProduct__bookmark isActive']")
 
     product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]")
+    img_in_catalog = s("//img[@class='CatalogProduct__image lazyloaded']")
     title_product_in_cart = s("//h1[@class='product__title']")
+
 
 
 
@@ -573,6 +589,30 @@ class SmokePage(BasePage):
         page.move_to(browser.driver.find_element_by_xpath("//a[@class='CatalogProduct__image-link']//img"))
         self.click(self.icon_fav_catalog, " элемент избранного в каталоге")
 
+    @allure.step('Удаление из избранного через  каталог')
+    def del_favourites_catalog(self):
+
+        page = CatalogPage()
+        time.sleep(3)
+        self.wait_element_assure(self.product_in_result_search)
+        page.move_to(browser.driver.find_element_by_xpath("//a[@class='CatalogProduct__image-link']//img"))
+        time.sleep(1)
+        self.click(self.icon_fav_catalog_active, " элемент избранного в каталоге")
+
+    @allure.step('Добавление в избранное из карточки')
+    def add_favourites_cart(self):
+
+        page = CatalogPage()
+        time.sleep(3)
+        self.wait_element_assure(self.product_in_result_search)
+        #page.move_to(browser.driver.find_element_by_xpath("//div[@class='CatalogProduct__price']"))
+        self.click(self.img_in_catalog, " карточка товара")
+        page.wait_element_assure(page.add_favorite_btn)
+        page.click(page.add_favorite_btn, " добавить товар в избранное")
+
+
+
+
     @allure.step('Проверка элемента избранное в меню')
     def check_element_fav_menu(self):
         time.sleep(1)
@@ -580,13 +620,21 @@ class SmokePage(BasePage):
         value_fav = self.get_element_text(self.icon_favourities_01, " получить значение элемента избранное")
         return value_fav
 
+    @allure.step('Проверка пустого элемента избранное в меню')
+    def check_element_fav_empty_menu(self):
+        time.sleep(1)
+        #self.wait_element_assure(self.icon_favourities_empty)
+        value_fav = self.get_element_text(self.icon_favourities_empty, " получить значение элемента избранное")
+        return value_fav
+
     @allure.step('Удаление из избранного в карточке')
     def del_favourites_cart_product(self):
         page = CatalogPage()
         page.click(page.favorites_btn, " избранное")
-        page.click(page.product_in_favourites_screen)
+        page.click(page.product_in_favourites_screen, " карточку товара")
         page.wait_element_assure(page.add_favorite_btn)
         page.click(page.add_favorite_btn, " удалить товар из избранного")
+
 
     @allure.step('Проверка отсутсвия товара после удаления на экране Избранное (из карточки товара)')
     def check_del_product_fav_screen(self):
@@ -594,9 +642,29 @@ class SmokePage(BasePage):
         title_del_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
         page = CatalogPage()
         page.click(page.favorites_btn, " избранное")
-        page.click(page.product_in_favourites_screen)
+        page.click(page.product_in_favourites_screen, " карточку товара" )
         title_not_del_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
         self.assert_check_not_expressions(title_del_fav, title_not_del_fav, " товар не удален из избранного")
+
+    @allure.step('Проверка наличия товара на экране Избранное (из карточки товара)')
+    def check_add_fav(self):
+
+        title_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
+        page = CatalogPage()
+        page.click(page.favorites_btn, " избранное")
+        page.click(page.product_in_favourites_screen, " карточку товара")
+        title_fav_screen = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
+        self.assert_check_expressions(title_fav, title_fav_screen, " товар отсутсвует в избранном")
+
+    @allure.step('Проверка пустого экрана избранного')
+    def check_full_screen_fav(self):
+        page = CatalogPage()
+        page.click(page.favorites_btn, " избранное")
+        page.wait_element_not_visible(page.product_in_favourites_screen_string)
+
+    @allure.step("Рандомный подраздела каталога")
+    def click_random_cat(self):
+        random.choice(self.categoryes_sub).click()
 
 
 

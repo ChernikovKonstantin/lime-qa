@@ -1,7 +1,7 @@
 import allure
 from selene import query, be
 from selene.api import browser
-from selene.support.conditions.be import visible
+from selene.support.conditions.be import visible, hidden
 from selene.support.shared import browser
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
@@ -61,6 +61,10 @@ class BasePage:
         element.assure(visible, 15)
         # wait = WebDriverWait(browser.driver, 10)
         # wait.until(EC.visibility_of((By.XPATH, element)))
+
+    @allure.step("Проверка отсутствия элемента")
+    def wait_element_hidden(self, element):
+        element.assure(hidden, 15)
 
     @allure.step("Сравнение значений {expression1} и {expression2}")
     def assert_check_expressions(self, expression1, expression2, allureText):

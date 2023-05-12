@@ -19,7 +19,9 @@ class HomePage(BasePage):
     email_field = s("//input[@type='email' and @placeholder='E-mail']")
     phone_number_field = s("//input[@class= 'vti__input']")
     name_field = s("//input[@placeholder='Ваше имя']")
+    name_field_2 = s("//input[@placeholder='Имя']")
     surname_name_field = s("//input[@placeholder='Фамилия']")
+
     new_password_field = s("//input[@placeholder='Новый пароль']")
     repeat_the_password_field = s("//input[@placeholder='Повторите пароль']")
     checkbox_mailing = s("//*[@class='checkbox__indicator']")
