@@ -136,8 +136,10 @@ class TestPayment:
         page.basket_btn.click()
         time.sleep(1)
 
-        page = CartPage()
+        page = PaymentPage()
+        page.check_product_for_order()
 
+        page = CartPage()
         page.change_value_products_in_cart()
         time.sleep(2)
         page.wait_element(page.making_an_order_btn_string)
@@ -152,7 +154,7 @@ class TestPayment:
         page.sum_order_with_discount_6000()
 
         page.filling_fields_registration_product()
-        page.check_product_for_order()
+
         self.to_pay_btn.click()
         time.sleep(2)
         self.success_btn.click()
@@ -219,8 +221,6 @@ class TestPayment:
         page.assert_check_expressions(error,error_text,'Не отображается ошибка некорректной оплаты')
 
 
-
-
     @allure.title("Оплата подарочной картой, доставка курьером+ добавить новый адрес")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/452")
 
@@ -229,8 +229,6 @@ class TestPayment:
 
     @allure.title("Оплата подарочной картой(НЕ ВАЛИДНАЯ КАРТА), доставка курьером")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/453")
-
-
 
 
     @allure.title("Оплата при получении, доставка курьером")
@@ -296,8 +294,6 @@ class TestPayment:
         page.wait_element(page.error_card_not_not_valid_card)
 
 
-
-
     @allure.title("Оплата подарочной картой(не существующая карта), самовывоз")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/458")
 
@@ -356,8 +352,6 @@ class TestPayment:
 
         page.wait_element_not_visible(page.success_btn_string)
         page.wait_element(page.error_card_not_not_valid_card)
-
-
 
     @allure.title("Оплата подарочной картой, ПВЗ")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/464")

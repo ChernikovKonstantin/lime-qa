@@ -14,24 +14,38 @@ from pages.home import HomePage
 from pages.login import LoginPage
 from selene.api import browser
 
+from pages.payment import PaymentPage
+from selene.support.shared import browser
+import random
+
+
 class SmokePage(BasePage):
+
     # locators main page
     banners_main_image = ss("//div[@class = 'slide' and @style != 'cursor: pointer;']")
     video_main_image = s("//video")
     block_icon_string = "//div[@class='App isHomepage page-index isAppNotify isEmptyCart']"
     first_catalog_image = s("(//picture/img)[1]")
+    catalog_image = s("//picture/img")
     first_catalog_video = s("(//video[@class='d-none d-md-block'])[1]")
     first_catalog_video_attribute = s("(//video[@class='d-none d-md-block'])[1]//child::*")
     #interesnaia_construkciya = s(//span[contains(@class,"mainmenu__link has-children")])
     all_bunners = ss("//div[@class='slide']")
     logo_string = "(//div[@class='logo'])[2]"
 
-    # locators button
+    # button main menu
 
     button_search = s("//button[@class='SearchBox__button']")
     input_search = s("//input[@type = 'text']")
     input_search_active = s("//input[@type = 'text' and @class='SearchBox__input active']")
+    input_search_active_full =s("//input[@type = 'text' and @class='SearchBox__input fill active']")
     input_search_active_string = "//input[@type = 'text' and @class='SearchBox__input active']"
+    product_in_result_search = s("//div[@class = 'CatalogProduct__title']")
+
+    product_in_result_search_string = "//div[@class = 'CatalogProduct__title']"
+    products_in_result_search = ss("//div[@class = 'CatalogProduct__title']/a")
+    product_article = s("//div[@class='product__article']")
+    message_search_not_result = s("//div[contains(text(), 'По вашему запросу ничего не найдено')]")
 
     button_favourites = s("(//div[@class='SvgIcon'])[2]")
     string_message_favourites_01 = s("//div[@class='headline-4']")
@@ -58,6 +72,7 @@ class SmokePage(BasePage):
     # locators burger and catalog
 
     hamburger_menu = s("(//div[@class='hamburger-menu burger'])[2]")
+    hamburger_menu_close = s("//div[@class = 'hamburger-menu burger open']")
     hamburger_menu_string = "(//div[@class='hamburger-menu burger'])[2]"
     categoryes_link = ss("//li[@class='mainmenu__item']/a")
     category_parents_clothes = s("(//li[@class='mainmenu__item']/span)[1]")
@@ -69,6 +84,15 @@ class SmokePage(BasePage):
     categoryes_sub = ss("//li[@class='mainmenu__item']/ul/li/a")
     categoryes_sub_sub = ss("//ul[@class='mainmenu-children mainmenu__children']/li/ul/li/a")
 
+    block_catalog = s("//nav[@class='mainmenu']")
+    cart = s("//span[@title = 'Ваша корзина пуста']")
+    favourites = s("//a[@href='/cart' and @class='usermenu__link']")
+    help = s("//a[@href='/help' and @class='usermenu__link']")
+    cart_bonus = s("//a[@href='/ru_ru#gift' and @class='usermenu__link']")
+    account_or_name_user = s("//a[@href='/ru_ru#lk' and @class='usermenu__link']")
+    dark_screen = s("//html[@style='overflow: hidden;']")
+
+
     #locators login screen
 
     h1_srting = "//h1[contains(text(), 'Личный кабинет')]"
@@ -76,6 +100,46 @@ class SmokePage(BasePage):
     link_contacts_string = "//a[@href = '/contacts' and contains(text(), 'Контакты')]"
     link_about_string = "//a[@href = '/about' and contains(text(), 'Компания')]"
     link_shops_string = "//a[@href = '/shops' and contains(text(), 'Магазины')]"
+
+    # locators registration screen
+
+    message_registration_screen_string = "//div[contains(text(), 'Личные данные')]"
+    button_change_password_string = "//button[contains(text(), 'Изменить пароль')]"
+    button_save_changes_string = "//button[contains(text(), 'Сохранить изменения')]"
+    message_mailing_string = "//span[contains(text(), 'Я хочу получать новостную рассылку')]"
+    button_delete_accaunt_string ="//a[contains(text(), 'Удалить аккаунт')]"
+    button_logout_account_string = "//button[contains(text(), 'Выйти')]"
+    orders_string = "//div[@class = 'PreviewOrders__item']"
+    message_orders_string = "//strong[contains(text(), 'Мои заказы')]"
+    message_number_order = s("//div[@class = 'OrderComplete__note']/div")
+    message_number_order_lk = s("//div[@class = 'PreviewOrders']/following-sibling::div")
+
+    # favourities
+
+    icon_favourities_empty = s("(//span[@class='badge'])[1]")
+    #icon_favourities_01 =s("//a[contains(text(), 'Избранное')]/span[contains(text(), '1')]")
+    #icon_favourities_01 = s("//a[contains(text(), 'Избранное')]")
+    #icon_favourities_01 = s("//a[contains(text(), 'Лоферы из кожи шевро')]")
+    icon_favourities_01 = s("(//span[@class='badge'])[1]")
+    #icon_favourities_01 = s("//a[@href='/ru_ru/catalog/all_shoes#favorites']")
+    icon_favourities_01_string = "//a[contains(text(), 'Избранное')]/span[contains(text(), '1')]"
+    icon_fav_catalog = s("//button[@class='IButton CatalogProduct__bookmark isHover']")
+    icon_fav_catalog_active = s("//button[@class='IButton CatalogProduct__bookmark isActive']")
+
+    product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]")
+    img_in_catalog = s("//img[@class='CatalogProduct__image lazyloaded']")
+    title_product_in_cart = s("//h1[@class='product__title']")
+
+
+
+
+
+
+
+
+
+
+
 
 
     # ОСНОВНОЙ ЭКРАН
@@ -122,13 +186,35 @@ class SmokePage(BasePage):
             #self.move_to(self.all_bunners[i])
             self.wait_element(self.logo_string)
 
+    @allure.step('Поиск в главном меню')
+    def main_menu_search(self):
+        self.click(self.button_search, " поиск")
+        self.wait_element_assure(self.input_search_active)
+        self.set_text(self.input_search_active, '6498-375', " инпут поиска")
+        self.push_enter(self.input_search_active_full, " инпут поиска")
+        self.wait_element_assure(self.product_in_result_search)
+
+        for i in range(len(self.products_in_result_search)):
+            self.click(self.products_in_result_search[i], " продукт в результатах поиска")
+            self.wait_element_assure(self.product_in_result_search)
+            article_text = self.get_element_text(self.product_article, " артикул товара")
+            article = article_text.partition(" ")[2]
+            self.assert_check_expressions(article, "6498-375", " значение артикула не соответствует")
+            self.browser_back()
+            self.wait_element_assure(self.product_in_result_search)
+
+        self.field_clear(self.input_search_active_full, " инпут поиска")
+        self.set_text(self.input_search_active_full, 'ожерелье', " инпут поиска")
+        self.push_enter(self.input_search_active_full, " инпут поиска")
+        time.sleep(3)
+        self.wait_element_assure(self.product_in_result_search)
+        for y in range(len(self.products_in_result_search)):
+            product_text = self.get_element_text(self.products_in_result_search[y], " название товара Ожерелье").lower()
+            print(product_text)
+            self.assert_check_coincidence("ожерел", product_text, " некорреткный вывод результатов поиска")
+
     @allure.step('Переходы по разделам главного меню')
     def main_menu(self):
-        self.click(self.button_search, " поиск")
-        self.wait_element(self.input_search_active_string)
-        self.set_text(self.input_search_active, '6498-375', " инпут поиска")
-
-        #не работает поиск, доделать проверку после правки
 
         self.click(self.button_favourites, " избранное")
         message_fav = self.get_element_text(self.string_message_favourites_01, " строка экрана избранное").replace("\n", " ")
@@ -401,8 +487,8 @@ class SmokePage(BasePage):
         assert list_errors[1] == ('некорректный номер телефона'), print('Некорректный текст ошибки регистрации')
         assert list_errors[2] == ('введенные пароли не совпадают'), print('Некорректный текст ошибки регистрации')
 
-    @allure.step('Регистрация с валидными данными')
-    def user_registration(self):
+    @allure.step('Регистрация с валидными данными + Первый вход в профиль')
+    def user_registration_and_first_lk(self):
         page = HomePage()
 
         page.click_account_btn()
@@ -411,8 +497,229 @@ class SmokePage(BasePage):
         page = LoginPage()
         page.check_logout_btn_is_visible()
 
-    # @allure.step('Первый вход в профиль')
-    # def user_first_lk(self):
+        self.wait_element(self.message_registration_screen_string)
+        self.wait_element(self.button_change_password_string)
+        self.wait_element(self.button_save_changes_string)
+        self.wait_element(self.message_mailing_string)
+        self.wait_element(self.button_delete_accaunt_string)
+        self.wait_element(self.button_logout_account_string)
+
+    @allure.step('Мои данные (профиль с покупками)')
+    def user_profile_with_order(self):
+
+        page = PaymentPage()
+        page.preview_payment()
+        page.check_product_for_order()
+        page.to_pay_btn.click()
+        time.sleep(2)
+        page.success_btn.click()
+
+
+        #number_order = self.get_element_text(self.message_number_order, " стрка с номером заказа")
+        number_order = (re.sub('[^0-9]', "", self.get_element_text(self.message_number_order, ' сумма заказа после оформления')))
+
+
+        self.click(self.button_lk, " личный кабинет")
+
+        self.wait_element(self.message_registration_screen_string)
+        self.wait_element(self.button_change_password_string)
+        self.wait_element(self.button_save_changes_string)
+        self.wait_element(self.message_mailing_string)
+        self.wait_element(self.button_delete_accaunt_string)
+        self.wait_element(self.button_logout_account_string)
+        self.wait_element(self.message_orders_string)
+        time.sleep(5)
+        self.wait_element(self.orders_string)
+
+
+        number_ord = (re.sub('[^0-9]', "", self.get_element_text(self.message_number_order_lk, ' сумма заказа в личном кабинете')))
+        number_order_lk = number_ord[:-12]
+
+        self.assert_check_expressions(number_order, number_order_lk, " оформленный заказ отсутсвует в личном кабинете")
+
+    @allure.step('Поиск по тексту')
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/881")
+    def search_successful_text(self):
+        self.click(self.button_search, " поиск")
+        self.wait_element_assure(self.input_search_active)
+        self.set_text(self.input_search_active, 'ожерелье', " инпут поиска")
+        self.push_enter(self.input_search_active_full, " инпут поиска")
+        time.sleep(3)
+        self.wait_element_assure(self.product_in_result_search)
+        for i in range(len(self.products_in_result_search)):
+            product_text = self.get_element_text(self.products_in_result_search[i], " название товара Ожерелье").lower()
+            print(product_text)
+            self.assert_check_coincidence("ожерел", product_text, " некорреткный вывод результатов поиска")
+
+    @allure.step('Поиск по артикулу')
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/882")
+    def search_successful_article(self):
+        #self.click(self.button_search, " поиск")
+        self.wait_element_assure(self.input_search_active_full)
+        self.set_text(self.input_search_active_full, '6498-375', " инпут поиска")
+        self.push_enter(self.input_search_active_full, " инпут поиска")
+        self.wait_element_assure(self.product_in_result_search)
+
+        for i in range(len(self.products_in_result_search)):
+            self.click(self.products_in_result_search[i], " продукт в результатах поиска")
+            self.wait_element_assure(self.product_in_result_search)
+            article_text = self.get_element_text(self.product_article, " артикул товара")
+            article = article_text.partition(" ")[2]
+            self.assert_check_expressions(article, "6498-375", " значение артикула не соответствует")
+            self.browser_back()
+            self.wait_element_assure(self.product_in_result_search)
+
+    @allure.step('Поиск без результата')
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/883")
+    def search_not_result(self):
+        #self.click(self.button_search, " поиск")
+        self.wait_element_assure(self.input_search_active_full)
+        self.set_text(self.input_search_active_full, 'фуфайка', " инпут поиска")
+        self.push_enter(self.input_search_active_full, " инпут поиска")
+        self.wait_element_assure(self.message_search_not_result)
+
+
+
+    @allure.step('Добавление в избранное из каталога')
+    def add_favourites_catalog(self):
+
+        page = CatalogPage()
+        time.sleep(3)
+        self.wait_element_assure(self.product_in_result_search)
+        page.move_to(browser.driver.find_element_by_xpath("//a[@class='CatalogProduct__image-link']//img"))
+        self.click(self.icon_fav_catalog, " элемент избранного в каталоге")
+
+    @allure.step('Удаление из избранного через  каталог')
+    def del_favourites_catalog(self):
+
+        page = CatalogPage()
+        time.sleep(3)
+        self.wait_element_assure(self.product_in_result_search)
+        page.move_to(browser.driver.find_element_by_xpath("//a[@class='CatalogProduct__image-link']//img"))
+        time.sleep(1)
+        self.click(self.icon_fav_catalog_active, " элемент избранного в каталоге")
+
+    @allure.step('Добавление в избранное из карточки')
+    def add_favourites_cart(self):
+
+        page = CatalogPage()
+        time.sleep(3)
+        self.wait_element_assure(self.product_in_result_search)
+        #page.move_to(browser.driver.find_element_by_xpath("//div[@class='CatalogProduct__price']"))
+        self.click(self.img_in_catalog, " карточка товара")
+        page.wait_element_assure(page.add_favorite_btn)
+        page.click(page.add_favorite_btn, " добавить товар в избранное")
+
+
+
+
+    @allure.step('Проверка элемента избранное в меню')
+    def check_element_fav_menu(self):
+        time.sleep(1)
+        self.wait_element_assure(self.icon_favourities_01)
+        value_fav = self.get_element_text(self.icon_favourities_01, " получить значение элемента избранное")
+        return value_fav
+
+    @allure.step('Проверка пустого элемента избранное в меню')
+    def check_element_fav_empty_menu(self):
+        time.sleep(1)
+        #self.wait_element_assure(self.icon_favourities_empty)
+        value_fav = self.get_element_text(self.icon_favourities_empty, " получить значение элемента избранное")
+        return value_fav
+
+    @allure.step('Удаление из избранного в карточке')
+    def del_favourites_cart_product(self):
+        page = CatalogPage()
+        page.click(page.favorites_btn, " избранное")
+        page.click(page.product_in_favourites_screen, " карточку товара")
+        page.wait_element_assure(page.add_favorite_btn)
+        page.click(page.add_favorite_btn, " удалить товар из избранного")
+
+
+    @allure.step('Проверка отсутсвия товара после удаления на экране Избранное (из карточки товара)')
+    def check_del_product_fav_screen(self):
+
+        title_del_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
+        page = CatalogPage()
+        page.click(page.favorites_btn, " избранное")
+        page.click(page.product_in_favourites_screen, " карточку товара" )
+        title_not_del_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
+        self.assert_check_not_expressions(title_del_fav, title_not_del_fav, " товар не удален из избранного")
+
+    @allure.step('Проверка наличия товара на экране Избранное (из карточки товара)')
+    def check_add_fav(self):
+
+        title_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
+        page = CatalogPage()
+        page.click(page.favorites_btn, " избранное")
+        page.click(page.product_in_favourites_screen, " карточку товара")
+        title_fav_screen = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
+        self.assert_check_expressions(title_fav, title_fav_screen, " товар отсутсвует в избранном")
+
+    @allure.step('Проверка пустого экрана избранного')
+    def check_full_screen_fav(self):
+        page = CatalogPage()
+        page.click(page.favorites_btn, " избранное")
+        page.wait_element_not_visible(page.product_in_favourites_screen_string)
+
+    @allure.step("Рандомный подраздела каталога")
+    def click_random_cat(self):
+        random.choice(self.categoryes_sub).click()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # @allure.step('Добавление в избранное из карточки несколько товаров')
+    # def add_favourites_cart_product(self):
+    #
+    # @allure.step('Удаление из избранного через каталог')
+    # def del_favourites_catalog(self):
+    #
+    # @allure.step('Удаление из избранного в карточке')
+    # def del_favourites_cart_product(self):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

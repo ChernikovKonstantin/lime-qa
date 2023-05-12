@@ -1,10 +1,13 @@
 import allure
 from selene import query, be
 from selene.api import browser
+from selene.support.conditions.be import visible, hidden
 from selene.support.shared import browser
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class BasePage:
     @staticmethod
@@ -16,6 +19,8 @@ class BasePage:
     def open_url2(url):
         with allure.step(f"Открыть страницу {url}"):
             browser.open_url(url)
+
+
 
     @allure.step("Взять текст из элемента '{allureText}'")
     def get_element_text(self, element, allureText):
@@ -43,13 +48,23 @@ class BasePage:
         action = ActionChains(driver)
         action.move_to_element(element).perform()
 
+    @allure.step("Проверка наличия элемента")
+    def wait_element(self, locator):
+        browser.s(locator).should(be.visible)
+
     @allure.step("Проверка отсутсвия элемента")
     def wait_element_not_visible(self, locator):
         browser.s(locator).should_not(be.visible)
 
     @allure.step("Проверка наличия элемента")
-    def wait_element(self, locator):
-        browser.s(locator).should(be.visible)
+    def wait_element_assure(self, element):
+        element.assure(visible, 15)
+        # wait = WebDriverWait(browser.driver, 10)
+        # wait.until(EC.visibility_of((By.XPATH, element)))
+
+    @allure.step("Проверка отсутствия элемента")
+    def wait_element_hidden(self, element):
+        element.assure(hidden, 15)
 
     @allure.step("Сравнение значений {expression1} и {expression2}")
     def assert_check_expressions(self, expression1, expression2, allureText):
@@ -71,8 +86,18 @@ class BasePage:
     def push_enter(self, element, fieldName):
         element.send_keys(Keys.ENTER)
 
+    @allure.step("Нажать Backspace")
+    def push_backspace(self, element, fieldName):
+        element.send_keys(Keys.BACKSPACE)
+
+    @allure.step("Очистить поле")
+    def field_clear(self, element, fieldName):
+        element.clear()
+
+
+
     @allure.step("Назад в браузере")
-    def browser_back(self):
+    def browser_back(self) -> object:
         browser.driver.back()
 
 

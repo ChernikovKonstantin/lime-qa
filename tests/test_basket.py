@@ -36,6 +36,8 @@ class TestBasket:
     @allure.title("Добавление в корзину несколько товаров")
     def test_basket_multiple_products():
         page = CatalogPage()
+
+
         page.basket_multiple_products()
         time.sleep(2)
         page.basket_btn.click()
