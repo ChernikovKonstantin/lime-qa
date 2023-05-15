@@ -13,7 +13,7 @@ from pages.base import BasePage
 class HomePage(BasePage):
     # Locators
 
-    account_btn = s("//a[@href = '/ru_ru#lk' and @class = 'btn-control']")
+    account_btn = s("//a[@href = '/ru_ru/#lk' and @class = 'btn-control']")
 
     registration_btn = s("//button[contains(text(),'Зарегистрироваться')]")
     email_field = s("//input[@type='email' and @placeholder='E-mail']")

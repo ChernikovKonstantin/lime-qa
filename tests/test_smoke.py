@@ -92,18 +92,6 @@ class TestSmoke:
 
         page.assert_check_expressions(name_menu, name_account, " имя пользователя не совпадает с именем пользователя в бургер меню")
 
-    @allure.title("Экран Каталог(Бургер-меню) / Раздел без подразделов")
-    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/1599")
-    def test_burger_menu_check_products(self):
-        page = CatalogPage()
-        page.select_section_menu_bags()
-        page = SmokePage()
-        page.wait_element_hidden(page.block_catalog)
-        time.sleep(1)
-        url = page.get_url()
-        page.assert_check_coincidence("catalog/sumki", url, " переход в каталог не выполнен")
-        page.wait_element_assure(page.catalog_image)
-
     @allure.title("Проверка выпадающего меню каталога Одежда. Раздел с вложенными подразделами")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/1600")
     def test_burger_menu_check_products_sections(self):
@@ -123,24 +111,174 @@ class TestSmoke:
         page.click(page.category_parents_clothes, " категория ОДЕЖДА")
         page.click_random_cat()
 
+        # КАТАЛОГ
+    @allure.title("Экран 'Каталог' (Бургер-меню) / Подарочные карты")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/892")
+    def test_burger_menu_bonus_card(self):
+        page = SmokePage()
+        page.click(page.hamburger_menu, " гамбургер меню")
+        page.click(page.cart_bonus, " пункт Подарочная карта")
+        url = page.get_url()
+        page.assert_check_coincidence('gift', url, " не выполнен переход к экрану подарочной карты")
+
+
+    @allure.title("Экран 'Коллекции' (Бургер-меню)/ Переход к карточке товара")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/893")
+    def test_burger_menu_product_card(self):
+        page = SmokePage()
+        random_cat = page.click_random_cat_url()
+        page.open_url(os.getenv('base_url') + random_cat)
+        page.wait_element_assure(page.product_in_result_search)
+        page.click_random_product()
+        #time.sleep(3)
+        page.wait_element_assure(page.title_product_in_cart)
+        url = page.get_url()
+        page.assert_check_coincidence('product', url, " не выполнен переход к карточке товара")
+
+    @allure.title("Экран Каталог(Бургер-меню) / Раздел без подразделов")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/1599")
+    def test_burger_menu_check_products(self):
+        page = CatalogPage()
+        page.select_section_menu_bags()
+        page = SmokePage()
+        page.wait_element_hidden(page.block_catalog)
+        time.sleep(1)
+        url = page.get_url()
+        page.assert_check_coincidence("catalog/sumki", url, " переход в каталог не выполнен")
+        page.wait_element_assure(page.catalog_image)
+
+    @allure.title("Просмотр карточки товара")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/894")
+    def test_cart_product(self):
+        page = CatalogPage()
+        page.select_section_menu_shoes_all()
+        page = SmokePage()
+        time.sleep(3)
+        page.wait_element_assure(page.img_in_catalog)
+        page.click(page.img_in_catalog, " продукт в каталоге")
+        page.wait_element_assure(page.title_product_in_cart)
+        page.wait_element_assure(page.share_string_card_products)
+        page.wait_element_assure(page.imges_in_cart_slider)
+        time.sleep(5)
+        for i in range(len(page.imges_in_cart_slider)):
+            resolution = page.imges_in_cart_slider[i].size
+            height = (resolution['height'])
+            width = (resolution['width'])
+            page.assert_check_comparison(height, width, " изображение не портретное")
+        page = CatalogPage()
+        page.wait_element_assure(page.add_to_cart)
+        page.wait_element_assure(page.colors_selector)
+        page.wait_element_assure(page.add_favorite_btn)
+        page.wait_element_assure(page.button_drop_down_size)
+        page.wait_element_assure(page.product_price_text)
+
+        page = SmokePage()
+        page.user_login()
+        page.click(page.button_close_screen, " закрыть экран входа\регистрации")
+        page = CatalogPage()
+        page.select_section_menu_shoes_all()
+        page = SmokePage()
+        time.sleep(3)
+        page.wait_element_assure(page.img_in_catalog)
+        page.click(page.img_in_catalog, " продукт в каталоге")
+        page.wait_element_assure(page.title_product_in_cart)
+        page.wait_element_assure(page.share_string_card_products)
+        page.wait_element_assure(page.imges_in_cart_slider)
+        time.sleep(5)
+        for y in range(len(page.imges_in_cart_slider)):
+            resolution = page.imges_in_cart_slider[y].size
+            height = (resolution['height'])
+            width = (resolution['width'])
+            page.assert_check_comparison(height, width, " изображение не портретное")
+
+        page = CatalogPage()
+        page.wait_element_assure(page.add_to_cart)
+        page.wait_element_assure(page.colors_selector)
+        page.wait_element_assure(page.add_favorite_btn)
+        page.wait_element_assure(page.button_drop_down_size)
+        page.wait_element_assure(page.product_price_text)
+
+    # КОРЗИНА
+
+    @allure.title("Проверка добавления товара в корзину (Неавторизованный пользователь)")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/898")
+    def test_cart_add_product_anonim(self):
+        page = CatalogPage()
+        page.click(page.hamburger_menu, "гамбургер-меню")
+        page.click(page.menu_link_lingerie, "Блок Нижнее белье")
+        page.click(page.menu_subsection_body, "Подраздел Все модели")
+        page.click(page.choose_a_product_1399, "Товар с ценой 1999")
+        time.sleep(2)
+        page = CatalogPage()
+        page.click(page.add_to_cart, "добавить в корзину")
+
+        page = SmokePage()
+        title_product = page.get_element_text(page.title_product_in_cart, " название товара в карточке")
+        value_counter_basket = page.check_counter_basket()
+        page.assert_check_expressions("1", value_counter_basket, " некорректная работа счетчика корзины")
+        page.click(page.button_cart_2, " переход в корзину")
+        time.sleep(2)
+
+        page = SmokePage()
+        title_product_basket = page.get_element_text(page.title_product_in_basket, " название товара в корзине")
+        page.assert_check_expressions(title_product_basket, title_product, " названиетовара в карточке не соответсвет названию товара в корзине")
+
+    @allure.title("Проверка добавления товара в корзину (Авторизованный пользователь)")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/899")
+    def test_cart_add_product_user(self):
+        page = SmokePage()
+        page.user_login()
+        page.click(page.button_close_screen, " закрыть экран входа\регистрации")
+        page = CatalogPage()
+        page.click(page.hamburger_menu, "гамбургер-меню")
+        page.click(page.menu_link_lingerie, "Блок Нижнее белье")
+        page.click(page.menu_subsection_body, "Подраздел Все модели")
+        page.click(page.choose_a_product_1399, "Товар с ценой 1999")
+        time.sleep(2)
+        page = CatalogPage()
+        page.click(page.add_to_cart, "добавить в корзину")
+
+        page = SmokePage()
+        title_product = page.get_element_text(page.title_product_in_cart, " название товара в карточке")
+        value_counter_basket = page.check_counter_basket()
+        page.assert_check_expressions("1", value_counter_basket, " некорректная работа счетчика корзины")
+        page.click(page.button_cart_2, " переход в корзину")
+        time.sleep(2)
+
+        page = SmokePage()
+        title_product_basket = page.get_element_text(page.title_product_in_basket, " название товара в корзине")
+        page.assert_check_expressions(title_product_basket, title_product,
+                                      " названиетовара в карточке не соответсвет названию товара в корзине")
+
+    @allure.title("Проверка удаления товара из корзины (Авторизованный пользователь)")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/900")
+    def test_cart_del_product_user(self):
+        page = SmokePage()
+        page.user_login()
+        page.click(page.button_close_screen, " закрыть экран входа\регистрации")
+        page = CatalogPage()
+        page.basket_add_many_products()
+        page = SmokePage()
+        value_counter_basket = page.check_counter_basket()
+        time.sleep(2)
+        page.click(page.button_cart_2, " переход в корзину")
+        title_product_basket = page.get_element_text(page.title_product_in_basket, " название товара в корзине")
+        page = CartPage()
+        page.wait_element_assure(page.block_product)
+        page.click(page.button_del, " удалить 1 товар в корзине")
+        time.sleep(3)
+        page = SmokePage()
+        title_product_basket_after_del = page.get_element_text(page.title_product_in_basket, " название товара в корзине")
+        page.assert_check_not_expressions(title_product_basket, title_product_basket_after_del, " товар не удален из корзины")
+        page.open_url(os.getenv('base_url'))
+        time.sleep(2)
+        value_counter_basket_after_del = page.check_counter_basket()
+        page.assert_check_expressions(int(value_counter_basket), (int(value_counter_basket_after_del) + 1), " счетчик не уменьшился после удаления товара из корзины")
 
 
 
+    # ПРОФИЛЬ
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # ПРОФИЛЬ
 
     @allure.title("Профиль пользователя")
     @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=122")

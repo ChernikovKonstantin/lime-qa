@@ -82,6 +82,10 @@ class BasePage:
     def assert_check_range(self, value_from, value_to, value_check,  allureText):
         assert value_check>=value_from and value_check <= value_to, print(allureText)
 
+    @allure.step("Сравнение значений {expression1} больше {expression2}")
+    def assert_check_comparison(self, expression1, expression2, allureText):
+        assert expression1 > expression2, print(allureText)
+
     @allure.step("Нажать Enter")
     def push_enter(self, element, fieldName):
         element.send_keys(Keys.ENTER)
@@ -99,6 +103,9 @@ class BasePage:
     @allure.step("Назад в браузере")
     def browser_back(self) -> object:
         browser.driver.back()
+
+
+
 
 
 

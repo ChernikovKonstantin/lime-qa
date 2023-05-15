@@ -63,6 +63,7 @@ class SmokePage(BasePage):
     button_close_screen = s("//div[@class='SvgIcon IButtonIcon']")
 
     button_cart = s("(//div[@class='SvgIcon'])[4]")
+    button_cart_2 =s("//a[@href='/cart' and @class='btn-control']")
     message_empty_cart = s("//div[@class='ViewCart__Empty__Message']/p")
     button_back_in_shop_empty_cart = s("//button[@class='btn ViewCart__Empty__Message__Button']")
     button_order_string = "//button[@class = 'btn btn-block']"
@@ -89,6 +90,7 @@ class SmokePage(BasePage):
     favourites = s("//a[@href='/cart' and @class='usermenu__link']")
     help = s("//a[@href='/help' and @class='usermenu__link']")
     cart_bonus = s("//a[@href='/ru_ru#gift' and @class='usermenu__link']")
+    card_bonus_text = s("//span[contains (text(), 'Электронные подарочные карты')]")
     account_or_name_user = s("//a[@href='/ru_ru#lk' and @class='usermenu__link']")
     dark_screen = s("//html[@style='overflow: hidden;']")
 
@@ -126,9 +128,29 @@ class SmokePage(BasePage):
     icon_fav_catalog = s("//button[@class='IButton CatalogProduct__bookmark isHover']")
     icon_fav_catalog_active = s("//button[@class='IButton CatalogProduct__bookmark isActive']")
 
-    product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]")
-    img_in_catalog = s("//img[@class='CatalogProduct__image lazyloaded']")
+    product_in_catalog = s("//button[@class='IButton CatalogProduct__bookmark']")
+    products_in_catalog_random = ss("//img[@class='CatalogProduct__image lazyloaded']")
+
+    img_in_catalog = s("//img[contains(@class,'CatalogProduct__image')]")
+    img_in_cart_slider = s("//img[@class='MediaTape__object lazyloaded']")
+    imges_in_cart_slider = ss("//img[contains(@class,'MediaTape__object ')]")
     title_product_in_cart = s("//h1[@class='product__title']")
+    title_product_in_basket = s('//div[@class="CartTable__name"]/a/p')
+
+    # Other
+
+    list_url_cat = ["ru_ru/catalog/underwear_invisible", "ru_ru/catalog/palto_i_trench",
+                    "ru_ru/catalog/underwear_microfiber", "ru_ru/catalog/bodysuits",
+                    "ru_ru/catalog/loafers", "ru_ru/catalog/new", "ru_ru/catalog/sale_platya"]
+
+    share_string_card_products = s("//a[contains(text(), 'Поделиться')]")
+
+    # Basket
+
+    counter_basket = s("(//span[@class='badge'])[2]")
+
+
+
 
 
 
@@ -464,8 +486,8 @@ class SmokePage(BasePage):
 
     @allure.step('Успешный логин')
     def user_login(self):
-        page = HomePage()
-        page.click_account_btn()
+
+        self.click(self.button_lk, " кнопка Личный кабинет")
         page = AccountPage()
         page.click_enter_btn()
         page = LoginPage()
@@ -665,6 +687,24 @@ class SmokePage(BasePage):
     @allure.step("Рандомный подраздела каталога")
     def click_random_cat(self):
         random.choice(self.categoryes_sub).click()
+
+    @allure.step("Рандомный url каталога")
+    def click_random_cat_url(self):
+
+        random_cat = random.choice(self.list_url_cat)
+        return random_cat
+
+    @allure.step("Рандомный товар каталога")
+    def click_random_product(self):
+        random.choice(self.products_in_catalog_random).click()
+
+    @allure.step('Проверка счетчика корзины')
+    def check_counter_basket(self):
+        time.sleep(1)
+        self.wait_element_assure(self.counter_basket)
+        value_counter_basket = self.get_element_text(self.counter_basket, " получить значение счетчика корзины")
+        return value_counter_basket
+
 
 
 

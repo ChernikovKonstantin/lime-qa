@@ -352,6 +352,8 @@ class PaymentPage(BasePage):
         self.set_text(self.card_holder_field, "tester", "Владелец карты")
         self.set_text(self.security_code_field, "123", "Код безопасности")
 
+
+
     @allure.step('Авторизация с очисткой корзины, заполнение корзины несколькими товарами, проверка наличия товаров, заполнение полей оформления заказа')
     def preview_payment_many_products(self):
 

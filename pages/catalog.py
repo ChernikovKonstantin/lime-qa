@@ -25,6 +25,7 @@ class CatalogPage(BasePage):
     basket_btn = s("//a[@href ='/cart' and @class='btn-control']")
     colors_selector = ss("//div[@class='ColorSelector__imageBox']")
     drop_down_size = s("//div[@class='SizeSelector__header']")
+    button_drop_down_size = s("//div[@class='SizeSelector__arrow']")
     sizes_list = ss("//span[@class='SizeSelector__title']")
     title_text = s("//h1[@class='product__title']")
     product_price_text = s("//div[@class='product__price']")
@@ -155,7 +156,7 @@ class CatalogPage(BasePage):
     def basket_multiple_products(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_bags, " Ссылка СУМКИ")
-        self.wait_element(self.choose_a_product_str)
+        self.wait_element_assure(self.choose_a_product)
         self.click(self.choose_a_product, "товар сумка")
         price_bags = self.get_element_text(self.product_price_text, 'цена сумки')
         self.click(self.add_to_cart, "добавить в корзину")
