@@ -26,7 +26,7 @@ class TestSmoke:
 
     @allure.title("Основной экран / Переход с баннера к разделам каталога")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/849")
-    @pytest.mark.smoke(1)
+    @pytest.mark.smoke
     def test_main_screen_bunners(self):
         page = SmokePage()
         page.cycle_banners()
@@ -36,7 +36,7 @@ class TestSmoke:
 
     @allure.title("Главная страница главное меню")
     @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=121")
-    @pytest.mark.smoke(2)
+    @pytest.mark.smoke
     def test_main_screen_main_menu(self):
         page = SmokePage()
         page.main_menu_search()
@@ -45,7 +45,7 @@ class TestSmoke:
 
     @allure.title("Главная страница меню каталога")
     @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=121")
-    @pytest.mark.smoke(3)
+    @pytest.mark.smoke
     def test_main_screen_menu(self):
         page = SmokePage()
         page.catalog_menu_link()
@@ -356,6 +356,7 @@ class TestSmoke:
         page = SmokePage()
         page.click(page.button_lk, " личный кабинет")
         page.login_screen()
+
     @allure.title("Профиль / экран войти(Негативный)")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/859")
     @pytest.mark.smoke
@@ -397,12 +398,6 @@ class TestSmoke:
     def test_first_login(self):
         page = SmokePage()
         page.user_profile_with_order()
-
-
-
-
-
-
 
     @allure.title("Экран поиска")
     @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=123")
