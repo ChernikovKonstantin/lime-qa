@@ -79,6 +79,7 @@ class PaymentPage(BasePage):
     price_finally_text_witout_discount = s('(//div[@class="CustomerCartSummary__value"])[4]/span')  # Итого при отсутсвии скидки
     promo_code_error = s("//div[contains(text(), 'промокод не найден')]")  # ошибка промокода
     promo_code_error_string = "//div[contains(text(), 'промокод не найден')]"  #ошибка промокода строка
+    old_price_block_cart = s("//span[@class = 'old']")
 
 
 
@@ -210,6 +211,23 @@ class PaymentPage(BasePage):
         self.assert_check_expressions((price_result + price_discount),total_price, ' Ошибка проверки: Σ без промо = Σ итог в блоке корзина + Σ промокод')
         self.assert_check_expressions((price_result_block_cart + price_discount), total_price, 'Ошибка проверки: Σ без промо = Σ итог в строке Общая стоимость товаров + Σ промокод')
         self.assert_check_expressions((total_price - price_discount_icon), price_result_block_cart, 'Ошибка проверки: Σ без промо - (Σ без промо х %скидки) = Σ итог в строке Общая стоимость товаров')
+
+    @allure.step('Проверка суммы заказа со скидкой в корзине')
+    def sum_order_with_discount_in_basket(self):
+
+        self.wait_element_assure(self.icon_discount_percent_block_cart_text)
+        old_price3 = self.get_element_text(self.old_price_block_cart, 'Получение суммы заказа без скидки')
+        #old_price2 = self.get_element_value(self.old_price_block_cart, " взять")
+        price_result_block_cart = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_finally_block_cart_text,'Получение итоговой суммы заказа сос кидкой из блока Корзина'))))
+        old_price = (int(re.sub('[^0-9]', "", self.get_element_text(self.old_price_block_cart,'Получение суммы заказа без скидки'))))
+        icon_discount_percent_block_cart = (int(re.sub('[^0-9]', "", self.get_element_text(self.icon_discount_percent_block_cart_text,'Получение процента скидки'))))
+        price_discount_icon = round(old_price * (icon_discount_percent_block_cart / 100), -1)
+
+
+        self.assert_check_expressions((price_result_block_cart + price_discount_icon), old_price,' Ошибка проверки: Σ без скидки = Σ итог в блоке корзина + Σ скидки')
+
+        self.assert_check_expressions((old_price - price_discount_icon), price_result_block_cart, 'Ошибка проверки: Σ без скидки - Σ скидки = Σ итог в блоке корзина')
+
 
     @allure.step('Проверка суммы заказа с учетом промо, несколько товаров')
     def sum_order_with_discount_many(self):
@@ -344,13 +362,15 @@ class PaymentPage(BasePage):
         self.check_product_for_order()
 
         page = CartPage()
-        page.wait_element(page.making_an_order_btn_string)
+        page.wait_element_assure(page.making_an_order_btn)
         page.click(page.making_an_order_btn, "Клик кнопку оформления заказа")
 
         self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
         self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
         self.set_text(self.card_holder_field, "tester", "Владелец карты")
         self.set_text(self.security_code_field, "123", "Код безопасности")
+
+
 
     @allure.step('Авторизация с очисткой корзины, заполнение корзины несколькими товарами, проверка наличия товаров, заполнение полей оформления заказа')
     def preview_payment_many_products(self):
@@ -413,6 +433,17 @@ class PaymentPage(BasePage):
 
         self.check_product_for_order()
 
+        page = CartPage()
+        page.wait_element(page.making_an_order_btn_string)
+        page.click(page.making_an_order_btn, "Клик кнопку оформления заказа")
+
+        self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
+        self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
+        self.set_text(self.card_holder_field, "tester", "Владелец карты")
+        self.set_text(self.security_code_field, "123", "Код безопасности")
+
+    @allure.step('Оформление добавленного заказа')
+    def preview_payment_in_cart(self):
         page = CartPage()
         page.wait_element(page.making_an_order_btn_string)
         page.click(page.making_an_order_btn, "Клик кнопку оформления заказа")

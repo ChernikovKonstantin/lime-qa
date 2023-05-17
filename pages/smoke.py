@@ -52,6 +52,7 @@ class SmokePage(BasePage):
     button_close_favourites = s('//div[@class = "SvgIcon IButtonIcon"]')
 
     button_lk = s("(//div[@class='SvgIcon'])[1]")
+    button_logout = s("//button[contains(text(), 'Выйти')]")
     button_login = s("//button[@class='btn btn-block btn-outline btn-primary']")
     button_login_string = "//button[@class='btn btn-block btn-outline btn-primary']"
     button_login_screen_login_string = "//button[@class='btn btn-block']"
@@ -63,6 +64,7 @@ class SmokePage(BasePage):
     button_close_screen = s("//div[@class='SvgIcon IButtonIcon']")
 
     button_cart = s("(//div[@class='SvgIcon'])[4]")
+    button_cart_2 =s("//a[@href='/cart' and @class='btn-control']")
     message_empty_cart = s("//div[@class='ViewCart__Empty__Message']/p")
     button_back_in_shop_empty_cart = s("//button[@class='btn ViewCart__Empty__Message__Button']")
     button_order_string = "//button[@class = 'btn btn-block']"
@@ -72,7 +74,7 @@ class SmokePage(BasePage):
     # locators burger and catalog
 
     hamburger_menu = s("(//div[@class='hamburger-menu burger'])[2]")
-    hamburger_menu_close = s("//div[@class = 'hamburger-menu burger open']")
+    hamburger_menu_close = s("(//div[@class = 'hamburger-menu burger open'])[1]")
     hamburger_menu_string = "(//div[@class='hamburger-menu burger'])[2]"
     categoryes_link = ss("//li[@class='mainmenu__item']/a")
     category_parents_clothes = s("(//li[@class='mainmenu__item']/span)[1]")
@@ -89,6 +91,7 @@ class SmokePage(BasePage):
     favourites = s("//a[@href='/cart' and @class='usermenu__link']")
     help = s("//a[@href='/help' and @class='usermenu__link']")
     cart_bonus = s("//a[@href='/ru_ru#gift' and @class='usermenu__link']")
+    card_bonus_text = s("//span[contains (text(), 'Электронные подарочные карты')]")
     account_or_name_user = s("//a[@href='/ru_ru#lk' and @class='usermenu__link']")
     dark_screen = s("//html[@style='overflow: hidden;']")
 
@@ -126,9 +129,29 @@ class SmokePage(BasePage):
     icon_fav_catalog = s("//button[@class='IButton CatalogProduct__bookmark isHover']")
     icon_fav_catalog_active = s("//button[@class='IButton CatalogProduct__bookmark isActive']")
 
-    product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]")
-    img_in_catalog = s("//img[@class='CatalogProduct__image lazyloaded']")
+    product_in_catalog = s("//button[@class='IButton CatalogProduct__bookmark']")
+    products_in_catalog_random = ss("//img[@class='CatalogProduct__image lazyloaded']")
+
+    img_in_catalog = s("//img[contains(@class,'CatalogProduct__image')]")
+    img_in_cart_slider = s("//img[@class='MediaTape__object lazyloaded']")
+    imges_in_cart_slider = ss("//img[contains(@class,'MediaTape__object ')]")
     title_product_in_cart = s("//h1[@class='product__title']")
+    title_product_in_basket = s('//div[@class="CartTable__name"]/a/p')
+
+    # Other
+
+    list_url_cat = ["ru_ru/catalog/underwear_invisible", "ru_ru/catalog/palto_i_trench",
+                    "ru_ru/catalog/underwear_microfiber", "ru_ru/catalog/bodysuits",
+                    "ru_ru/catalog/loafers", "ru_ru/catalog/new", "ru_ru/catalog/sale_platya"]
+
+    share_string_card_products = s("//a[contains(text(), 'Поделиться')]")
+
+    # Basket
+
+    counter_basket = s("(//span[@class='badge'])[2]")
+
+
+
 
 
 
@@ -159,6 +182,7 @@ class SmokePage(BasePage):
             self.assert_check_expressions(list_first_attribute_banners[i], first_image, " некорректное отображение порядка товаров в каталоге")
             self.browser_back()
             url_main_return = self.get_url()
+
             self.wait_element(self.block_icon_string) #ожидание блока иконок белого цвета
             self.assert_check_expressions(url_main, url_main_return, " ошибка адреса при возврате на главную страницу")
 
@@ -436,7 +460,7 @@ class SmokePage(BasePage):
 
     # ПРОФИЛЬ
 
-    @allure.step('Профиль экран входа')
+    @allure.step('Профиль / экран вход/регистрация')
     def login_screen(self):
 
         self.wait_element(self.h1_srting)
@@ -451,8 +475,8 @@ class SmokePage(BasePage):
     @allure.step('Логин с невалидным паролем')
     def user_login_not_valid(self):
 
-        page = HomePage()
-        page.click_account_btn()
+        #page = HomePage()
+        self.click(self.button_lk, " личный кабинет")
 
         page = AccountPage()
         page.click_enter_btn()
@@ -464,20 +488,36 @@ class SmokePage(BasePage):
 
     @allure.step('Успешный логин')
     def user_login(self):
-        page = HomePage()
-        page.click_account_btn()
+
+        self.click(self.button_lk, " кнопка Личный кабинет")
         page = AccountPage()
         page.click_enter_btn()
         page = LoginPage()
         page.login(email=os.getenv("test_user"), password=os.getenv("password"))
         page.check_logout_btn_is_visible()
 
+    @allure.step('Разлогин')
+    def user_logout(self):
+
+        self.click(self.button_lk, " кнопка Личный кабинет")
+        self.wait_element_assure(self.button_logout)
+        self.click(self.button_logout, " кнопка выход из ЛК")
+
+    @allure.step('Успешный логин второй пользователь')
+    def user2_login(self):
+
+        self.click(self.button_lk, " кнопка Личный кабинет")
+        page = AccountPage()
+        page.click_enter_btn()
+        page = LoginPage()
+        page.login(email=os.getenv("test_user2"), password=os.getenv("password"))
+        page.check_logout_btn_is_visible()
+
     @allure.step('Регистрация с не валидными данными')
     def user_registration_not_valid(self):
+        # page = HomePage()
+        self.click(self.button_lk, " личный кабинет")
         page = HomePage()
-
-
-        page.click_account_btn()
         page.click_registration_btn()
         page.fill_registration_fields_smoke()
 
@@ -488,7 +528,17 @@ class SmokePage(BasePage):
         assert list_errors[2] == ('введенные пароли не совпадают'), print('Некорректный текст ошибки регистрации')
 
     @allure.step('Регистрация с валидными данными + Первый вход в профиль')
-    def user_registration_and_first_lk(self):
+    def user_registration(self):
+        page = HomePage()
+
+        page.click_account_btn()
+        page.click_registration_btn()
+        page.fill_registration_fields()
+        page = LoginPage()
+        page.check_logout_btn_is_visible()
+
+    @allure.step('Первый вход в профиль')
+    def user_first_lk(self):
         page = HomePage()
 
         page.click_account_btn()
@@ -528,7 +578,7 @@ class SmokePage(BasePage):
         self.wait_element(self.button_delete_accaunt_string)
         self.wait_element(self.button_logout_account_string)
         self.wait_element(self.message_orders_string)
-        time.sleep(5)
+        time.sleep(10)
         self.wait_element(self.orders_string)
 
 
@@ -584,7 +634,7 @@ class SmokePage(BasePage):
     def add_favourites_catalog(self):
 
         page = CatalogPage()
-        time.sleep(3)
+        time.sleep(5)
         self.wait_element_assure(self.product_in_result_search)
         page.move_to(browser.driver.find_element_by_xpath("//a[@class='CatalogProduct__image-link']//img"))
         self.click(self.icon_fav_catalog, " элемент избранного в каталоге")
@@ -665,6 +715,24 @@ class SmokePage(BasePage):
     @allure.step("Рандомный подраздела каталога")
     def click_random_cat(self):
         random.choice(self.categoryes_sub).click()
+
+    @allure.step("Рандомный url каталога")
+    def click_random_cat_url(self):
+
+        random_cat = random.choice(self.list_url_cat)
+        return random_cat
+
+    @allure.step("Рандомный товар каталога")
+    def click_random_product(self):
+        random.choice(self.products_in_catalog_random).click()
+
+    @allure.step('Проверка счетчика корзины')
+    def check_counter_basket(self):
+        time.sleep(1)
+        self.wait_element_assure(self.counter_basket)
+        value_counter_basket = self.get_element_text(self.counter_basket, " получить значение счетчика корзины")
+        return value_counter_basket
+
 
 
 

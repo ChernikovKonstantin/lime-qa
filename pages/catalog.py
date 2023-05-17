@@ -25,6 +25,7 @@ class CatalogPage(BasePage):
     basket_btn = s("//a[@href ='/cart' and @class='btn-control']")
     colors_selector = ss("//div[@class='ColorSelector__imageBox']")
     drop_down_size = s("//div[@class='SizeSelector__header']")
+    button_drop_down_size = s("//div[@class='SizeSelector__arrow']")
     sizes_list = ss("//span[@class='SizeSelector__title']")
     title_text = s("//h1[@class='product__title']")
     product_price_text = s("//div[@class='product__price']")
@@ -68,6 +69,13 @@ class CatalogPage(BasePage):
     product_in_favourites_screen_string = "//img[@class = 'PreviewGoods__img']"
     products_in_favourites_screen = ss("//img[@class = 'PreviewGoods__img']")
     button_close_fav = s("//div[@class='SvgIcon IButtonIcon']")
+
+    menu_link_special = s("//span[span= 'СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ']")
+    menu_subsection_all_models_special = s("//a[@class= 'mainmenu-children__link highlight' and span = 'ВСЕ МОДЕЛИ']")
+
+    img_in_catalog = s("//img[contains(@class,'CatalogProduct__image')]")
+
+
 
 
 
@@ -155,7 +163,7 @@ class CatalogPage(BasePage):
     def basket_multiple_products(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_bags, " Ссылка СУМКИ")
-        self.wait_element(self.choose_a_product_str)
+        self.wait_element_assure(self.choose_a_product)
         self.click(self.choose_a_product, "товар сумка")
         price_bags = self.get_element_text(self.product_price_text, 'цена сумки')
         self.click(self.add_to_cart, "добавить в корзину")
@@ -190,6 +198,31 @@ class CatalogPage(BasePage):
         self.click(self.menu_link_lingerie, "Блок Нижнее белье")
         self.click(self.menu_subsection_body, "Подраздел Все модели")
         self.click(self.choose_a_product_1399, "Товар с ценой 1999")
+        time.sleep(2)
+        self.click(self.add_to_cart, "добавить в корзину")
+        time.sleep(1)
+
+    @allure.step("Добавление в корзину единственного товара")
+    def basket_add_last_product(self):
+        # Подобрать товар
+        time.sleep(5)
+        # self.wait_element(self.hamburger_menu_string)
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_lingerie, "Блок Нижнее белье")
+        self.click(self.menu_subsection_body, "Подраздел Все модели")
+        self.click(self.choose_a_product_1399, "Товар с ценой 1999")
+        time.sleep(2)
+        self.click(self.add_to_cart, "добавить в корзину")
+        time.sleep(1)
+
+    @allure.step("Добавление в корзину товара со скидкой")
+    def basket_add_discount_product(self):
+        time.sleep(5)
+        # self.wait_element(self.hamburger_menu_string)
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_special, "Блок Специальное предложение")
+        self.click(self.menu_subsection_all_models_special, "Подраздел Все модели")
+        self.click(self.img_in_catalog, "Товар со скидкой")
         time.sleep(2)
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
