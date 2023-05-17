@@ -24,17 +24,19 @@ class TestSmoke:
 
     #ОСНОВНОЙ ЭКРАН
 
-    @allure.title("Главная страница")
-    @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=121",
-                 "https://lmdev.testrail.io/index.php?/cases/view/852")
-    def test_main_screen(self):
+    @allure.title("Основной экран / Переход с баннера к разделам каталога")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/849")
+    @pytest.mark.smoke(1)
+    def test_main_screen_bunners(self):
         page = SmokePage()
         page.cycle_banners()
         page.video()
         page.logo()
 
+
     @allure.title("Главная страница главное меню")
     @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=121")
+    @pytest.mark.smoke(2)
     def test_main_screen_main_menu(self):
         page = SmokePage()
         page.main_menu_search()
@@ -43,6 +45,7 @@ class TestSmoke:
 
     @allure.title("Главная страница меню каталога")
     @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=121")
+    @pytest.mark.smoke(3)
     def test_main_screen_menu(self):
         page = SmokePage()
         page.catalog_menu_link()
@@ -55,6 +58,7 @@ class TestSmoke:
 
     @allure.title("Главная страница бургер меню")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/1599")
+    @pytest.mark.smoke
     def test_burger_menu(self):
         page = SmokePage()
         page.click(page.hamburger_menu, " гамбургер меню")
@@ -69,8 +73,11 @@ class TestSmoke:
         page.user_login()
         page.click(page.button_close_screen, " закрыть экран входа\регистрации")
 
+        page = CatalogPage()
+        page.click(page.basket_btn, "Переход в корзину")
         page = CartPage()
         page.cart_delete()
+        page.open_url(os.getenv('base_url'))
         page = CatalogPage()
         page.favoutites_clear()
         page.click(page.hamburger_menu, " гамбургер меню")
@@ -86,6 +93,7 @@ class TestSmoke:
 
         page = HomePage()
         page.click(page.account_btn, " элемент аккаунта в меню")
+        time.sleep(2)
         name_acc = browser.driver.execute_script("return document.querySelector('input[placeholder=Имя]').value").upper()
         surname_acc = browser.driver.execute_script("return document.querySelector('input[placeholder=Фамилия]').value").upper()
         name_account = name_acc + " " + surname_acc
@@ -94,6 +102,7 @@ class TestSmoke:
 
     @allure.title("Проверка выпадающего меню каталога Одежда. Раздел с вложенными подразделами")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/1600")
+    @pytest.mark.smoke
     def test_burger_menu_check_products_sections(self):
         page = SmokePage()
         page.click(page.hamburger_menu, " гамбургер меню")
@@ -101,11 +110,12 @@ class TestSmoke:
         page.click(page.category_parents_clothes, " категория ОДЕЖДА")
         page.click_random_cat()
         page.click(page.category_parents_clothes, " закрыть категория ОДЕЖДА")
+        time.sleep(3)
         page.click(page.hamburger_menu_close, " закрыть гамбургер меню")
-
+        time.sleep(2)
         page.user_login()
         page.click(page.button_close_screen, " закрыть экран входа\регистрации")
-
+        time.sleep(2)
         page.click(page.hamburger_menu, " гамбургер меню")
         page.wait_element_assure(page.dark_screen)
         page.click(page.category_parents_clothes, " категория ОДЕЖДА")
@@ -114,6 +124,7 @@ class TestSmoke:
         # КАТАЛОГ
     @allure.title("Экран 'Каталог' (Бургер-меню) / Подарочные карты")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/892")
+    @pytest.mark.smoke
     def test_burger_menu_bonus_card(self):
         page = SmokePage()
         page.click(page.hamburger_menu, " гамбургер меню")
@@ -124,6 +135,7 @@ class TestSmoke:
 
     @allure.title("Экран 'Коллекции' (Бургер-меню)/ Переход к карточке товара")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/893")
+    @pytest.mark.smoke
     def test_burger_menu_product_card(self):
         page = SmokePage()
         random_cat = page.click_random_cat_url()
@@ -137,6 +149,7 @@ class TestSmoke:
 
     @allure.title("Экран Каталог(Бургер-меню) / Раздел без подразделов")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/1599")
+    @pytest.mark.smoke
     def test_burger_menu_check_products(self):
         page = CatalogPage()
         page.select_section_menu_bags()
@@ -149,6 +162,7 @@ class TestSmoke:
 
     @allure.title("Просмотр карточки товара")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/894")
+    @pytest.mark.smoke
     def test_cart_product(self):
         page = CatalogPage()
         page.select_section_menu_shoes_all()
@@ -202,6 +216,7 @@ class TestSmoke:
 
     @allure.title("Проверка добавления товара в корзину (Неавторизованный пользователь)")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/898")
+    @pytest.mark.smoke
     def test_cart_add_product_anonim(self):
         page = CatalogPage()
         page.click(page.hamburger_menu, "гамбургер-меню")
@@ -225,7 +240,9 @@ class TestSmoke:
 
     @allure.title("Проверка добавления товара в корзину (Авторизованный пользователь)")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/899")
+    @pytest.mark.smoke
     def test_cart_add_product_user(self):
+
         page = SmokePage()
         page.user_login()
         page.click(page.button_close_screen, " закрыть экран входа\регистрации")
@@ -252,6 +269,8 @@ class TestSmoke:
 
     @allure.title("Проверка удаления товара из корзины (Авторизованный пользователь)")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/900")
+    @pytest.mark.smoke
+
     def test_cart_del_product_user(self):
         page = SmokePage()
         page.user_login()
@@ -275,24 +294,119 @@ class TestSmoke:
         value_counter_basket_after_del = page.check_counter_basket()
         page.assert_check_expressions(int(value_counter_basket), (int(value_counter_basket_after_del) + 1), " счетчик не уменьшился после удаления товара из корзины")
 
+    # @allure.title("Экран Корзина Товара нет в наличии")
+    # @allure.link("https://lmdev.testrail.io/index.php?/cases/view/901")
+    # def test_cart_add_product_not_available(self):
+    #     page = SmokePage()
+    #     page.user_login()
+    #     page.click(page.button_close_screen, " закрыть экран входа\регистрации")
+    #     PaymentPage.click(self.basket_btn, "Переход в корзину")
+    #     CartPage.cart_delete()
+    #     page = CatalogPage()
+    #     page.basket_add_last_product()
+    #     page = SmokePage()
+    #     page.user_logout()
+    #     page.user2_login()
+    #     page.click(page.button_close_screen, " закрыть экран входа\регистрации")
+    #     PaymentPage.click(self.basket_btn, "Переход в корзину")
+    #     CartPage.cart_delete()
+    #     page = CatalogPage()
+    #     page.basket_add_last_product()
+    #     page = SmokePage()
+    #     page.user_logout()
+    #     page.user_login()
+    #     page.click(page.button_close_screen, " закрыть экран входа\регистрации")
+    #     page = PaymentPage
+    #     page.preview_payment_in_cart()
+    #     page.pay_order()
+    #     page = SmokePage()
+    #     page.user_logout()
+    #     page.user2_login()
+    #     page.click(page.button_close_screen, " закрыть экран входа\регистрации")
+    #     PaymentPage.click(self.basket_btn, "Переход в корзину")
+
+    @allure.title("Экран Корзина / Товар со скидкой")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/902&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=131")
+    @pytest.mark.smoke
+    def test_cart_product_discount(self):
+        page = CatalogPage()
+        page.basket_add_discount_product()
+        page = SmokePage()
+        page.click(page.button_cart_2, " переход в корзину")
+        page = PaymentPage()
+        page.sum_order_with_discount_in_basket()
 
 
     # ПРОФИЛЬ
 
 
-    @allure.title("Профиль пользователя")
-    @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=122")
-    def test_profile(self):
+    # @allure.title("Профиль пользователя")
+    # @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=122")
+    # def test_profile(self):
+    #
+    #
+    #
+    #     page.user_registration_and_first_lk()
+    #     page.user_profile_with_order()
+
+    @allure.title("Профиль / экран вход/регистрация")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/858")
+    @pytest.mark.smoke
+    def test_login_screen(self):
+        page = SmokePage()
+        page.click(page.button_lk, " личный кабинет")
+        page.login_screen()
+    @allure.title("Профиль / экран войти(Негативный)")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/859")
+    @pytest.mark.smoke
+    def test_login_negative(self):
         page = SmokePage()
         page.user_login_not_valid()
-        page.click(page.button_close_screen, " закрыть экран входа\регистрации")
+
+    @allure.title("Профиль / экран войти")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/861")
+    @pytest.mark.smoke
+    def test_login(self):
+        page = SmokePage()
         page.user_login()
+
+    @allure.title("Профиль / регистрация (Негативный)")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/862")
+    @pytest.mark.smoke
+    def test_registration_negative(self):
+        page = SmokePage()
         page.user_registration_not_valid()
-        page.user_registration_and_first_lk()
+
+    @allure.title("Профиль / регистрация")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/862")
+    @pytest.mark.smoke
+    def test_registration(self):
+        page = SmokePage()
+        page.user_registration()
+
+    @allure.title("Профиль / мои данные / первый вход в аккаунт")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/872")
+    @pytest.mark.smoke
+    def test_first_login(self):
+        page = SmokePage
+        page.user_first_lk()
+
+    @allure.title("Профиль / мои данные /")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/880")
+    @pytest.mark.smoke
+    def test_first_login(self):
+        page = SmokePage()
         page.user_profile_with_order()
+
+
+
+
+
+
 
     @allure.title("Экран поиска")
     @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=123")
+    @pytest.mark.smoke
     def test_search(self):
         page = SmokePage()
         page.search_successful_text()
@@ -301,6 +415,7 @@ class TestSmoke:
 
     @allure.title("Оплата карта + валидный промокод")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/903")
+    @pytest.mark.smoke
     def test_payment_cart_valid_promo(self):
         page = PaymentPage()
         page.preview_payment()
@@ -312,6 +427,7 @@ class TestSmoke:
 
     @allure.title("Оплата карта + валидный промокод, несколько товаров")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/904")
+    @pytest.mark.smoke
     def test_payment_cart_valid_promo_many_prducts(self):
         page = PaymentPage()
         page.preview_payment_many_products()
@@ -321,6 +437,7 @@ class TestSmoke:
 
     @allure.title("Оплата карта + не валидный промокод")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/905")
+    @pytest.mark.smoke
     def test_payment_cart_valid_promo_many_prducts(self):
         page = PaymentPage()
         page.preview_payment()
@@ -329,6 +446,7 @@ class TestSmoke:
 
     @allure.title("Проверка скидки при безналичной оплате на сайте заказа суммой > 6000")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/906&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=124")
+    @pytest.mark.smoke
     def test_payment_cart_order_more_6000(self):
         page = PaymentPage()
         page.preview_payment_6000()
@@ -341,6 +459,7 @@ class TestSmoke:
 
     @allure.title("Проверка применения промокодов для заказов 6000 < Σ < 6000")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/907")
+    @pytest.mark.smoke
     def test_payment_promocodes_6000_sum_6000(self):
         page = PaymentPage()
         page.preview_payment_6000()
@@ -356,6 +475,7 @@ class TestSmoke:
 
     @allure.title("Оплата картой ошибка оплаты")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/908")
+    @pytest.mark.smoke
     def test_payment_card_error(self):
         page = PaymentPage()
         page.preview_payment()
@@ -365,6 +485,7 @@ class TestSmoke:
 
     @allure.title("Оплата при получении, доставка курьером")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/912")
+    @pytest.mark.smoke
     def test_pay_receiving_courier(self):
         page = PaymentPage()
         page.preview_payment()
@@ -375,6 +496,7 @@ class TestSmoke:
 
     @allure.title("Оплата банковской картой самовывоз")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/913")
+    @pytest.mark.smoke
     def test_card_self(self):
         page = PaymentPage()
         page.preview_payment()
@@ -385,6 +507,7 @@ class TestSmoke:
 
     @allure.title("Оплата банковской картой (недостаточно средств), самовывоз")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/914")
+    @pytest.mark.smoke
     def test_card_self_no_many(self):
         page = PaymentPage()
         page.preview_payment()
@@ -400,6 +523,7 @@ class TestSmoke:
 
     @allure.title("Оплата банковской картой(не существующая карта), самовывоз")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/915")
+    @pytest.mark.smoke
     def test_card_self_no_valid_card(self):
         page = PaymentPage()
         page.preview_payment()
@@ -417,6 +541,7 @@ class TestSmoke:
 
     @allure.title("Оплата банковской картой, ПВЗ")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/920")
+    @pytest.mark.smoke
     def test_pay_card_pick_point(self):
         page = PaymentPage()
         page.preview_payment()
@@ -427,6 +552,7 @@ class TestSmoke:
 
     @allure.title("Оплата банковской картой(недостаточно средств), ПВЗ")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/921")
+    @pytest.mark.smoke
     def test_pay_card_no_many_pick_point(self):
         page = PaymentPage()
         page.preview_payment()
@@ -443,6 +569,7 @@ class TestSmoke:
 
     @allure.title("Оплата банковской картой(не существующая карта), ПВЗ")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/922")
+    @pytest.mark.smoke
     def test_pay_card_not_valid_pick_point(self):
         page = PaymentPage()
         page.preview_payment()
@@ -460,6 +587,7 @@ class TestSmoke:
 
     @allure.title("Проверка добавление товара в избранное из каталога (Неавторизованный пользователь)")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/885&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=125")
+    @pytest.mark.smoke
     def test_add_fav_anonim(self):
 
         page = CatalogPage()
@@ -475,6 +603,7 @@ class TestSmoke:
 
     @allure.title("Проверка добавления и удаления  товара из Избранного (Авторизованный пользователь)")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/886")
+    @pytest.mark.smoke
     def test_add_del_fav_user(self):
 
         page = SmokePage()
@@ -506,6 +635,7 @@ class TestSmoke:
 
     @allure.title("Избранное / перейти в карточку товара")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/888")
+    @pytest.mark.smoke
     def test_add_del_fav_user(self):
         page = SmokePage()
         page.user_login()
@@ -520,6 +650,7 @@ class TestSmoke:
 
     @allure.title("Проверка добавления и удаления  товара из Избранного (Авторизованный пользователь)")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/887")
+    @pytest.mark.smoke
     def test_add_del_fav_user(self):
         page = SmokePage()
         page.user_login()

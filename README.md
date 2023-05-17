@@ -29,5 +29,7 @@
 Запуск тестов по маркерам:
 аннотация `@pytest.mark.order(#)`
 терминальный запуск `pytest -m order` 
+запуск теста по имени `pytest -m order -k name_test`
+
 
 

@@ -26,6 +26,10 @@ class BasePage:
     def get_element_text(self, element, allureText):
         return element.get(query.text)
 
+    @allure.step("Взять тело из элемента '{allureText}'")
+    def get_element_value(self, element, allureText):
+        return element.get(query.tag)
+
     @allure.step("Заполнение поля {fieldName} текстом '{text}'")
     def set_text(self, element, text, fieldName):
         element.set_value(text)
