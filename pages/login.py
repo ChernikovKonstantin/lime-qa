@@ -38,6 +38,7 @@ class LoginPage(BasePage):
 
     @allure.step("Проверить что кнопка Выйти отображается")
     def check_logout_btn_is_visible(self):
+        self.wait_element_assure(self.logout_btn)
         self.logout_btn.should(be.visible)
 
     @allure.step("Проверить что ошибка логина отображается")

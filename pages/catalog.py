@@ -60,7 +60,7 @@ class CatalogPage(BasePage):
     menu_chapter_accessories = s("//span[span= 'АКСЕССУАРЫ']")
     menu_subsection_belts = s("//a[@class= 'mainmenu-children__link' and span = 'РЕМНИ']")
     choose_a_product_belts = s("(//a[@href= '/product/12843_9898_293-cernyi'])[2]")
-    choose_a_product_1399 = s('//div[@class="CatalogProduct__title"]/a')
+    choose_a_product_1399 = s('//a[contains(text(), "Базовое боди с длинными рукавами")]')
     choose_a_product_loafers = s('//a[contains (text(), "Лоферы из кожи шевро")]')
     menu_subsection_shoes_all = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
 

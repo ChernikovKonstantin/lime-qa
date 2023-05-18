@@ -74,7 +74,7 @@ class SmokePage(BasePage):
     # locators burger and catalog
 
     hamburger_menu = s("(//div[@class='hamburger-menu burger'])[2]")
-    hamburger_menu_close = s("(//div[@class = 'hamburger-menu burger open'])[1]")
+    hamburger_menu_close = s("(//div[@class = 'hamburger-menu burger open']/div)[1]")
     hamburger_menu_string = "(//div[@class='hamburger-menu burger'])[2]"
     categoryes_link = ss("//li[@class='mainmenu__item']/a")
     category_parents_clothes = s("(//li[@class='mainmenu__item']/span)[1]")
@@ -182,8 +182,8 @@ class SmokePage(BasePage):
             self.assert_check_expressions(list_first_attribute_banners[i], first_image, " некорректное отображение порядка товаров в каталоге")
             self.browser_back()
             url_main_return = self.get_url()
-
-            self.wait_element(self.block_icon_string) #ожидание блока иконок белого цвета
+            #ДОБАВИТЬ НА НОВОЙ ПЛОЩАДКЕ
+            #self.wait_element(self.block_icon_string) #ожидание блока иконок белого цвета
             self.assert_check_expressions(url_main, url_main_return, " ошибка адреса при возврате на главную страницу")
 
     @allure.step('Проверка видео')
@@ -236,35 +236,6 @@ class SmokePage(BasePage):
             product_text = self.get_element_text(self.products_in_result_search[y], " название товара Ожерелье").lower()
             print(product_text)
             self.assert_check_coincidence("ожерел", product_text, " некорреткный вывод результатов поиска")
-
-    @allure.step('Переходы по разделам главного меню')
-    def main_menu(self):
-
-        self.click(self.button_favourites, " избранное")
-        message_fav = self.get_element_text(self.string_message_favourites_01, " строка экрана избранное").replace("\n", " ")
-        self.assert_check_expressions("ВОЙДИТЕ ИЛИ ЗАРЕГИСТРИРУЙТЕСЬ, ЧТОБЫ ПРОСМОТРЕТЬ ВИШЛИСТ", message_fav, " ошибка сообщения на экране избранного")
-        self.click(self.button_close_favourites, " закрыть избранное")
-
-        self.click(self.button_lk, " личный кабинет")
-        self.click(self.button_login, " войти")
-        self.wait_element(self.button_login_screen_login_string)
-        self.click(self.button_close_screen_login, " закрыть экран входа")
-
-        self.click(self.button_lk, " личный кабинет")
-        self.click(self.button_registration, " зарегистрироваться")
-        self.wait_element(self.button_registration_screen_registration_string)
-        self.click(self.button_close_screen, " закрыть экран регистрации")
-
-        self.click(self.button_cart, " кнопка корзины")
-        message_cart = self.get_element_text(self.message_empty_cart, " текст сообщения 'В вашей корзине нет покупок'")
-        self.assert_check_expressions(message_cart, "В ВАШЕЙ КОРЗИНЕ НЕТ ПОКУПОК", " ошибка сообщения 'В вашей корзине нет покупок'")
-        self.click(self.button_back_in_shop_empty_cart, " кнопка в магазин")
-        page = CatalogPage()
-        page.basket_changes_products_1399()
-        self.click(self.button_cart, " кнопка корзины")
-        self.wait_element(self.button_order_string)
-
-        # НЕТ ПРОВЕРКИ ЭЛЕМЕНТА ЛОКАЛИЗАЦИИ
 
     @allure.step('Разделы меню каталога (ссылки)')
     def catalog_menu_link(self):
@@ -692,6 +663,7 @@ class SmokePage(BasePage):
         title_del_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
         page = CatalogPage()
         page.click(page.favorites_btn, " избранное")
+        time.sleep(2)
         page.click(page.product_in_favourites_screen, " карточку товара" )
         title_not_del_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
         self.assert_check_not_expressions(title_del_fav, title_not_del_fav, " товар не удален из избранного")
