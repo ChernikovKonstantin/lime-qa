@@ -81,6 +81,16 @@ class PaymentPage(BasePage):
     promo_code_error_string = "//div[contains(text(), 'промокод не найден')]"  #ошибка промокода строка
     old_price_block_cart = s("//span[@class = 'old']")
 
+    # locators block card
+
+    #del_card =s("(//div[@class='SvgIcon'])[17]")
+    del_card = s("(//div[@class='SvgIcon'])[17]/..")
+    #del_card = s("((//div[@class = 'FormGroup__control'])[7]//div[@class='SvgIcon'])[3]")
+    #del_card = s("((//div[@class = 'FormGroup__control'])[7]//div[@class='SvgIcon'])[3]/..")
+    button_popup_card_del = s("//button[@class='btn btn-outline']")
+
+
+
 
 
 
@@ -362,13 +372,63 @@ class PaymentPage(BasePage):
         self.check_product_for_order()
 
         page = CartPage()
+        time.sleep(3)
         page.wait_element_assure(page.making_an_order_btn)
         page.click(page.making_an_order_btn, "Клик кнопку оформления заказа")
 
+    @allure.step('Заполнение полей валидной карты')
+    def field_valid_card(self):
         self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
         self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
         self.set_text(self.card_holder_field, "tester", "Владелец карты")
         self.set_text(self.security_code_field, "123", "Код безопасности")
+
+    @allure.step('Проверка и удаление существующей карты')
+    def check_del_old_card(self):
+
+        try:
+            self.click(self.del_card, " элемент удаления существующей карты")
+            time.sleep(1)
+            self.click(self.button_popup_card_del, " удалить существующую карту")
+            time.sleep(2)
+        except:
+            pass
+
+
+
+
+    @allure.step(
+        'Авторизация с очисткой корзины, заполнение корзины 1 товаром,проверка наличия товаров')
+    def preview_payment_old_card(self):
+
+        page = LoginPage()
+        page.authorization()
+        page.wait_element_assure(page.close_btn)
+        page.click(page.close_btn, "Закрыть профиль")
+
+        page = CatalogPage()
+        page.wait_element_assure(page.basket_btn)
+        time.sleep(3)
+        page.click(page.basket_btn, "Переход в корзину")
+
+        page = CartPage()
+        page.cart_delete()
+
+        page.open_url(os.getenv('base_url'))
+
+        page = CatalogPage()
+        page.basket_changes_products_1399()
+        # page.basket_multiple_products()
+        page.click(page.basket_btn, "Переход в корзину")
+
+        self.check_product_for_order()
+
+        page = CartPage()
+        time.sleep(3)
+        page.wait_element_assure(page.making_an_order_btn)
+        page.click(page.making_an_order_btn, "Клик кнопку оформления заказа")
+
+
 
 
 
@@ -384,7 +444,7 @@ class PaymentPage(BasePage):
         page.wait_element_assure(page.basket_btn)
         time.sleep(3)
         page.click(page.basket_btn, "Переход в корзину")
-
+        time.sleep(2)
         page = CartPage()
         page.cart_delete()
 
@@ -461,7 +521,7 @@ class PaymentPage(BasePage):
             for i in range(len(self.message_out_of_stock)):
 
                 self.click(self.button_del2, " кнопку удаления заказа")
-                time.sleep(2)
+                time.sleep(3)
         except:
             pass
 
@@ -482,7 +542,7 @@ class PaymentPage(BasePage):
 
         self.wait_element_assure(self.to_pay_btn)
         self.click(self.to_pay_btn, "кнопка оплаты")
-
+        time.sleep(3)
         self.wait_element_assure(self.success_btn)
         self.click(self.success_btn, " кнопка опалты Удачно")
 
@@ -490,6 +550,17 @@ class PaymentPage(BasePage):
 
         title_thank_you_page = self.get_element_text(self.title_thank_you_page_text, " получение текста элемента")
 
+        self.assert_check_expressions("СПАСИБО!", title_thank_you_page, " нет сообщения об успешной оплате")
+
+    @allure.step("Оплата при заполненных полях")
+    def pay_order_without_3d(self):
+
+        self.wait_element_assure(self.to_pay_btn)
+        self.click(self.to_pay_btn, "кнопка оплаты")
+        time.sleep(3)
+
+        self.wait_element_assure(self.title_thank_you_page_text)
+        title_thank_you_page = self.get_element_text(self.title_thank_you_page_text, " получение текста элемента")
         self.assert_check_expressions("СПАСИБО!", title_thank_you_page, " нет сообщения об успешной оплате")
 
     @allure.step("Оплата при заполненных полях при постоплате")

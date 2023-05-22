@@ -25,6 +25,7 @@ class SmokePage(BasePage):
     banners_main_image = ss("//div[@class = 'slide' and @style != 'cursor: pointer;']")
     video_main_image = s("//video")
     block_icon_string = "//div[@class='App isHomepage page-index isAppNotify isEmptyCart']"
+    block_icon_dark_theme = s("//div[@class='App isHomepage page-index isDark theme-isDark isEmptyCart']")
     first_catalog_image = s("(//picture/img)[1]")
     catalog_image = s("//picture/img")
     first_catalog_video = s("(//video[@class='d-none d-md-block'])[1]")
@@ -61,6 +62,7 @@ class SmokePage(BasePage):
     button_registration = s("//button[@class='btn btn-block btn-primary']")
     button_registration_string = "//button[@class='btn btn-block btn-primary']"
     button_registration_screen_registration_string = "//button[@class='btn btn-block']"
+    button_registration_screen_registration = s("//button[@class='btn btn-block']")
     button_close_screen = s("//div[@class='SvgIcon IButtonIcon']")
 
     button_cart = s("(//div[@class='SvgIcon'])[4]")
@@ -83,17 +85,21 @@ class SmokePage(BasePage):
     category_parents_shoes = s("(//li[@class='mainmenu__item']/span)[4]")
     category_parents_special_offer = s("(//li[@class='mainmenu__item']/span)[5]")
     category_parents_campaigns = s("(//li[@class='mainmenu__item']/span)[6]")
-    categoryes_sub = ss("//li[@class='mainmenu__item']/ul/li/a")
+    #categoryes_sub = ss("//li[@class='mainmenu__item']/ul/li/a")
+    categoryes_sub = ss("//li[@class='mainmenu-children__item']/a")
+    categoryes_sub_special_offer = ss("//span[@class='mainmenu__link has-children highlight delimiter']")
     categoryes_sub_sub = ss("//ul[@class='mainmenu-children mainmenu__children']/li/ul/li/a")
 
     block_catalog = s("//nav[@class='mainmenu']")
     cart = s("//span[@title = 'Ваша корзина пуста']")
     favourites = s("//a[@href='/cart' and @class='usermenu__link']")
     help = s("//a[@href='/help' and @class='usermenu__link']")
-    cart_bonus = s("//a[@href='/ru_ru#gift' and @class='usermenu__link']")
+    #cart_bonus = s("//a[@href='/ru_ru#gift' and @class='usermenu__link']")
+    cart_bonus = s("//a[@href='/ru_ru#gift']")
     card_bonus_text = s("//span[contains (text(), 'Электронные подарочные карты')]")
     account_or_name_user = s("//a[@href='/ru_ru#lk' and @class='usermenu__link']")
     dark_screen = s("//html[@style='overflow: hidden;']")
+    element_plus = s("//div[@class='actions']")
 
 
     #locators login screen
@@ -171,11 +177,9 @@ class SmokePage(BasePage):
     def cycle_banners(self):
 
         for i in range(len(self.banners_main_image)):
-            list_first_attribute_banners = ['https://cache-limeshop.cdnvideo.ru/limeshop/aa/734083954af8f1a65bf3a11ed9d9900155d011401.jpeg?q=85&w=440',
-                                            'https://cache-limeshop.cdnvideo.ru/limeshop/aa/73344231819676f30b73f11ed9d9600155d011401.jpeg?q=85&w=440',
-                                            'https://cache-limeshop.cdnvideo.ru/limeshop/aa/73164154295cc9644a39611ed9d8f00155d011401.jpeg?q=85&w=440',
-                                            'https://cache-limeshop.cdnvideo.ru/limeshop/aa/73107092616306c58bff011ec9d3700155d011401.jpeg?q=85&w=440',
-                                            '']
+            list_first_attribute_banners = ['https://cache-limeshop.cdnvideo.ru/limeshop/aa/736621555ab6179a1e50411ed9da700155d011401.jpeg?q=85&w=440',
+                                            'https://cache-limeshop.cdnvideo.ru/limeshop/aa/7310296803a1cc11e539611ed9d6e00155d011401.jpeg?q=85&w=440',
+                                            'https://cache-limeshop.cdnvideo.ru/limeshop/aa/7370441558edecbe9adef11ed9d9300155d011401.jpeg?q=85&w=440']
             url_main = self.get_url()
             self.click(self.banners_main_image[i], " баннер")
             first_image = self.get_attribute(self.first_catalog_image, "data-src")
@@ -183,7 +187,7 @@ class SmokePage(BasePage):
             self.browser_back()
             url_main_return = self.get_url()
             #ДОБАВИТЬ НА НОВОЙ ПЛОЩАДКЕ
-            #self.wait_element(self.block_icon_string) #ожидание блока иконок белого цвета
+            self.wait_element_assure(self.block_icon_dark_theme) #ожидание блока иконок черного цвета
             self.assert_check_expressions(url_main, url_main_return, " ошибка адреса при возврате на главную страницу")
 
     @allure.step('Проверка видео')
@@ -243,7 +247,7 @@ class SmokePage(BasePage):
         for i in range(len(self.categoryes_link)):
            #self.wait_element(self.hamburger_menu_string)
             self.click(self.categoryes_link[i], " раздел меню")
-            time.sleep(1)
+            time.sleep(2)
             url_catalog = self.get_url()
             self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
             self.browser_back()
@@ -260,24 +264,29 @@ class SmokePage(BasePage):
             url_main = self.get_url()
 
             self.click(self.categoryes_sub[i], " подраздел категории ОДЕЖДА ")
-            time.sleep(1)
+            time.sleep(2)
             url_catalog = self.get_url()
             if  url_catalog != url_main:
                 self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
                 self.browser_back()
+                time.sleep(1)
                 self.click(self.hamburger_menu, " гамбургер меню")
                 self.click(self.category_parents_clothes, " категория ОДЕЖДА")
+                time.sleep(1)
+
 
             elif url_catalog == url_main:
                 for y in range(len(self.categoryes_sub_sub)):
                     self.click(self.categoryes_sub_sub[y], " подраздел подраздела")
-                    time.sleep(1)
+                    time.sleep(2)
                     url_catalog = self.get_url()
-                    self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
+                    self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в подкаталог")
                     self.browser_back()
                     self.click(self.hamburger_menu, " гамбургер меню")
+                    time.sleep(1)
                     self.click(self.category_parents_clothes, " категория ОДЕЖДА")
                     self.click(self.categoryes_sub[i], " подраздел категории ОДЕЖДА ")
+                    time.sleep(1)
 
     @allure.step('Разделы меню НИЖНЕЕ БЕЛЬЕ (выпадающие меню)')
     def catalog_menu_parents_link_lingerie(self):
@@ -290,24 +299,28 @@ class SmokePage(BasePage):
             url_main = self.get_url()
 
             self.click(self.categoryes_sub[i], " подраздел категории НИЖНЕЕ БЕЛЬЕ")
-            time.sleep(1)
+            time.sleep(2)
             url_catalog = self.get_url()
             if url_catalog != url_main:
                 self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
                 self.browser_back()
+                time.sleep(1)
                 self.click(self.hamburger_menu, " гамбургер меню")
                 self.click(self.category_parents_lingerie, " категория НИЖНЕЕ БЕЛЬЕ")
+                time.sleep(1)
 
             elif url_catalog == url_main:
                 for y in range(len(self.categoryes_sub_sub)):
                     self.click(self.categoryes_sub_sub[y], " подраздел подраздела")
-                    time.sleep(1)
+                    time.sleep(2)
                     url_catalog = self.get_url()
                     self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
                     self.browser_back()
+                    time.sleep(1)
                     self.click(self.hamburger_menu, " гамбургер меню")
                     self.click(self.category_parents_lingerie, " категория НИЖНЕЕ БЕЛЬЕ")
                     self.click(self.categoryes_sub[i], " подраздел категории НИЖНЕЕ БЕЛЬЕ ")
+                    time.sleep(1)
 
     @allure.step('Разделы меню АКСЕССУАРЫ (выпадающие меню)')
     def catalog_menu_parents_link_accessories(self):
@@ -320,24 +333,28 @@ class SmokePage(BasePage):
             url_main = self.get_url()
 
             self.click(self.categoryes_sub[i], " подраздел категории АКСЕССУАРЫ")
-            time.sleep(1)
+            time.sleep(2)
             url_catalog = self.get_url()
             if url_catalog != url_main:
                 self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
                 self.browser_back()
+                time.sleep(1)
                 self.click(self.hamburger_menu, " гамбургер меню")
                 self.click(self.category_parents_accessories, " категория АКСЕССУАРЫ")
+                time.sleep(1)
 
             elif url_catalog == url_main:
                 for y in range(len(self.categoryes_sub_sub)):
                     self.click(self.categoryes_sub_sub[y], " подраздел подраздела")
-                    time.sleep(1)
+                    time.sleep(2)
                     url_catalog = self.get_url()
                     self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
                     self.browser_back()
+                    time.sleep(1)
                     self.click(self.hamburger_menu, " гамбургер меню")
                     self.click(self.category_parents_accessories, " категория АКСЕССУАРЫ")
                     self.click(self.categoryes_sub[i], " подраздел категории АКСЕССУАРЫ")
+                    time.sleep(1)
 
     @allure.step('Разделы меню ОБУВЬ (выпадающие меню)')
     def catalog_menu_parents_link_shoes(self):
@@ -350,24 +367,28 @@ class SmokePage(BasePage):
             url_main = self.get_url()
 
             self.click(self.categoryes_sub[i], " подраздел категории ОБУВЬ")
-            time.sleep(1)
+            time.sleep(2)
             url_catalog = self.get_url()
             if url_catalog != url_main:
                 self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
                 self.browser_back()
+                time.sleep(1)
                 self.click(self.hamburger_menu, " гамбургер меню")
                 self.click(self.category_parents_shoes, " категория ОБУВЬ")
+                time.sleep(1)
 
             elif url_catalog == url_main:
                 for y in range(len(self.categoryes_sub_sub)):
                     self.click(self.categoryes_sub_sub[y], " подраздел подраздела")
-                    time.sleep(1)
+                    time.sleep(2)
                     url_catalog = self.get_url()
                     self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
                     self.browser_back()
+                    time.sleep(1)
                     self.click(self.hamburger_menu, " гамбургер меню")
                     self.click(self.category_parents_shoes, " категория ОБУВЬ")
                     self.click(self.categoryes_sub[i], " подраздел категории ОБУВЬ")
+                    time.sleep(1)
 
     @allure.step('Разделы меню СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ (выпадающие меню)')
     def catalog_menu_parents_link_special_offer(self):
@@ -380,24 +401,28 @@ class SmokePage(BasePage):
             url_main = self.get_url()
 
             self.click(self.categoryes_sub[i], " подраздел категории СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ")
-            time.sleep(1)
+            time.sleep(3)
             url_catalog = self.get_url()
             if url_catalog != url_main:
                 self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
                 self.browser_back()
+                time.sleep(1)
                 self.click(self.hamburger_menu, " гамбургер меню")
                 self.click(self.category_parents_special_offer, " категория СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ")
+                time.sleep(1)
 
             elif url_catalog == url_main:
                 for y in range(len(self.categoryes_sub_sub)):
                     self.click(self.categoryes_sub_sub[y], " подраздел подраздела")
-                    time.sleep(1)
+                    time.sleep(2)
                     url_catalog = self.get_url()
                     self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
                     self.browser_back()
+                    time.sleep(1)
                     self.click(self.hamburger_menu, " гамбургер меню")
                     self.click(self.category_parents_special_offer, " категория СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ")
                     self.click(self.categoryes_sub[i], " подраздел категории СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ")
+                    time.sleep(1)
 
     @allure.step('Разделы меню КОМПАНИИ (выпадающие меню)')
     def catalog_menu_parents_link_campaigns(self):
@@ -410,24 +435,28 @@ class SmokePage(BasePage):
             url_main = self.get_url()
 
             self.click(self.categoryes_sub[i], " подраздел категории КОМПАНИИ")
-            time.sleep(1)
+            time.sleep(2)
             url_catalog = self.get_url()
             if url_catalog != url_main:
                 self.assert_check_coincidence("summer", url_catalog, " переход выполнен не в каталог")
                 self.browser_back()
+                time.sleep(1)
                 self.click(self.hamburger_menu, " гамбургер меню")
                 self.click(self.category_parents_campaigns, " категория КОМПАНИИ")
+                time.sleep(1)
 
             elif url_catalog == url_main:
                 for y in range(len(self.categoryes_sub_sub)):
                     self.click(self.categoryes_sub_sub[y], " подраздел подраздела")
-                    time.sleep(1)
+                    time.sleep(2)
                     url_catalog = self.get_url()
                     self.assert_check_coincidence("summer", url_catalog, " переход выполнен не в каталог")
                     self.browser_back()
+                    time.sleep(1)
                     self.click(self.hamburger_menu, " гамбургер меню")
                     self.click(self.category_parents_campaigns, " категория КОМПАНИИ")
                     self.click(self.categoryes_sub[i], " подраздел категории КОМПАНИИ")
+                    time.sleep(1)
 
     # ПРОФИЛЬ
 
@@ -506,7 +535,7 @@ class SmokePage(BasePage):
         page.click_registration_btn()
         page.fill_registration_fields()
         page = LoginPage()
-        page.check_logout_btn_is_visible()
+        page.wait_element_assure(page.logout_btn)
 
     @allure.step('Первый вход в профиль')
     def user_first_lk(self):
@@ -663,8 +692,9 @@ class SmokePage(BasePage):
         title_del_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
         page = CatalogPage()
         page.click(page.favorites_btn, " избранное")
-        time.sleep(2)
+        time.sleep(3)
         page.click(page.product_in_favourites_screen, " карточку товара" )
+        time.sleep(1)
         title_not_del_fav = self.get_element_text(self.title_product_in_cart, " название товара в карточке")
         self.assert_check_not_expressions(title_del_fav, title_not_del_fav, " товар не удален из избранного")
 

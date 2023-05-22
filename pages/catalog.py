@@ -1,3 +1,4 @@
+import os
 import random
 import time
 import re
@@ -12,7 +13,7 @@ from selene.support.shared import browser
 class CatalogPage(BasePage):
     # Locators
     #hamburger_menu = s("//div[@class='icon']")
-    hamburger_menu = s("// *[ @ id = 'AppNavbar'] / div[1] / div[1] / div")
+    hamburger_menu = s("(//div[@class='hamburger-menu burger'])[2]")
 
     hamburger_menu_string = "//div[@class='icon']"
     menu_link_clothes = s("//span[span= 'Одежда']")
@@ -53,6 +54,7 @@ class CatalogPage(BasePage):
     menu_link_lingerie = s("//span[span= 'НИЖНЕЕ БЕЛЬЕ']")
     menu_subsection_all_models = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
     menu_subsection_body = s("//a[@class= 'mainmenu-children__link' and span = 'БОДИ']")
+    menu_subsection_linearge_briefs = s("//a[@class= 'mainmenu-children__link' and span = 'БОДИ']")
     choose_a_product_lingerie = s("(//a[@href= '/product/12463_8035_966-svetlyi_xaki'])[1]")
     first_product_in_catalog = s(
         "//button[contains(@class, 'isActive')]/ancestor::div[contains(@class, 'CatalogRow ')]//a")
@@ -60,7 +62,7 @@ class CatalogPage(BasePage):
     menu_chapter_accessories = s("//span[span= 'АКСЕССУАРЫ']")
     menu_subsection_belts = s("//a[@class= 'mainmenu-children__link' and span = 'РЕМНИ']")
     choose_a_product_belts = s("(//a[@href= '/product/12843_9898_293-cernyi'])[2]")
-    choose_a_product_1399 = s('//a[contains(text(), "Базовое боди с длинными рукавами")]')
+    choose_a_product_1399 = s('//a[contains(text(), "Бесшовный бюстгальтер с треугольными чашками")]')
     choose_a_product_loafers = s('//a[contains (text(), "Лоферы из кожи шевро")]')
     menu_subsection_shoes_all = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
 
@@ -193,10 +195,12 @@ class CatalogPage(BasePage):
     @allure.step("Добавление товара в корзину 1999 рублей")
     def basket_changes_products_1399(self):
         time.sleep(5)
-        #self.wait_element(self.hamburger_menu_string)
-        self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_lingerie, "Блок Нижнее белье")
-        self.click(self.menu_subsection_body, "Подраздел Все модели")
+        self.open_url(os.getenv('base_url') + "/ru_ru/catalog/underwear_invisible")
+        # #self.wait_element(self.hamburger_menu_string)
+        # self.click(self.hamburger_menu, "гамбургер-меню")
+        # self.click(self.menu_link_lingerie, "Блок Нижнее белье")
+        # self.click(self.menu_subsection_linearge_briefs, "Подраздел бесшовное")
+
         self.click(self.choose_a_product_1399, "Товар с ценой 1999")
         time.sleep(2)
         self.click(self.add_to_cart, "добавить в корзину")
@@ -206,10 +210,8 @@ class CatalogPage(BasePage):
     def basket_add_last_product(self):
         # Подобрать товар
         time.sleep(5)
-        # self.wait_element(self.hamburger_menu_string)
-        self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_lingerie, "Блок Нижнее белье")
-        self.click(self.menu_subsection_body, "Подраздел Все модели")
+
+        self.open_url(os.getenv('base_url') + "/ru_ru/catalog/underwear_invisible")
         self.click(self.choose_a_product_1399, "Товар с ценой 1999")
         time.sleep(2)
         self.click(self.add_to_cart, "добавить в корзину")
@@ -230,16 +232,11 @@ class CatalogPage(BasePage):
     @allure.step("Добавление нескольких товаров в корзину")
     def basket_add_many_products(self):
 
-
-        self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_lingerie, "Блок Нижнее белье")
-        self.click(self.menu_subsection_body, "Подраздел Все модели")
+        self.open_url(os.getenv('base_url') + "/ru_ru/catalog/underwear_invisible")
         self.click(self.choose_a_product_1399, "Товар с ценой 1999")
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
-        self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_shoes, "Блок ТУФЛИ")
-        self.click(self.menu_subsection_shoes_all, "Ссылка ВСЕ МОДЕЛИ")
+        self.open_url(os.getenv('base_url') + "/ru_ru/catalog/loafers")
         self.click(self.choose_a_product_loafers, "Товар лоферы")
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
@@ -267,7 +264,7 @@ class CatalogPage(BasePage):
 
        #self.wait_element_assure(self.block_product)
         self.click(self.favorites_btn, " избранное")
-        time.sleep(3)
+        time.sleep(4)
 
         try:
             for i in range(len(self.products_in_favourites_screen)):

@@ -30,6 +30,7 @@
 аннотация `@pytest.mark.order(#)`
 терминальный запуск по маркеру `pytest -m order`
 запуск теста по имени `pytest -m order -k name_test`
+запуск с перезапуском упавших `pytest -m smoked44 --reruns 1 test_smoke.py`
 
 
 

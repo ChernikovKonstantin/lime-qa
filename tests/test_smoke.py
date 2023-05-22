@@ -24,19 +24,14 @@ class TestSmoke:
 
     #ОСНОВНОЙ ЭКРАН
 
-    @allure.title("Основной экран Заглушка")
-    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/849")
-    @pytest.mark.smoked44
-    def test_z(self):
-        page = SmokePage()
 
     @allure.title("Основной экран / Переход с баннера к разделам каталога")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/849")
-    @pytest.mark.smoked44
+    @pytest.mark.smoked
     def test_main_screen_banners(self):
         page = SmokePage()
         page.cycle_banners()
-        page.video()
+        #page.video()
 
 
     @allure.title("Основной экран / Лого LIME")
@@ -48,7 +43,7 @@ class TestSmoke:
 
     @allure.title("Основной экран / Переход к экрану поиска")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/853")
-    @pytest.mark.smoked44
+    @pytest.mark.smoked
     def test_main_screen_main_menu_search(self):
         page = SmokePage()
         page.main_menu_search()
@@ -75,10 +70,11 @@ class TestSmoke:
         page.click(page.button_login, " войти")
         page.wait_element(page.button_login_screen_login_string)
         page.click(page.button_close_screen_login, " закрыть экран входа")
-
+        time.sleep(2)
         page.click(page.button_lk, " личный кабинет")
+        time.sleep(2)
         page.click(page.button_registration, " зарегистрироваться")
-        page.wait_element(page.button_registration_screen_registration_string)
+        page.wait_element_assure(page.button_registration_screen_registration)
         page.click(page.button_close_screen, " закрыть экран регистрации")
 
     @allure.title("Основной экран / Переход к экрану Корзина")
@@ -93,8 +89,9 @@ class TestSmoke:
         page.click(page.button_back_in_shop_empty_cart, " кнопка в магазин")
         page = CatalogPage()
         page.basket_changes_products_1399()
+        time.sleep(1)
         page = SmokePage()
-        page.click(page.button_cart, " кнопка корзины")
+        page.click(page.button_cart_2, " кнопка корзины")
         page.wait_element(page.button_order_string)
 
         # НЕТ ПРОВЕРКИ ЭЛЕМЕНТА ЛОКАЛИЗАЦИИ
@@ -124,6 +121,7 @@ class TestSmoke:
         time.sleep(2)
         page.wait_element_assure(page.dark_screen)
         page.wait_element_assure(page.block_catalog)
+        page.click(page.element_plus, " список Дополнительно")
         page.wait_element_assure(page.cart)
         page.wait_element_assure(page.help)
         page.wait_element_assure(page.cart_bonus)
@@ -145,6 +143,7 @@ class TestSmoke:
 
         page = SmokePage()
         page.wait_element_assure(page.block_catalog)
+        page.click(page.element_plus, " список Дополнительно")
         page.wait_element_assure(page.cart)
         page.wait_element_assure(page.help)
         page.wait_element_assure(page.cart_bonus)
@@ -169,7 +168,7 @@ class TestSmoke:
         page.click(page.hamburger_menu, " гамбургер меню")
         page.wait_element_assure(page.dark_screen)
         page.click(page.category_parents_clothes, " категория ОДЕЖДА")
-        page.click_random_cat()
+        #page.click_random_cat()
         page.click(page.category_parents_clothes, " закрыть категория ОДЕЖДА")
         time.sleep(3)
         page.click(page.hamburger_menu_close, " закрыть гамбургер меню")
@@ -309,13 +308,12 @@ class TestSmoke:
         page = SmokePage()
         page.user_login()
         page.click(page.button_close_screen, " закрыть экран входа\регистрации")
-        page = CatalogPage()
-        page.click(page.hamburger_menu, "гамбургер-меню")
-        page.click(page.menu_link_lingerie, "Блок Нижнее белье")
-        page.click(page.menu_subsection_body, "Подраздел Все модели")
-        page.click(page.choose_a_product_1399, "Товар с ценой 1999")
+
+        page.open_url(os.getenv('base_url') + "/ru_ru/catalog/underwear_invisible")
         time.sleep(2)
         page = CatalogPage()
+        page.click(page.choose_a_product_1399, "Товар с ценой 1999")
+        time.sleep(2)
         page.click(page.add_to_cart, "добавить в корзину")
 
         page = SmokePage()
@@ -340,15 +338,17 @@ class TestSmoke:
         page.click(page.button_close_screen, " закрыть экран входа\регистрации")
         page = CatalogPage()
         page.basket_add_many_products()
+        time.sleep(2)
         page = SmokePage()
         value_counter_basket = page.check_counter_basket()
-        time.sleep(2)
+
         page.click(page.button_cart_2, " переход в корзину")
+        time.sleep(2)
         title_product_basket = page.get_element_text(page.title_product_in_basket, " название товара в корзине")
         page = CartPage()
         page.wait_element_assure(page.block_product)
         page.click(page.button_del, " удалить 1 товар в корзине")
-        time.sleep(3)
+        time.sleep(5)
         page = SmokePage()
         title_product_basket_after_del = page.get_element_text(page.title_product_in_basket, " название товара в корзине")
         page.assert_check_not_expressions(title_product_basket, title_product_basket_after_del, " товар не удален из корзины")
@@ -555,10 +555,12 @@ class TestSmoke:
     @pytest.mark.smoke2
     def test_card_self(self):
         page = PaymentPage()
-        page.preview_payment()
+        page.preview_payment_old_card()
         page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
         page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
+        page.check_del_old_card()
+        page.field_valid_card()
         page.pay_order()
 
     @allure.title("Оплата банковской картой (недостаточно средств), самовывоз")
@@ -684,6 +686,7 @@ class TestSmoke:
 
         page = SmokePage()
         page.del_favourites_cart_product()
+        time.sleep(3)
         value_fav = page.check_element_fav_menu()
         page.check_del_product_fav_screen()
         page = BasePage()
