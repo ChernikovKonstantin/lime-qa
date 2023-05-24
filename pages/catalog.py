@@ -41,6 +41,7 @@ class CatalogPage(BasePage):
     menu_blazers = s("//a[@class = 'mainmenu-children__link' and span ='БЛЕЙЗЕРЫ']")
     product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]")
     menu_link_bags = s("//a[span= 'СУМКИ']")
+    menu_link_new = s("//a[span= 'НОВИНКИ']")
     choose_a_product_bags = s("//div[@class= 'CatalogProduct__title']/a")
     menu_link_shoes = s("//span[span= 'ОБУВЬ']")
     menu_subsection_shoes = s("//a[@class= 'mainmenu-children__link' and span = 'Ботильоны']")
@@ -62,7 +63,8 @@ class CatalogPage(BasePage):
     menu_chapter_accessories = s("//span[span= 'АКСЕССУАРЫ']")
     menu_subsection_belts = s("//a[@class= 'mainmenu-children__link' and span = 'РЕМНИ']")
     choose_a_product_belts = s("(//a[@href= '/product/12843_9898_293-cernyi'])[2]")
-    choose_a_product_1399 = s('//a[contains(text(), "Бесшовный бюстгальтер с треугольными чашками")]')
+    #choose_a_product_1399 = s('//a[contains(text(), "Бюстгальтер с треугольными чашками и узлом")]')
+    choose_a_product_1399 = s('(//a[contains(text(), "Боди без рукавов")])[3]')
     choose_a_product_loafers = s('//a[contains (text(), "Лоферы из кожи шевро")]')
     menu_subsection_shoes_all = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
 
@@ -195,11 +197,7 @@ class CatalogPage(BasePage):
     @allure.step("Добавление товара в корзину 1999 рублей")
     def basket_changes_products_1399(self):
         time.sleep(5)
-        self.open_url(os.getenv('base_url') + "/ru_ru/catalog/underwear_invisible")
-        # #self.wait_element(self.hamburger_menu_string)
-        # self.click(self.hamburger_menu, "гамбургер-меню")
-        # self.click(self.menu_link_lingerie, "Блок Нижнее белье")
-        # self.click(self.menu_subsection_linearge_briefs, "Подраздел бесшовное")
+        self.open_url(os.getenv('base_url') + "/ru_ru/catalog/bodysuits")
 
         self.click(self.choose_a_product_1399, "Товар с ценой 1999")
         time.sleep(2)
@@ -232,10 +230,11 @@ class CatalogPage(BasePage):
     @allure.step("Добавление нескольких товаров в корзину")
     def basket_add_many_products(self):
 
-        self.open_url(os.getenv('base_url') + "/ru_ru/catalog/underwear_invisible")
+        self.open_url(os.getenv('base_url') + "/ru_ru/catalog/bodysuits")
         self.click(self.choose_a_product_1399, "Товар с ценой 1999")
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
+        #self.open_url(os.getenv('base_url') + "/ru_ru/catalog/loafers")
         self.open_url(os.getenv('base_url') + "/ru_ru/catalog/loafers")
         self.click(self.choose_a_product_loafers, "Товар лоферы")
         self.click(self.add_to_cart, "добавить в корзину")
@@ -258,6 +257,11 @@ class CatalogPage(BasePage):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_bags, "Блок Сумки")
 
+    @allure.step("Переход в каталог Новинки")
+    def select_section_menu_new(self):
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_new, "Блок Новинки")
+
 
     @allure.title("Очистка избранного")
     def favoutites_clear(self):
@@ -268,15 +272,22 @@ class CatalogPage(BasePage):
 
         try:
             for i in range(len(self.products_in_favourites_screen)):
-                time.sleep(1)
+                time.sleep(2)
                 self.click(self.product_in_favourites_screen, " превью товара на экране избранного")
+                time.sleep(1)
                 self.wait_element_assure(self.add_favorite_btn)
                 self.click(self.add_favorite_btn, " удалить товар из избранного")
-                time.sleep(1)
+                time.sleep(3)
                 self.click(self.favorites_btn, " избранное")
 
-
+            self.click(self.product_in_favourites_screen, " превью товара на экране избранного")
+            time.sleep(1)
+            self.wait_element_assure(self.add_favorite_btn)
+            self.click(self.add_favorite_btn, " удалить товар из избранного")
+            time.sleep(3)
+            self.click(self.favorites_btn, " избранное")
             self.click(self.button_close_fav, " закрыть экран избранного")
+            time.sleep(2)
 
         except:
             pass

@@ -44,7 +44,11 @@ class PaymentPage(BasePage):
     button_del = s('//div[@class="SvgIcon IButtonIcon"]/child::*')
     button_del2 = s("//p[@class='CartTable__error']/ancestor::div[@class='CartTable__name']/following-sibling::button//div[@class='SvgIcon IButtonIcon']/child::*")
 
+    error_bonus_card_not_money = s("//div[contains(text(), 'превышена сумма по карте')]")
+    error_bonus_card_not_valid = s("//div[contains(text(), 'не коррекнтый номер сертификата')]")
+    error_bonus_card_not_money2 = s("//div[contains(text(), 'Сумма заказа больше, указанных к списанию средств с сертификата. Чтобы оформить заказ, выберите дополнительный способ оплаты:')]")
 
+    button_dop_pay = s("(//span[contains(text(), 'Оплата картой онлайн')])[2]")
 
 
 
@@ -75,6 +79,7 @@ class PaymentPage(BasePage):
     discount_string = '//div[contains(text(), " Скидка на заказ")]'# строка Скидка на заказ
     price_discount_text = s('(//div[@class="CustomerCartSummary__value"])[3]/span')# сумма скидки
     price_without_discount_text = s('(//div[@class="CustomerCartSummary__value"])[2]/span')# итоговая сумма без промокода
+    price_without_discount_bonus_card = s('(//div[@class="CustomerCartSummary__value"])[6]/span')  # итоговая сумма без промокода
     price_finally_text = s('(//div[@class="CustomerCartSummary__value"])[5]/span')# Итого
     price_finally_text_witout_discount = s('(//div[@class="CustomerCartSummary__value"])[4]/span')  # Итого при отсутсвии скидки
     promo_code_error = s("//div[contains(text(), 'промокод не найден')]")  # ошибка промокода
@@ -84,10 +89,12 @@ class PaymentPage(BasePage):
     # locators block card
 
     #del_card =s("(//div[@class='SvgIcon'])[17]")
-    del_card = s("(//div[@class='SvgIcon'])[17]/..")
+    del_card = ss("(//div[@class='SvgIcon'])[17]/..")
+    del_card_2_products = ss("(//div[@class='SvgIcon'])[20]/..")
     #del_card = s("((//div[@class = 'FormGroup__control'])[7]//div[@class='SvgIcon'])[3]")
     #del_card = s("((//div[@class = 'FormGroup__control'])[7]//div[@class='SvgIcon'])[3]/..")
     button_popup_card_del = s("//button[@class='btn btn-outline']")
+    checkbox_add_new_card = s("//span[contains(text(), ' Добавить новую карту')]")
 
 
 
@@ -205,7 +212,7 @@ class PaymentPage(BasePage):
 
     @allure.step('Проверка суммы заказа с учетом промо')
     def sum_order_with_discount(self):
-        self.wait_element(self.discount_string)
+        self.wait_element(self.discount_string) #ошибка - нет скидки в корзине при заказе более 6000
         self.wait_element(self.icon_discount_percent_block_cart_text_string)
         price_result_block_cart = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_finally_block_cart_text, 'Получение итоговой суммы заказа из блока Корзина'))))
         total_price = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text, 'Получение суммы заказа без промокода'))))
@@ -378,24 +385,36 @@ class PaymentPage(BasePage):
 
     @allure.step('Заполнение полей валидной карты')
     def field_valid_card(self):
-        self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
+        self.click(self.checkbox_add_new_card, " чекбокс добавить новую карту")
+        self.set_text(self.card_number_field, "2200 0000 0000 0004", " Номер карты")
         self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
         self.set_text(self.card_holder_field, "tester", "Владелец карты")
         self.set_text(self.security_code_field, "123", "Код безопасности")
 
     @allure.step('Проверка и удаление существующей карты')
     def check_del_old_card(self):
-
+        time.sleep(1)
         try:
-            self.click(self.del_card, " элемент удаления существующей карты")
-            time.sleep(1)
-            self.click(self.button_popup_card_del, " удалить существующую карту")
-            time.sleep(2)
+            for i in range(len(self.del_card)):
+                self.click(self.del_card[i], " элемент удаления существующей карты")
+                time.sleep(1)
+                self.click(self.button_popup_card_del, " удалить существующую карту")
+                time.sleep(2)
+
         except:
             pass
 
-
-
+    @allure.step('Проверка и удаление существующей карты')
+    def check_del_old_card_2_products(self):
+        time.sleep(1)
+        try:
+            for i in range(len(self.del_card_2_products)):
+                self.click(self.del_card_2_products[i], " элемент удаления существующей карты")
+                time.sleep(1)
+                self.click(self.button_popup_card_del, " удалить существующую карту")
+                time.sleep(2)
+        except:
+            pass
 
     @allure.step(
         'Авторизация с очисткой корзины, заполнение корзины 1 товаром,проверка наличия товаров')
@@ -461,10 +480,6 @@ class PaymentPage(BasePage):
         page.wait_element(page.making_an_order_btn_string)
         page.click(page.making_an_order_btn, "Клик кнопку оформления заказа")
 
-        self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
-        self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
-        self.set_text(self.card_holder_field, "tester", "Владелец карты")
-        self.set_text(self.security_code_field, "123", "Код безопасности")
 
     @allure.step(
         'Авторизация с очисткой корзины, заполнение корзины 1 товаром и увеличение до 5,проверка наличия товаров, заполнение полей оформления заказа')
@@ -497,10 +512,7 @@ class PaymentPage(BasePage):
         page.wait_element(page.making_an_order_btn_string)
         page.click(page.making_an_order_btn, "Клик кнопку оформления заказа")
 
-        self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
-        self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
-        self.set_text(self.card_holder_field, "tester", "Владелец карты")
-        self.set_text(self.security_code_field, "123", "Код безопасности")
+
 
     @allure.step('Оформление добавленного заказа')
     def preview_payment_in_cart(self):
@@ -552,7 +564,7 @@ class PaymentPage(BasePage):
 
         self.assert_check_expressions("СПАСИБО!", title_thank_you_page, " нет сообщения об успешной оплате")
 
-    @allure.step("Оплата при заполненных полях")
+    @allure.step("Оплата при заполненных полях без 3d")
     def pay_order_without_3d(self):
 
         self.wait_element_assure(self.to_pay_btn)

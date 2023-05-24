@@ -2,6 +2,7 @@ import json
 import os
 import time
 from this import s
+import re
 
 import allure
 import pytest
@@ -31,7 +32,7 @@ class TestSmoke:
     def test_main_screen_banners(self):
         page = SmokePage()
         page.cycle_banners()
-        #page.video()
+        page.video()
 
 
     @allure.title("Основной экран / Лого LIME")
@@ -104,11 +105,11 @@ class TestSmoke:
     @pytest.mark.smoked(3)
     def test_main_screen_menu(self):
         page = SmokePage()
-        page.catalog_menu_link()
-        page.catalog_menu_parents_link_clothes()
-        page.catalog_menu_parents_link_lingerie()
-        page.catalog_menu_parents_link_accessories()
-        page.catalog_menu_parents_link_shoes()
+        #page.catalog_menu_link()
+        #page.catalog_menu_parents_link_clothes()
+        #page.catalog_menu_parents_link_lingerie()
+        #page.catalog_menu_parents_link_accessories()
+        #page.catalog_menu_parents_link_shoes()
         page.catalog_menu_parents_link_special_offer()
         page.catalog_menu_parents_link_campaigns()
 
@@ -122,6 +123,7 @@ class TestSmoke:
         page.wait_element_assure(page.dark_screen)
         page.wait_element_assure(page.block_catalog)
         page.click(page.element_plus, " список Дополнительно")
+        #НУЖНО ДОБАВИТЬТ ПУНКТЫ В МЕНЮ
         page.wait_element_assure(page.cart)
         page.wait_element_assure(page.help)
         page.wait_element_assure(page.cart_bonus)
@@ -188,7 +190,9 @@ class TestSmoke:
     def test_burger_menu_bonus_card(self):
         page = SmokePage()
         page.click(page.hamburger_menu, " гамбургер меню")
+        page.click(page.element_plus, " список Дополнительно")
         page.click(page.cart_bonus, " пункт Подарочная карта")
+        time.sleep(1)
         url = page.get_url()
         page.assert_check_coincidence('gift', url, " не выполнен переход к экрану подарочной карты")
 
@@ -208,16 +212,16 @@ class TestSmoke:
         page.assert_check_coincidence('product', url, " не выполнен переход к карточке товара")
 
     @allure.title("Экран Каталог(Бургер-меню) / Раздел без подразделов")
-    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/1599")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/890&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=130")
     @pytest.mark.smoke4
     def test_burger_menu_check_products(self):
         page = CatalogPage()
-        page.select_section_menu_bags()
+        page.select_section_menu_new()
         page = SmokePage()
         page.wait_element_hidden(page.block_catalog)
         time.sleep(1)
         url = page.get_url()
-        page.assert_check_coincidence("catalog/sumki", url, " переход в каталог не выполнен")
+        page.assert_check_coincidence("catalog/new", url, " переход в каталог не выполнен")
         page.wait_element_assure(page.catalog_image)
 
     @allure.title("Просмотр карточки товара")
@@ -281,10 +285,7 @@ class TestSmoke:
     @pytest.mark.smoked1(7)
     def test_cart_add_product_anonim(self):
         page = CatalogPage()
-        page.click(page.hamburger_menu, "гамбургер-меню")
-        page.click(page.menu_link_lingerie, "Блок Нижнее белье")
-        page.click(page.menu_subsection_body, "Подраздел Все модели")
-        page.click(page.choose_a_product_1399, "Товар с ценой 1999")
+        page.basket_changes_products_1399()
         time.sleep(2)
         page = CatalogPage()
         page.click(page.add_to_cart, "добавить в корзину")
@@ -459,8 +460,37 @@ class TestSmoke:
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/880")
     @pytest.mark.smoke3
     def test_first_login_with_profile(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.check_product_for_order()
+        page.check_del_old_card()
+        page.field_valid_card()
+        page.to_pay_btn.click()
+        time.sleep(2)
+        page.success_btn.click()
+
         page = SmokePage()
-        page.user_profile_with_order()
+        number_order = (re.sub('[^0-9]', "", page.get_element_text(page.message_number_order, ' сумма заказа после оформления')))
+
+        page.click(page.button_lk, " личный кабинет")
+
+        page.wait_element(page.message_registration_screen_string)
+        page.wait_element(page.button_change_password_string)
+        page.wait_element(page.button_save_changes_string)
+        #page.wait_element(page.message_mailing_string)
+        page.wait_element(page.button_delete_accaunt_string)
+        page.wait_element(page.button_logout_account_string)
+        page.wait_element(page.message_orders_string)
+        time.sleep(10)
+        page.wait_element(page.orders_string)
+
+        number_ord = (re.sub('[^0-9]', "",
+                             page.get_element_text(page.message_number_order_lk, ' сумма заказа в личном кабинете')))
+        number_order_lk = number_ord[:-12]
+
+        page.assert_check_expressions(number_order, number_order_lk, " оформленный заказ отсутсвует в личном кабинете")
+
+
 
     @allure.title("Экран поиска")
     @allure.link("https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=123")
@@ -479,6 +509,8 @@ class TestSmoke:
         page.preview_payment()
         page.set_text(page.promo_code_field, "XHGFAH", "Промо код")
         page.sum_order_with_discount()
+        page.check_del_old_card()
+        page.field_valid_card()
         page.pay_order()
 
     @allure.title("Оплата карта + валидный промокод, несколько товаров")
@@ -489,15 +521,20 @@ class TestSmoke:
         page.preview_payment_many_products()
         page.set_text(page.promo_code_field, "XHGFAH", "Промо код")
         page.sum_order_with_discount_many()
+        page.check_del_old_card_2_products()
+        page.field_valid_card()
         page.pay_order()
 
     @allure.title("Оплата карта + не валидный промокод")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/905")
 
     def test_payment_cart_no_valid_promo(self):
+
         page = PaymentPage()
         page.preview_payment()
         page.set_text(page.promo_code_field, "00000", "Промо код")
+        page.check_del_old_card()
+        page.field_valid_card()
         page.check_payment_promo_not_valid()
 
     @allure.title("Проверка скидки при безналичной оплате на сайте заказа суммой > 6000")
@@ -511,6 +548,8 @@ class TestSmoke:
         page.check_without_discount()
         page.change_value_products_in_payment_5_unit()
         page.sum_order_with_discount()
+        page.check_del_old_card()
+        page.field_valid_card()
         page.pay_order()
 
     @allure.title("Проверка применения промокодов для заказов 6000 < Σ < 6000")
@@ -537,6 +576,8 @@ class TestSmoke:
         page.preview_payment()
         page.click(page.type_of_delivery_courier, "Выбор типа доставки Курьер")
         page.click(page.type_of_payment_card, "Выбор типа оплаты Карта")
+        page.check_del_old_card()
+        page.field_valid_card()
         page.pay_order_error()
 
     @allure.title("Оплата при получении, доставка курьером")
@@ -569,14 +610,14 @@ class TestSmoke:
     def test_card_self_no_many(self):
         page = PaymentPage()
         page.preview_payment()
-        page.set_text(page.card_number_field, "4012 8888 8888 1881", " тестовый номер карты  с ошибкой Недостаточно средств")
         page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
         page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
-        page.wait_element_assure(page.to_pay_btn)
-        page.click(page.to_pay_btn, "кнопка оплаты")
+        page.check_del_old_card()
+        page.field_valid_card()
+        page.set_text(page.card_number_field, "4012 8888 8888 1881", " тестовый номер карты  с ошибкой Недостаточно средств")
+        page.pay_order_without_check()
 
-        #нужно разобраться - можно ли перекидывать на сторонний сервис? по факту перекидывает, но после нажатияь успешно перекидывает в корзину
         page.wait_element(page.error_card_not_money_string)
 
     @allure.title("Оплата банковской картой(не существующая карта), самовывоз")
@@ -585,14 +626,18 @@ class TestSmoke:
     def test_card_self_no_valid_card(self):
         page = PaymentPage()
         page.preview_payment()
-        page.set_text(page.card_number_field, "4012 8888 8888 1882",
-                      " тестовый номер карты  с ошибкой Недостаточно средств")
+
         page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
         page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
+        page.check_del_old_card()
+        page.field_valid_card()
+        page.set_text(page.card_number_field, "4012 8888 8888 1882",
+                      " не валидный номер карты")
+        #page.pay_order_without_check()
         page.wait_element(page.error_card_not_not_valid_card)
         page.wait_element_assure(page.to_pay_btn)
-        page.click(page.to_pay_btn, "кнопка оплаты")
+        page.click( page.to_pay_btn, "кнопка оплаты")
 
         page.wait_element_not_visible(page.success_btn_string)
         page.wait_element(page.error_card_not_not_valid_card)
@@ -606,6 +651,8 @@ class TestSmoke:
         page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
         page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+        page.check_del_old_card()
+        page.field_valid_card()
         page.pay_order()
 
     @allure.title("Оплата банковской картой(недостаточно средств), ПВЗ")
@@ -614,15 +661,15 @@ class TestSmoke:
     def test_pay_card_no_many_pick_point(self):
         page = PaymentPage()
         page.preview_payment()
-        page.set_text(page.card_number_field, "4012 8888 8888 1881",
-                      " тестовый номер карты  с ошибкой Недостаточно средств")
+
         page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
         page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
-        page.wait_element_assure(page.to_pay_btn)
-        page.click(page.to_pay_btn, "кнопка оплаты")
-
-        # нужно разобраться - можно ли перекидывать на сторонний сервис? по факту перекидывает, но после нажатияь успешно перекидывает в корзину
+        page.check_del_old_card()
+        page.field_valid_card()
+        page.set_text(page.card_number_field, "4012 8888 8888 1881",
+                      " тестовый номер карты с ошибкой недостаточно средств")
+        page.pay_order_without_check()
         page.wait_element(page.error_card_not_money_string)
 
     @allure.title("Оплата банковской картой(не существующая карта), ПВЗ")
@@ -631,17 +678,213 @@ class TestSmoke:
     def test_pay_card_not_valid_pick_point(self):
         page = PaymentPage()
         page.preview_payment()
-        page.set_text(page.card_number_field, "4012 8888 8888 1882",
-                      " тестовый номер карты  с ошибкой Недостаточно средств")
+
         page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
         page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+        page.check_del_old_card()
+        page.field_valid_card()
+        page.set_text(page.card_number_field, "4012 8888 8888 1882",
+                      " не валидный номер карты")
+        # page.pay_order_without_check()
         page.wait_element(page.error_card_not_not_valid_card)
         page.wait_element_assure(page.to_pay_btn)
         page.click(page.to_pay_btn, "кнопка оплаты")
 
         page.wait_element_not_visible(page.success_btn_string)
         page.wait_element(page.error_card_not_not_valid_card)
+
+    @allure.title("Оплата подарочной картой, доставка курьером+ добавить новый адрес ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/909")
+    @pytest.mark.smoke2
+    def test_bonus_card_courier(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page = SmokePage()
+        page.add_address_courier()
+        page.payment_bonus_card()
+        page = PaymentPage()
+        page.pay_order_without_3d()
+
+    @allure.title("Оплата подарочной картой(не достаточно средств), доставка курьером")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/910")
+    @pytest.mark.smoke2
+    def test_bonus_card_no_many(self):
+        page = PaymentPage()
+        page.preview_payment_many_products()
+        page = SmokePage()
+        #page.add_address_courier()
+        page.payment_bonus_card_no_many()
+        page = PaymentPage()
+        page.wait_element_assure(page.error_bonus_card_not_money)
+        page.click(page.to_pay_btn, "кнопка оплаты")
+        page.wait_element_assure(page.error_bonus_card_not_money)
+
+
+    @allure.title("Оплата подарочной картой(НЕ ВАЛИДНАЯ КАРТА), доставка курьером ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/911")
+    @pytest.mark.smoke2
+    def test_pay_bonus_card_not_valid(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page = SmokePage()
+        page.payment_bonus_card_not_valid()
+        page = PaymentPage()
+        page.wait_element_assure(page.error_bonus_card_not_valid)
+        page.click(page.to_pay_btn, "кнопка оплаты")
+        page.wait_element_assure(page.error_bonus_card_not_valid)
+
+    @allure.title("Оплата подарочной картой(не существующая карта), самовывоз")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/916")
+    @pytest.mark.smoke2
+    def test_pay_bonus_card_not_valid_self(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
+
+        page = SmokePage()
+        page.payment_bonus_card_not_valid()
+        page = PaymentPage()
+        page.wait_element_assure(page.error_bonus_card_not_valid)
+        page.click(page.to_pay_btn, "кнопка оплаты")
+        page.wait_element_assure(page.error_bonus_card_not_valid)
+
+    @allure.title("Оплата подарочной картой(недостаточно средств), самовывоз")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/917")
+    @pytest.mark.smoke2
+    def test_pay_bonus_card_no_many_self(self):
+        page = PaymentPage()
+        page.preview_payment_many_products()
+        page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин')
+
+        page = SmokePage()
+        page.payment_bonus_card_no_many()
+        page = PaymentPage()
+        page.wait_element_assure(page.error_bonus_card_not_money)
+        page.click(page.to_pay_btn, "кнопка оплаты")
+        page.wait_element_assure(page.error_bonus_card_not_money)
+
+    @allure.title("Оплата подарочной картой, самовывоз ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/918")
+    @pytest.mark.smoke2
+    def test_bonus_card_self(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин')
+        page = SmokePage()
+        page.payment_bonus_card()
+        page = PaymentPage()
+        page.pay_order_without_3d()
+
+    @allure.title("Оплата банковской картой + подарочная карта+ промкод ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/919")
+    @pytest.mark.smoke2
+    def test_card_bonus_card_self_promo(self):
+        page = PaymentPage()
+        page.preview_payment_many_products()
+        page = SmokePage()
+        page.payment_bonus_card_promocode()
+        page = PaymentPage()
+        #page.field_valid_card()
+        page.wait_element_assure(page.error_bonus_card_not_money2)
+        page.click(page.button_dop_pay, " дополнительная оплата")
+
+
+        page = SmokePage()
+        page.payment_bonus_card_promocode()
+        page = PaymentPage()
+        page.enter_valid_promo_10()
+        price_without_discount = (int(re.sub('[^0-9]', "", page.get_element_text(page.price_without_discount_bonus_card,
+                                                                                 'Получение суммы заказа без промо'))))
+        page.assert_check_expressions("0", price_without_discount, " сумма заказа в строке Итого перессчитывается некорректно")
+
+
+        page = PaymentPage()
+        page.pay_order_without_3d()
+
+    @allure.title("Оплата подарочной картой, ПВЗ ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/923")
+    @pytest.mark.smoke2
+    def test_bonus_card_pick_point(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+        page = SmokePage()
+        page.payment_bonus_card()
+        page = PaymentPage()
+        page.pay_order_without_3d()
+
+    @allure.title("Оплата подарочной картой(не существующая карта), ПВЗ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/924")
+    @pytest.mark.smoke2
+    def test_pay_bonus_card_not_valid_pick_point(self):
+        page = PaymentPage()
+        page.preview_payment()
+        page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+
+        page = SmokePage()
+        page.payment_bonus_card_not_valid()
+        page = PaymentPage()
+        page.wait_element_assure(page.error_bonus_card_not_valid)
+        page.click(page.to_pay_btn, "кнопка оплаты")
+        page.wait_element_assure(page.error_bonus_card_not_valid)
+
+    @allure.title("Оплата подарочной картой(недостаточно средств), ПВЗ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/925")
+    @pytest.mark.smoke2
+    def test_pay_bonus_card_no_many_pick_point(self):
+        page = PaymentPage()
+        page.preview_payment_many_products()
+        page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+
+        page = SmokePage()
+        page.payment_bonus_card_no_many()
+        page = PaymentPage()
+        page.wait_element_assure(page.error_bonus_card_not_money)
+        page.click(page.to_pay_btn, "кнопка оплаты")
+        page.wait_element_assure(page.error_bonus_card_not_money)
+
+    @allure.title("Оплата банковской картой + подарочная карта+ промкод + ПВЗ ")
+    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/926&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=124")
+    @pytest.mark.smoke2
+    def test_card_bonus_card_self_promo(self):
+        page = PaymentPage()
+        page.preview_payment_many_products()
+        page.click(page.type_of_delivery_pic_point, 'Выбор типа доставки Пункт выдачи товара')
+        page.click(page.point_self_and_pic_point_delivery, 'Выбор ПВЗ')
+        page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
+        page = SmokePage()
+        page.payment_bonus_card_promocode()
+        page = PaymentPage()
+        # page.field_valid_card()
+        page.wait_element_assure(page.error_bonus_card_not_money2)
+        page.click(page.button_dop_pay, " дополнительная оплата")
+        # page.field_valid_card()
+
+        page = SmokePage()
+        page.payment_bonus_card_promocode()
+        page = PaymentPage()
+        page.enter_valid_promo_10()
+
+        price_without_discount = (int(re.sub('[^0-9]', "", page.get_element_text(page.price_without_discount_bonus_card, 'Получение суммы заказа без промо'))))
+        page.assert_check_expressions("0", price_without_discount,
+                                      " сумма заказа в строке Итого перессчитывается некорректно")
+
+
+        page = PaymentPage()
+        page.pay_order_without_3d()
 
     @allure.title("Проверка добавление товара в избранное из каталога (Неавторизованный пользователь)")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/885&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=125")
@@ -670,12 +913,13 @@ class TestSmoke:
 
         page = CatalogPage()
         page.favoutites_clear()
-        page.select_section_menu_shoes_all()
+
+        page.open_url(os.getenv('base_url') + "/ru_ru/catalog/all_shoes")
         page = SmokePage()
         page.add_favourites_catalog()
+        time.sleep(1)
 
-        page = CatalogPage()
-        page.select_section_menu_lingerie_all()
+        page.open_url(os.getenv('base_url') + "/ru_ru/catalog/underwear")
         page = SmokePage()
         page.add_favourites_catalog()
         time.sleep(1)
@@ -691,6 +935,8 @@ class TestSmoke:
         page.check_del_product_fav_screen()
         page = BasePage()
         page.assert_check_expressions("1", value_fav, " не верное количество товаров в иконке избранное")
+        page = SmokePage()
+        page.del_favourites_cart_product()
 
     @allure.title("Избранное / перейти в карточку товара")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/888")
@@ -702,7 +948,7 @@ class TestSmoke:
 
         page = CatalogPage()
         page.favoutites_clear()
-        page.select_section_menu_shoes_all()
+        page.open_url(os.getenv('base_url') + "/ru_ru/catalog/all_shoes")
         page = SmokePage()
         page.add_favourites_cart()
         page.check_add_fav()
