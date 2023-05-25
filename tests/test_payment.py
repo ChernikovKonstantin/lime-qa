@@ -23,7 +23,7 @@ class TestPayment:
 
     @allure.title("Оплата картой + валидный промокод")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/441")
-    @pytest.mark.order(1)
+    @pytest.mark.order
     def test_product_registration_cart_promo_code(self):
         page = LoginPage()
         page.authorization()
@@ -56,7 +56,7 @@ class TestPayment:
 
     @allure.title("Оплата картой + валидный промокод, несколько товаров в корзине")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/445")
-    @pytest.mark.order(2)
+    @pytest.mark.order
     def test_product_registration_cart_promo_code_many_products(self):
         page = LoginPage()
         page.authorization()
@@ -87,7 +87,7 @@ class TestPayment:
 
     @allure.title("Оплата картой +  не валидный промокод")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/443")
-    @pytest.mark.order(3)
+    @pytest.mark.order
     def test_product_registration_cart_not_valid_promo_code(self):
         page = LoginPage()
         page.authorization()
@@ -117,7 +117,7 @@ class TestPayment:
 
     @allure.title("Оплата картой заказа суммой более 6000 с формированием заказа в корзине")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/442&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=80")
-    @pytest.mark.order(4)
+    @pytest.mark.order
     def test_product_discount_cart_6000(self):
         page = LoginPage()
         page.authorization()
@@ -164,7 +164,7 @@ class TestPayment:
 
     @allure.title("Проверка применения скидок для заказа > 6000")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/444")
-    @pytest.mark.order(5)
+    @pytest.mark.order
     def test_discount(self):
 
         page = LoginPage()
@@ -200,7 +200,7 @@ class TestPayment:
 
     @allure.title("Оплата картой, ошибка оплаты")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/451")
-    @pytest.mark.order(6)
+    @pytest.mark.order
     def test_check_payment_card_error(self):
         page = PaymentPage()
         page.preview_payment()
@@ -233,7 +233,7 @@ class TestPayment:
 
     @allure.title("Оплата при получении, доставка курьером")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/454")
-    @pytest.mark.order(7)
+    @pytest.mark.order
     def test_pay_receiving_courier(self):
 
         page = PaymentPage()
@@ -248,7 +248,7 @@ class TestPayment:
 
     @allure.title("Оплата банковской картой, самовывоз")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/455")
-    @pytest.mark.order(8)
+    @pytest.mark.order
     def test_pay_card_self(self):
         page = PaymentPage()
         page.preview_payment()
@@ -264,7 +264,7 @@ class TestPayment:
 
     @allure.title("Оплата банковской картой(недостаточно средств), самовывоз")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/456")
-    @pytest.mark.order(9)
+    @pytest.mark.order
     def test_pay_card_self_not_money(self):
         page = PaymentPage()
         page.preview_payment()
@@ -280,7 +280,7 @@ class TestPayment:
 
     @allure.title("Оплата банковской картой(не существующая карта), самовывоз")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/457")
-    @pytest.mark.order(10)
+    @pytest.mark.order
     def test_pay_card_not_valid_sel(self):
         page = PaymentPage()
         page.preview_payment()
@@ -308,7 +308,7 @@ class TestPayment:
 
     @allure.title("Оплата банковской картой, ПВЗ ")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/461")
-    @pytest.mark.order(11)
+    @pytest.mark.order
     def test_pay_card_pick_point(self):
         page = PaymentPage()
         page.preview_payment()
@@ -324,7 +324,7 @@ class TestPayment:
 
     @allure.title("Оплата банковской картой(недостаточно средств), ПВЗ")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/462")
-    @pytest.mark.order(12)
+    @pytest.mark.order
     def test_pay_card_pick_point_not_money(self):
         page = PaymentPage()
         page.preview_payment()
@@ -340,7 +340,7 @@ class TestPayment:
 
     @allure.title("Оплата банковской картой(не существующая карта), ПВЗ")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/463&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=90")
-    @pytest.mark.order(13)
+    @pytest.mark.order
     def test_pay_card_not_valid_pick_point(self):
         page = PaymentPage()
         page.preview_payment()

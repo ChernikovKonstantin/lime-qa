@@ -17,6 +17,7 @@ class TestLogin():
     @staticmethod
     @allure.title("Успешная авторизация")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/441")
+    @pytest.mark.login
 
     def test_login_success():
         page = HomePage()
@@ -34,6 +35,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Не успешая авторизация")
+    @pytest.mark.login
     def test_login_fail():
         page = HomePage()
         page.click_account_btn()
@@ -49,6 +51,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Успешная регистрация")
+    @pytest.mark.login
     def test_registration_success():
         page = HomePage()
 
@@ -62,6 +65,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Регистрация без чек-бокса рассылки")
+    @pytest.mark.login
     def test_registration_none_mailing():
         page = HomePage()
         page.click_account_btn()
@@ -75,6 +79,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Проверка валидности поля email")
+    @pytest.mark.login
     def test_field_email():
         page = HomePage()
         page.click_account_btn()
@@ -83,6 +88,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Проверка валидности поля номера телефона")
+    @pytest.mark.login
     def test_field_phone():
         page = HomePage()
         page.click_account_btn()
@@ -91,6 +97,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Проверка валидности поля Ваше имя")
+    @pytest.mark.login
     def test_field_name():
         page = HomePage()
         page.click_account_btn()
@@ -102,6 +109,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Проверка валидности поля Ваша фамилия")
+    @pytest.mark.login
     def test_field_surname():
         page = HomePage()
         page.click_account_btn()
@@ -110,6 +118,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Проверка валидности поля Пароль")
+    @pytest.mark.login
     def test_field_password():
         page = HomePage()
         page.click_account_btn()
@@ -118,6 +127,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Проверка валидности поля Повтор пароля")
+    @pytest.mark.login
     def test_field_repeat_password():
         page = HomePage()
         page.click_account_btn()
@@ -126,6 +136,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Проверка совпадения паролей")
+    @pytest.mark.login
     def test_matching_password():
         page = HomePage()
         page.click_account_btn()
@@ -134,6 +145,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Проверка ссылки условий")
+    @pytest.mark.login
     def test_link_conditions():
         page = HomePage()
         page.click_account_btn()
@@ -145,6 +157,7 @@ class TestLogin():
 
     @staticmethod
     @allure.title("Проверка ошибок полей при неуспешной регистрации")
+    @pytest.mark.login
     def test_registration_errors():
         page = HomePage()
         page.click_account_btn()
