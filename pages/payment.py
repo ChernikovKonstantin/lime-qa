@@ -300,10 +300,10 @@ class PaymentPage(BasePage):
         self.wait_element_not_visible(self.price_finally_block_cart_text_string)
         self.wait_element_not_visible(self.icon_discount_percent_block_cart_text_string)
 
-        price_finally = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_finally_text_witout_discount,
-                                                                        'Получение суммы заказа при 0 скидке'))))
-        price_without_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text,
-                                                                                 'Получение суммы заказа без промо'))))
+        price_finally = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_finally_text_witout_discount,'Получение суммы заказа при 0 скидке'))))
+        time.sleep(1)
+        price_without_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text,'Получение суммы заказа без промо'))))
+        time.sleep(1)
         self.assert_check_expressions(price_without_discount, price_finally, " промокод применен неверно")
 
 

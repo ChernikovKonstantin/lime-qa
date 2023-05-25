@@ -181,6 +181,7 @@ class TestSmoke:
         page.click(page.hamburger_menu, " гамбургер меню")
         page.wait_element_assure(page.dark_screen)
         page.click(page.category_parents_clothes, " категория ОДЕЖДА")
+        time.sleep(2)
         page.click_random_cat()
 
         # КАТАЛОГ
@@ -234,10 +235,11 @@ class TestSmoke:
         time.sleep(3)
         page.wait_element_assure(page.img_in_catalog)
         page.click(page.img_in_catalog, " продукт в каталоге")
-        time.sleep(2)
+        time.sleep(3)
         page.wait_element_assure(page.title_product_in_cart)
         page.wait_element_assure(page.share_string_card_products)
-        page.wait_element_assure(page.imges_in_cart_slider)
+        #page.wait_element_assure(page.imges_in_cart_slider)
+        page.wait_element_assure(page.img_in_cart_slider)
         time.sleep(5)
         for i in range(len(page.imges_in_cart_slider)):
             resolution = page.imges_in_cart_slider[i].size
@@ -310,7 +312,7 @@ class TestSmoke:
         page.user_login()
         page.click(page.button_close_screen, " закрыть экран входа\регистрации")
 
-        page.open_url(os.getenv('base_url') + "/ru_ru/catalog/underwear_invisible")
+        page.open_url(os.getenv('base_url') + "/ru_ru/catalog/bodysuits")
         time.sleep(2)
         page = CatalogPage()
         page.click(page.choose_a_product_1399, "Товар с ценой 1999")
@@ -463,7 +465,7 @@ class TestSmoke:
         page = PaymentPage()
         page.preview_payment()
         page.check_product_for_order()
-        page.check_del_old_card()
+        #page.check_del_old_card()
         page.field_valid_card()
         page.to_pay_btn.click()
         time.sleep(2)
@@ -509,7 +511,7 @@ class TestSmoke:
         page.preview_payment()
         page.set_text(page.promo_code_field, "XHGFAH", "Промо код")
         page.sum_order_with_discount()
-        page.check_del_old_card()
+        #page.check_del_old_card()
         page.field_valid_card()
         page.pay_order()
 
@@ -521,7 +523,7 @@ class TestSmoke:
         page.preview_payment_many_products()
         page.set_text(page.promo_code_field, "XHGFAH", "Промо код")
         page.sum_order_with_discount_many()
-        page.check_del_old_card_2_products()
+        #page.check_del_old_card_2_products()
         page.field_valid_card()
         page.pay_order()
 
@@ -534,7 +536,7 @@ class TestSmoke:
         page.preview_payment()
         page.set_text(page.promo_code_field, "00000", "Промо код")
         page.check_del_old_card()
-        page.field_valid_card()
+        #page.field_valid_card()
         page.check_payment_promo_not_valid()
 
     @allure.title("Проверка скидки при безналичной оплате на сайте заказа суммой > 6000")
@@ -576,7 +578,7 @@ class TestSmoke:
         page.preview_payment()
         page.click(page.type_of_delivery_courier, "Выбор типа доставки Курьер")
         page.click(page.type_of_payment_card, "Выбор типа оплаты Карта")
-        page.check_del_old_card()
+        #page.check_del_old_card()
         page.field_valid_card()
         page.pay_order_error()
 

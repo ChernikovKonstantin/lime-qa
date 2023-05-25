@@ -44,6 +44,31 @@ payment_bonus_card_no_many`
 `allure serve .`
 
 
+# Проблемы о состоянию 25.05.2023
+
+Test main screen bunners
+не выполняется возврат из каталога к хедеру лендинга
+
+test search
+test main menu search
+в двнный момент модуль поиска не работает
+
+test payment card order 6000
+баг с применением скидки 5% на заказы более 6000
+
+test_burger_menu
+необходимо добавить разделы во вкладку Дополнительно
+
+test card product 
+в слайдере есть не вертикальные изображения
+
+test card bonus card self provo
+test card bonus card self provo pick point
+не верно читается сумма в строке итого после применения промокода
+
+
+
+
 
 
 
