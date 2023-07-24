@@ -30,6 +30,7 @@ class CatalogPage(BasePage):
     sizes_list = ss("//span[@class='SizeSelector__title']")
     title_text = s("//h1[@class='product__title']")
     product_price_text = s("//div[@class='product__price']")
+    product_price_sale_text = s("//div[@class='product__price sale']")
     product_article_text = s("//div[@class='product__article']")
     product_color_text = s("//div[@class='ColorSelector product__colors']")
     product_size_text = s("//div[@class='SizeSelector__selected']")
@@ -42,10 +43,13 @@ class CatalogPage(BasePage):
     product_in_catalog = s("(//button[@class='IButton CatalogProduct__bookmark'])[1]")
     menu_link_bags = s("//a[span= 'СУМКИ']")
     menu_link_new = s("//a[span= 'НОВИНКИ']")
+    menu_link_new_collection = s("//span[@class='mainmenu__link has-children']/span")
+    menu_link_sail = s("//span[@class= 'mainmenu__link has-children highlight']/span")
     choose_a_product_bags = s("//div[@class= 'CatalogProduct__title']/a")
     menu_link_shoes = s("//span[span= 'ОБУВЬ']")
     menu_subsection_shoes = s("//a[@class= 'mainmenu-children__link' and span = 'Ботильоны']")
     menu_subsection_shoes_01_all_models = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
+    menu_subsection_sales_all_models = s("//a[@class= 'mainmenu-children__link highlight' and span = 'ВСЕ МОДЕЛИ']")
     menu_subsection_shoes_lofers = s("//a[@class= 'mainmenu-children__link' and span = 'ЛОФЕРЫ']")
     menu_subsection_shoes_botil = s("//a[@class= 'mainmenu-children__link' and span = 'Ботильоны']")
 
@@ -65,7 +69,9 @@ class CatalogPage(BasePage):
     choose_a_product_belts = s("(//a[@href= '/product/12843_9898_293-cernyi'])[2]")
     #choose_a_product_1399 = s('//a[contains(text(), "Бюстгальтер с треугольными чашками и узлом")]')
     choose_a_product_1399 = s('(//a[contains(text(), "Боди без рукавов")])[3]')
-    choose_a_product_loafers = s('//a[contains (text(), "Лоферы из кожи шевро")]')
+    choose_a_product_loafers = s('//a[text()="Кожаные лоферы"]')
+    choose_a_product_loafers_2 = s('//a[contains (text(), "Кожаные лоферы в винтажном стиле")]')
+    choose_a_product_bra = s('//a[contains (text(), "Бра-топ из хлопка и льна")]')
     menu_subsection_shoes_all = s("//a[@class= 'mainmenu-children__link' and span = 'ВСЕ МОДЕЛИ']")
 
     icon_favourities_full = s("//a[@disabled='disabled']")
@@ -220,8 +226,8 @@ class CatalogPage(BasePage):
         time.sleep(5)
         # self.wait_element(self.hamburger_menu_string)
         self.click(self.hamburger_menu, "гамбургер-меню")
-        self.click(self.menu_link_special, "Блок Специальное предложение")
-        self.click(self.menu_subsection_all_models_special, "Подраздел Все модели")
+        self.click(self.menu_link_sail, "Секция Распродажа")
+        self.click(self.menu_subsection_sales_all_models, "Раздел Все модели")
         self.click(self.img_in_catalog, "Товар со скидкой")
         time.sleep(2)
         self.click(self.add_to_cart, "добавить в корзину")
@@ -239,12 +245,22 @@ class CatalogPage(BasePage):
         self.click(self.choose_a_product_loafers, "Товар лоферы")
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
+        self.open_url(os.getenv('base_url') + "/ru_ru/catalog/loafers")
+        self.click(self.choose_a_product_loafers_2, "Товар лоферы")
+        self.click(self.add_to_cart, "добавить в корзину")
+        time.sleep(1)
 
     @allure.step("Переход в каталог Обувь Все модели")
     def select_section_menu_shoes_all(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_shoes, "Секция Обувь")
         self.click(self.menu_subsection_shoes_01_all_models, "Раздел Все модели")
+
+    @allure.step("Переход в каталог Распродажа Все модели")
+    def select_section_menu_sales_all(self):
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_sail, "Секция Распродажа")
+        self.click(self.menu_subsection_sales_all_models, "Раздел Все модели")
 
     @allure.step("Переход в каталог Нижнее белье  Все модели")
     def select_section_menu_lingerie_all(self):
@@ -261,6 +277,11 @@ class CatalogPage(BasePage):
     def select_section_menu_new(self):
         self.click(self.hamburger_menu, "гамбургер-меню")
         self.click(self.menu_link_new, "Блок Новинки")
+
+    @allure.step("Переход в каталог Новая коллекция")
+    def select_section_menu_new_collection(self):
+        self.click(self.hamburger_menu, "гамбургер-меню")
+        self.click(self.menu_link_new_collection, "Блок Новинки")
 
 
     @allure.title("Очистка избранного")

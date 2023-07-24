@@ -67,6 +67,38 @@ test card bonus card self provo pick point
 не верно читается сумма в строке итого после применения промокода
 
 
+Актуализация 18.07.2023
+
+test_main_screen_banners
+https://lmdev.testrail.io/index.php?/cases/view/849
+Не выполняется: на основном экране при возврате отображается первый баннер в хедере сайта
+
+test_burger_menu_check_products
+https://lmdev.testrail.io/index.php?/cases/view/890&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=130
+Не выполняется: 2.Выберите раздел, не имеющий подразделов, например, сумки 
+нужно добавить раздел в админке
+
+test_profile_order
+https://lmdev.testrail.io/index.php?/cases/view/880
+Не выполняется: Отображаются история покупок
+
+test_search
+https://lmdev.testrail.io/index.php?/suites/view/2&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=123
+Не выполняется:Появляются карточки товаров, релевантные запросу 1418-888
+
+test_payment_cart_order_more_6000
+https://lmdev.testrail.io/index.php?/cases/view/906&group_by=cases:section_id&group_order=asc&display_deleted_cases=0&group_id=124"
+баг
+
+test_profile_order
+https://lmdev.testrail.io/index.php?/cases/view/880
+баг, разные номера заказов в сообщение после заказа и в ЛК, воспроизвелось после выполнеия теста 4 раза 
+
+
+
+
+
+
 
 
 
