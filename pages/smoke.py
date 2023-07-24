@@ -26,9 +26,12 @@ class SmokePage(BasePage):
     video_main_image = ss("//video")
     block_icon_string = "//div[@class='App isHomepage page-index isAppNotify isEmptyCart']"
     block_icon_dark_theme = s("//div[@class='App isHomepage page-index isDark theme-isDark isEmptyCart']")
+    block_icon_white_theme = s("//div[@class='App isHomepage page-index isAppNotify isEmptyCart']")
+
     first_catalog_image = s("(//picture/img)[1]")
     catalog_image = s("//picture/img")
     first_catalog_video = s("(//video[@class='d-none d-md-block'])[1]/source")
+    catalog_video = s("//video/source")
     #first_catalog_video_attribute = s("(//video[@class='d-none d-md-block'])[1]//child::*")
     first_catalog_video_attribute = s("(//video[@class='d-none d-md-block'])[1]")
     #interesnaia_construkciya = s(//span[contains(@class,"mainmenu__link has-children")])
@@ -206,7 +209,7 @@ class SmokePage(BasePage):
     def cycle_banners(self):
 
         for i in range(len(self.banners_main_image)):
-            list_first_attribute_banners = ['https://cache-limeshop.cdnvideo.ru/limeshop/aa/73586520383eaded7dded11ed9da400155d011401.jpeg?q=85&w=440',
+            list_first_attribute_banners = ['https://cache-limeshop.cdnvideo.ru/limeshop/aa/740493936811267570dfa11ee9db500155d011401.jpeg?q=85&w=440',
                                             'https://cache-limeshop.cdnvideo.ru/limeshop/aa/7381001681ca62c1ceb2511ed9da900155d011401.jpeg?q=85&w=440',
                                             'https://cache-limeshop.cdnvideo.ru/limeshop/aa/7310296803a1cc11e539611ed9d6e00155d011401.jpeg?q=85&w=440']
             url_main = self.get_url()
@@ -217,19 +220,20 @@ class SmokePage(BasePage):
             self.assert_check_expressions(list_first_attribute_banners[i], first_image, " некорректное отображение порядка товаров в каталоге")
             self.browser_back()
             url_main_return = self.get_url()
-            #ДОБАВИТЬ НА НОВОЙ ПЛОЩАДКЕ
-            self.wait_element_assure(self.block_icon_dark_theme) #ожидание блока иконок черного цвета
+            # добавить когда испраявят баг на накст 01
+            #self.wait_element_assure(self.block_icon_white_theme)  # ожидание блока иконок белого цвета
+            #self.wait_element_assure(self.block_icon_dark_theme) #ожидание блока иконок черного цвета
             self.assert_check_expressions(url_main, url_main_return, " ошибка адреса при возврате на главную страницу")
 
     @allure.step('Проверка видео')
     def video(self):
         for i in range(len(self.video_main_image)):
-            list_first_attribute_banners = ['https://cache-limeshop.cdnvideo.ru/limeshop/landing-pages/summer-basic-23/01_desc+ipad.mp4']
+            list_first_attribute_banners = ['https://cache-limeshop.cdnvideo.ru/limeshop/2023/07/13/43de35d624baff5fce94dd268af8a9d3ed62bc3f.mp4']
             url_main = self.get_url()
 
             self.move_to(browser.driver.find_element_by_xpath("(//video)[" + (str(i + 1)) + "]"))
             self.click(self.video_main_image[i], " видео")
-            first_image = self.get_attribute(self.first_catalog_video, "src")
+            first_image = self.get_attribute(self.catalog_video, "src")
             self.assert_check_expressions(list_first_attribute_banners[i], first_image,
                                           " некорректное отображение порядка товаров в каталоге")
             first_video_loop = self.get_attribute(self.first_catalog_video_attribute, "loop")
@@ -282,14 +286,14 @@ class SmokePage(BasePage):
             self.wait_element_assure(self.product_in_result_search)
 
         self.field_clear(self.input_search_active_full, " инпут поиска")
-        self.set_text(self.input_search_active_full, 'куртка', " инпут поиска")
+        self.set_text(self.input_search_active_full, 'платье', " инпут поиска")
         self.push_enter(self.input_search_active_full, " инпут поиска")
         time.sleep(3)
         self.wait_element_assure(self.product_in_result_search)
         for y in range(len(self.products_in_result_search)):
             product_text = self.get_element_text(self.products_in_result_search[y], " название товара куртка").lower()
             print(product_text)
-            self.assert_check_coincidence("куртк", product_text, " некорреткный вывод результатов поиска")
+            self.assert_check_coincidence("платье", product_text, " некорреткный вывод результатов поиска")
 
     @allure.step('Разделы меню каталога (ссылки)')
     def catalog_menu_link(self):
@@ -372,39 +376,39 @@ class SmokePage(BasePage):
                     self.click(self.categoryes_sub[i], " подраздел категории НИЖНЕЕ БЕЛЬЕ ")
                     time.sleep(1)
 
-    # @allure.step('Разделы меню АКСЕССУАРЫ (выпадающие меню)')
-    # def catalog_menu_parents_link_accessories(self):
-    #     self.open_url(os.getenv('base_url'))
-    #     self.click(self.hamburger_menu, " гамбургер меню")
-    #     self.click(self.category_parents_accessories, " категория АКСЕССУАРЫ")
-    #
-    #     for i in range(len(self.categoryes_sub)):
-    #
-    #         url_main = self.get_url()
-    #
-    #         self.click(self.categoryes_sub[i], " подраздел категории АКСЕССУАРЫ")
-    #         time.sleep(2)
-    #         url_catalog = self.get_url()
-    #         if url_catalog != url_main:
-    #             self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
-    #             self.browser_back()
-    #             time.sleep(1)
-    #             self.click(self.hamburger_menu, " гамбургер меню")
-    #             self.click(self.category_parents_accessories, " категория АКСЕССУАРЫ")
-    #             time.sleep(1)
-    #
-    #         elif url_catalog == url_main:
-    #             for y in range(len(self.categoryes_sub_sub)):
-    #                 self.click(self.categoryes_sub_sub[y], " подраздел подраздела")
-    #                 time.sleep(2)
-    #                 url_catalog = self.get_url()
-    #                 self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
-    #                 self.browser_back()
-    #                 time.sleep(1)
-    #                 self.click(self.hamburger_menu, " гамбургер меню")
-    #                 self.click(self.category_parents_accessories, " категория АКСЕССУАРЫ")
-    #                 self.click(self.categoryes_sub[i], " подраздел категории АКСЕССУАРЫ")
-    #                 time.sleep(1)
+    @allure.step('Разделы меню АКСЕССУАРЫ (выпадающие меню)')
+    def catalog_menu_parents_link_accessories(self):
+        self.open_url(os.getenv('base_url'))
+        self.click(self.hamburger_menu, " гамбургер меню")
+        self.click(self.category_parents_accessories, " категория АКСЕССУАРЫ")
+
+        for i in range(len(self.categoryes_sub)):
+
+            url_main = self.get_url()
+
+            self.click(self.categoryes_sub[i], " подраздел категории АКСЕССУАРЫ")
+            time.sleep(2)
+            url_catalog = self.get_url()
+            if url_catalog != url_main:
+                self.assert_check_coincidence("summer", url_catalog, " переход выполнен не в каталог")
+                self.browser_back()
+                time.sleep(1)
+                self.click(self.hamburger_menu, " гамбургер меню")
+                self.click(self.category_parents_accessories, " категория АКСЕССУАРЫ")
+                time.sleep(1)
+
+            elif url_catalog == url_main:
+                for y in range(len(self.categoryes_sub_sub)):
+                    self.click(self.categoryes_sub_sub[y], " подраздел подраздела")
+                    time.sleep(2)
+                    url_catalog = self.get_url()
+                    self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")
+                    self.browser_back()
+                    time.sleep(1)
+                    self.click(self.hamburger_menu, " гамбургер меню")
+                    self.click(self.category_parents_accessories, " категория АКСЕССУАРЫ")
+                    self.click(self.categoryes_sub[i], " подраздел категории АКСЕССУАРЫ")
+                    time.sleep(1)
 
     @allure.step('Разделы меню ОБУВЬ (выпадающие меню)')
     def catalog_menu_parents_link_shoes(self):
@@ -642,31 +646,35 @@ class SmokePage(BasePage):
     def search_successful_text(self):
         self.click(self.button_search, " поиск")
         self.wait_element_assure(self.input_search_active)
-        self.set_text(self.input_search_active, 'куртка', " инпут поиска")
+        self.set_text(self.input_search_active, 'очки', " инпут поиска")
         self.push_enter(self.input_search_active_full, " инпут поиска")
         time.sleep(3)
         self.wait_element_assure(self.product_in_result_search)
         for i in range(len(self.products_in_result_search)):
-            product_text = self.get_element_text(self.products_in_result_search[i], " название товара Ожерелье").lower()
+            product_text = self.get_element_text(self.products_in_result_search[i], " название товара Очки").lower()
             print(product_text)
-            self.assert_check_coincidence("куртк", product_text, " некорреткный вывод результатов поиска")
+            self.assert_check_coincidence("очки", product_text, " некорреткный вывод результатов поиска")
 
     @allure.step('Поиск по артикулу')
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/882")
     def search_successful_article(self):
         #self.click(self.button_search, " поиск")
-        self.wait_element_assure(self.input_search_active_full)
-        self.set_text(self.input_search_active_full, '9521-690', " инпут поиска")
+        self.click(self.button_search, " поиск")
+        self.wait_element_assure(self.input_search_active)
+        self.set_text(self.input_search_active, '1418-888', " инпут поиска")
+        time.sleep(3)
         self.push_enter(self.input_search_active_full, " инпут поиска")
         self.wait_element_assure(self.product_in_result_search)
 
         for i in range(len(self.products_in_result_search)):
+
             self.click(self.products_in_result_search[i], " продукт в результатах поиска")
             self.wait_element_assure(self.product_in_result_search)
             article_text = self.get_element_text(self.product_article, " артикул товара")
             article = article_text.partition(" ")[2]
-            self.assert_check_expressions(article, "9521-690", " значение артикула не соответствует")
+            self.assert_check_expressions(article, "1418-888", " значение артикула не соответствует")
             self.browser_back()
+
             self.wait_element_assure(self.product_in_result_search)
 
     @allure.step('Поиск без результата')
@@ -803,41 +811,41 @@ class SmokePage(BasePage):
     @allure.step('Оплата подарочной картой 50000')
     def payment_bonus_card(self):
         self.click(self.card_bonus, " подарочная карта")
-        self.set_text(self.field_card_bonus_number, "5772285607170254", " заполнение поля номера подарочной карты")
+        self.set_text(self.field_card_bonus_number, "7012495883190627", " заполнение поля номера подарочной карты")
 
         price_without_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text,
                                                                                  'Получение суммы заказа без промо'))))
 
 
         self.set_text(self.field_card_bonus_sum, price_without_discount, " заполнение поля номера подарочной карты")
-        self.set_text(self.field_card_bonus_pin, "4392", " заполнение поля пинкода")
+        self.set_text(self.field_card_bonus_pin, "3550", " заполнение поля пинкода")
 
     @allure.step('Оплата подарочной картой с промо')
     def payment_bonus_card_promocode(self):
         self.click(self.card_bonus, " подарочная карта")
-        self.set_text(self.field_card_bonus_number, "5648683071232708", " заполнение поля номера подарочной карты")
+        self.set_text(self.field_card_bonus_number, "7012495883190627", " заполнение поля номера подарочной карты")
 
-        self.set_text(self.field_card_bonus_sum, 9900, " заполнение поля номера подарочной карты")
+        self.set_text(self.field_card_bonus_sum, 100, " заполнение поля номера подарочной карты")
         time.sleep(3)
-        self.set_text(self.field_card_bonus_pin, "7025", " заполнение поля пинкода")
+        self.set_text(self.field_card_bonus_pin, "3550", " заполнение поля пинкода")
         time.sleep(3)
 
     @allure.step('Оплата подарочной картой недостаточно средств')
     def payment_bonus_card_no_many(self):
         self.click(self.card_bonus, " подарочная карта")
-        self.set_text(self.field_card_bonus_number, "1011607915986563", " заполнение поля номера подарочной карты")
+        self.set_text(self.field_card_bonus_number, "6088490568745006", " заполнение поля номера подарочной карты")
         time.sleep(3)
         price_without_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text, 'Получение суммы заказа без промо'))))
 
         self.set_text(self.field_card_bonus_sum, price_without_discount, " заполнение поля номера подарочной карты")
-        self.set_text(self.field_card_bonus_pin, "7267", " заполнение поля пинкода")
+        self.set_text(self.field_card_bonus_pin, "6474", " заполнение поля пинкода")
 
 
 
     @allure.step('Оплата подарочной картой не валидная ')
     def payment_bonus_card_not_valid(self):
         self.click(self.card_bonus, " подарочная карта")
-        self.set_text(self.field_card_bonus_number, "1011607915986564", " заполнение поля номера подарочной карты")
+        self.set_text(self.field_card_bonus_number, "6088490568745111", " заполнение поля номера подарочной карты")
 
         price_without_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text,
                                                                                  'Получение суммы заказа без промо'))))

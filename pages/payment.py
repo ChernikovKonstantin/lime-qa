@@ -27,6 +27,7 @@ class PaymentPage(BasePage):
     success_btn_string = "//button[@class = 'button button_primary']"
     success_btn_fault = s("//button[@class='button button_secondary']")
     success_btn_fault_string = "//button[@class='button button_secondary']"
+    check_box_save_card = s("//span[contains(text(), 'Запомнить данные карты')]")
 
     title_thank_you_page_text = s("//div[contains(text(),'Спасибо!')]")
     dropdown_quantity_product_on_payment = s("//div[@class='DropdownList__container DropdownList__inline']")
@@ -37,7 +38,7 @@ class PaymentPage(BasePage):
     error_card_payment_string = '// div[contains(text(), "ОПЛАТА НЕ ПРОШЛА: Свяжитесь с вашим банком или воспользуйтесь другой картой")]'
 
     #error_card_not_money = s('//div[contains(text(),"ОПЛАТА НЕ ПРОШЛА: Недостаточно средств на карте"]')
-    error_card_not_money_string = '//div[@class="CustomerCartSummary__error"]'
+    error_card_not_money_string = s('//div[contains(text(),"ОПЛАТА НЕ ПРОШЛА: Недостаточно средств (без 3D)")]')
     error_card_not_not_valid_card = '//div[contains (text(), "Неправильный номер карты")]'
     block_product = ss("//div[@class='CartTable__row']")
     message_out_of_stock = ss('//p[contains(text(), "Нет в наличии")]')
@@ -66,6 +67,10 @@ class PaymentPage(BasePage):
     type_of_payment_receiving = s("//span[contains(text(), 'При получении')]")
     string_data_card = '//div[contains(text(), "Данные вашей карты visa/mastercard/мир")]'
 
+    field_select_pic_point_and_self = s("//textarea[@role='combobox']")
+    field_select_delivery_result_1 =s("//ul[@id='autocomplete-result-list-1']")
+
+
 
 
 
@@ -79,7 +84,8 @@ class PaymentPage(BasePage):
     discount_string = '//div[contains(text(), " Скидка на заказ")]'# строка Скидка на заказ
     price_discount_text = s('(//div[@class="CustomerCartSummary__value"])[3]/span')# сумма скидки
     price_without_discount_text = s('(//div[@class="CustomerCartSummary__value"])[2]/span')# итоговая сумма без промокода
-    price_without_discount_bonus_card = s('(//div[@class="CustomerCartSummary__value"])[6]/span')  # итоговая сумма без промокода
+    price_without_discount_bonus_card = s('(//div[@class="CustomerCartSummary__value"])[5]/span')  # итоговая сумма без промокода
+    price_with_discount_bonus_card = s('(//div[@class="CustomerCartSummary__value"])[6]/span')
     price_finally_text = s('(//div[@class="CustomerCartSummary__value"])[5]/span')# Итого
     price_finally_text_witout_discount = s('(//div[@class="CustomerCartSummary__value"])[4]/span')  # Итого при отсутсвии скидки
     promo_code_error = s("//div[contains(text(), 'промокод не найден')]")  # ошибка промокода
@@ -245,6 +251,14 @@ class PaymentPage(BasePage):
 
         self.assert_check_expressions((old_price - price_discount_icon), price_result_block_cart, 'Ошибка проверки: Σ без скидки - Σ скидки = Σ итог в блоке корзина')
 
+    @allure.step('Проверка НАЛИЧИЯ ЭЛЕМЕНТОВ СКИДКИ')
+    def sum_order_in_basket_with_discount(self):
+        self.wait_element_assure(self.icon_discount_percent_block_cart_text)
+        self.wait_element_assure(self.old_price_block_cart)
+        self.wait_element_assure(self.price_finally_block_cart_text)
+
+
+
 
     @allure.step('Проверка суммы заказа с учетом промо, несколько товаров')
     def sum_order_with_discount_many(self):
@@ -299,12 +313,12 @@ class PaymentPage(BasePage):
         self.wait_element_not_visible(self.discount_string)
         self.wait_element_not_visible(self.price_finally_block_cart_text_string)
         self.wait_element_not_visible(self.icon_discount_percent_block_cart_text_string)
-
+        time.sleep(2)
         price_finally = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_finally_text_witout_discount,'Получение суммы заказа при 0 скидке'))))
-        time.sleep(1)
+
         price_without_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text,'Получение суммы заказа без промо'))))
-        time.sleep(1)
-        self.assert_check_expressions(price_without_discount, price_finally, " промокод применен неверно")
+
+        self.assert_check_expressions(price_without_discount, price_finally, " не верный расчет суммы заказа")
 
 
 
@@ -385,11 +399,13 @@ class PaymentPage(BasePage):
 
     @allure.step('Заполнение полей валидной карты')
     def field_valid_card(self):
-        self.click(self.checkbox_add_new_card, " чекбокс добавить новую карту")
-        self.set_text(self.card_number_field, "2200 0000 0000 0004", " Номер карты")
+        #self.click(self.checkbox_add_new_card, " чекбокс добавить новую карту")
+        self.set_text(self.card_number_field, "4242 4242 4242 4242", " Номер карты")
         self.set_text(self.validity_period_field, "12/24", "Дата окончания срока действия")
         self.set_text(self.card_holder_field, "tester", "Владелец карты")
         self.set_text(self.security_code_field, "123", "Код безопасности")
+        self.click(self.check_box_save_card, " сохранить карту")
+
 
     @allure.step('Проверка и удаление существующей карты')
     def check_del_old_card(self):
@@ -555,8 +571,8 @@ class PaymentPage(BasePage):
         self.wait_element_assure(self.to_pay_btn)
         self.click(self.to_pay_btn, "кнопка оплаты")
         time.sleep(3)
-        self.wait_element_assure(self.success_btn)
-        self.click(self.success_btn, " кнопка опалты Удачно")
+        # self.wait_element_assure(self.success_btn)
+        # self.click(self.success_btn, " кнопка опалты Удачно")
 
         self.wait_element_assure(self.title_thank_you_page_text)
 
@@ -590,8 +606,8 @@ class PaymentPage(BasePage):
         self.wait_element_assure(self.to_pay_btn)
         self.click(self.to_pay_btn, "кнопка оплаты")
 
-        self.wait_element_assure(self.success_btn)
-        self.click(self.success_btn, " кнопка опалты Удачно")
+        # self.wait_element_assure(self.success_btn)
+        # self.click(self.success_btn, " кнопка опалты Удачно")
 
 
     @allure.step("Не удачная оплата")
@@ -672,6 +688,13 @@ class PaymentPage(BasePage):
         price_without_discount = (int(re.sub('[^0-9]', "", self.get_element_text(self.price_without_discount_text,
                                                                                  'Получение суммы заказа без промо'))))
         self.assert_check_expressions(price_without_discount, price_finally, " промокод применен неверно")
+
+    @allure.step('Заполнение поля адреса в пунктах самовывоза или доставки')
+    def field_self_and_pic_point(self):
+        self.set_text(self.field_select_pic_point_and_self,"Москва", " город доставки или самовывоза")
+        self.click(self.field_select_delivery_result_1, " первый результа поиска по слову Москва")
+
+
 
 
 

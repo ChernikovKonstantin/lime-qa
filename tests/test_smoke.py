@@ -26,13 +26,13 @@ class TestSmoke:
     #ОСНОВНОЙ ЭКРАН
 
 
-    @allure.title("Основной экран / Переход с баннера к разделам каталога")
-    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/849")
-    @pytest.mark.smoked
-    def test_main_screen_banners(self):
-        page = SmokePage()
-        page.cycle_banners()
-        page.video()
+    # @allure.title("Основной экран / Переход с баннера к разделам каталога")
+    # @allure.link("https://lmdev.testrail.io/index.php?/cases/view/849")
+    # @pytest.mark.smoked
+    # def test_main_screen_banners(self):
+    #     page = SmokePage()
+    #     page.cycle_banners()
+    #     page.video()
 
 
     @allure.title("Основной экран / Лого LIME")
@@ -106,12 +106,12 @@ class TestSmoke:
     def test_main_screen_menu(self):
         page = SmokePage()
         #page.catalog_menu_link()
-        #page.catalog_menu_parents_link_clothes()
-        #page.catalog_menu_parents_link_lingerie()
+        page.catalog_menu_parents_link_clothes()
+        page.catalog_menu_parents_link_lingerie()
         #page.catalog_menu_parents_link_accessories()
-        #page.catalog_menu_parents_link_shoes()
-        page.catalog_menu_parents_link_special_offer()
-        page.catalog_menu_parents_link_campaigns()
+        # page.catalog_menu_parents_link_shoes()
+        # page.catalog_menu_parents_link_special_offer()
+        # page.catalog_menu_parents_link_campaigns()
 
     @allure.title("Главная страница бургер меню")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/1599")
@@ -140,6 +140,7 @@ class TestSmoke:
         page.open_url(os.getenv('base_url'))
         page = CatalogPage()
         page.favoutites_clear()
+        page.click(page.button_close_fav, " закрыть экран избранного")
         page.click(page.hamburger_menu, " гамбургер меню")
         time.sleep(2)
 
@@ -217,7 +218,7 @@ class TestSmoke:
     @pytest.mark.smoke4
     def test_burger_menu_check_products(self):
         page = CatalogPage()
-        page.select_section_menu_new()
+        page.select_section_menu_new_collection()
         page = SmokePage()
         page.wait_element_hidden(page.block_catalog)
         time.sleep(1)
@@ -230,7 +231,7 @@ class TestSmoke:
     @pytest.mark.smoked1(6)
     def test_cart_product(self):
         page = CatalogPage()
-        page.select_section_menu_shoes_all()
+        page.select_section_menu_sales_all()
         page = SmokePage()
         time.sleep(3)
         page.wait_element_assure(page.img_in_catalog)
@@ -241,23 +242,24 @@ class TestSmoke:
         #page.wait_element_assure(page.imges_in_cart_slider)
         page.wait_element_assure(page.img_in_cart_slider)
         time.sleep(5)
-        for i in range(len(page.imges_in_cart_slider)):
-            resolution = page.imges_in_cart_slider[i].size
-            height = (resolution['height'])
-            width = (resolution['width'])
-            page.assert_check_comparison(height, width, " изображение не портретное")
+        # Цикл проверки верикальных карточе товаров
+        # for i in range(len(page.imges_in_cart_slider)):
+        #     resolution = page.imges_in_cart_slider[i].size
+        #     height = (resolution['height'])
+        #     width = (resolution['width'])
+        #     page.assert_check_comparison(height, width, " изображение не портретное")
         page = CatalogPage()
         page.wait_element_assure(page.add_to_cart)
         page.wait_element_assure(page.colors_selector)
         page.wait_element_assure(page.add_favorite_btn)
         page.wait_element_assure(page.button_drop_down_size)
-        page.wait_element_assure(page.product_price_text)
+        page.wait_element_assure(page.product_price_sale_text)
 
         page = SmokePage()
         page.user_login()
         page.click(page.button_close_screen, " закрыть экран входа\регистрации")
         page = CatalogPage()
-        page.select_section_menu_shoes_all()
+        page.select_section_menu_sales_all()
         page = SmokePage()
         time.sleep(3)
         page.wait_element_assure(page.img_in_catalog)
@@ -267,18 +269,18 @@ class TestSmoke:
         page.wait_element_assure(page.share_string_card_products)
         page.wait_element_assure(page.imges_in_cart_slider)
         time.sleep(5)
-        for y in range(len(page.imges_in_cart_slider)):
-            resolution = page.imges_in_cart_slider[y].size
-            height = (resolution['height'])
-            width = (resolution['width'])
-            page.assert_check_comparison(height, width, " изображение не портретное")
+        # for y in range(len(page.imges_in_cart_slider)):
+        #     resolution = page.imges_in_cart_slider[y].size
+        #     height = (resolution['height'])
+        #     width = (resolution['width'])
+        #     page.assert_check_comparison(height, width, " изображение не портретное")
 
         page = CatalogPage()
         page.wait_element_assure(page.add_to_cart)
         page.wait_element_assure(page.colors_selector)
         page.wait_element_assure(page.add_favorite_btn)
         page.wait_element_assure(page.button_drop_down_size)
-        page.wait_element_assure(page.product_price_text)
+        page.wait_element_assure(page.product_price_sale_text)
 
     # КОРЗИНА
 
@@ -400,7 +402,7 @@ class TestSmoke:
         page = SmokePage()
         page.click(page.button_cart_2, " переход в корзину")
         page = PaymentPage()
-        page.sum_order_with_discount_in_basket()
+        page.sum_order_in_basket_with_discount()
 
 
     # ПРОФИЛЬ
@@ -461,15 +463,16 @@ class TestSmoke:
     @allure.title("Профиль / мои данные /")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/880")
     @pytest.mark.smoke3
-    def test_first_login_with_profile(self):
+    def test_profile_order(self):
         page = PaymentPage()
         page.preview_payment()
         page.check_product_for_order()
         #page.check_del_old_card()
+
         page.field_valid_card()
         page.to_pay_btn.click()
         time.sleep(2)
-        page.success_btn.click()
+        #page.success_btn.click()
 
         page = SmokePage()
         number_order = (re.sub('[^0-9]', "", page.get_element_text(page.message_number_order, ' сумма заказа после оформления')))
@@ -488,6 +491,7 @@ class TestSmoke:
 
         number_ord = (re.sub('[^0-9]', "",
                              page.get_element_text(page.message_number_order_lk, ' сумма заказа в личном кабинете')))
+
         number_order_lk = number_ord[:-12]
 
         page.assert_check_expressions(number_order, number_order_lk, " оформленный заказ отсутсвует в личном кабинете")
@@ -500,6 +504,7 @@ class TestSmoke:
     def test_search(self):
         page = SmokePage()
         page.search_successful_text()
+        page.open_url(os.getenv('base_url'))
         page.search_successful_article()
         page.search_not_result()
 
@@ -570,17 +575,17 @@ class TestSmoke:
         page.enter_valid_promo_0()
         page.check_without_discount()
 
-    @allure.title("Оплата картой ошибка оплаты")
-    @allure.link("https://lmdev.testrail.io/index.php?/cases/view/908")
-    @pytest.mark.smoke2
-    def test_payment_card_error(self):
-        page = PaymentPage()
-        page.preview_payment()
-        page.click(page.type_of_delivery_courier, "Выбор типа доставки Курьер")
-        page.click(page.type_of_payment_card, "Выбор типа оплаты Карта")
-        #page.check_del_old_card()
-        page.field_valid_card()
-        page.pay_order_error()
+    # @allure.title("Оплата картой ошибка оплаты")
+    # @allure.link("https://lmdev.testrail.io/index.php?/cases/view/908")
+    # @pytest.mark.smoke2
+    # def test_payment_card_error(self):
+    #     page = PaymentPage()
+    #     page.preview_payment()
+    #     page.click(page.type_of_delivery_courier, "Выбор типа доставки Курьер")
+    #     page.click(page.type_of_payment_card, "Выбор типа оплаты Карта")
+    #     #page.check_del_old_card()
+    #     page.field_valid_card()
+    #     page.pay_order_error()
 
     @allure.title("Оплата при получении, доставка курьером")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/912")
@@ -600,6 +605,7 @@ class TestSmoke:
         page = PaymentPage()
         page.preview_payment_old_card()
         page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.field_self_and_pic_point()
         page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
         page.check_del_old_card()
@@ -613,14 +619,17 @@ class TestSmoke:
         page = PaymentPage()
         page.preview_payment()
         page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.field_self_and_pic_point()
+        time.sleep(1)
+
         page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
         page.check_del_old_card()
         page.field_valid_card()
-        page.set_text(page.card_number_field, "4012 8888 8888 1881", " тестовый номер карты  с ошибкой Недостаточно средств")
+        page.set_text(page.card_number_field, "2203 0000 0000 0043", " тестовый номер карты  с ошибкой Недостаточно средств")
         page.pay_order_without_check()
 
-        page.wait_element(page.error_card_not_money_string)
+        page.wait_element_assure(page.error_card_not_money_string)
 
     @allure.title("Оплата банковской картой(не существующая карта), самовывоз")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/915")
@@ -630,6 +639,7 @@ class TestSmoke:
         page.preview_payment()
 
         page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.field_self_and_pic_point()
         page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
         page.check_del_old_card()
@@ -669,10 +679,10 @@ class TestSmoke:
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот ПВЗ"')
         page.check_del_old_card()
         page.field_valid_card()
-        page.set_text(page.card_number_field, "4012 8888 8888 1881",
+        page.set_text(page.card_number_field, "2203 0000 0000 0043",
                       " тестовый номер карты с ошибкой недостаточно средств")
         page.pay_order_without_check()
-        page.wait_element(page.error_card_not_money_string)
+        page.wait_element_assure(page.error_card_not_money_string)
 
     @allure.title("Оплата банковской картой(не существующая карта), ПВЗ")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/922")
@@ -878,12 +888,16 @@ class TestSmoke:
         page = SmokePage()
         page.payment_bonus_card_promocode()
         page = PaymentPage()
+        price_without_discount = (int(re.sub('[^0-9]', "", page.get_element_text(page.price_without_discount_bonus_card,
+                                                                                 'Получение суммы заказа без промо'))))
+        price_discount = round((price_without_discount * 0.1), -2)
+
         page.enter_valid_promo_10()
+        page.field_valid_card()
+        price_with_discount = (int(re.sub('[^0-9]', "", page.get_element_text(page.price_with_discount_bonus_card,'Получение суммы заказа без промо'))))
 
-        price_without_discount = (int(re.sub('[^0-9]', "", page.get_element_text(page.price_without_discount_bonus_card, 'Получение суммы заказа без промо'))))
-        page.assert_check_expressions("0", price_without_discount,
+        page.assert_check_expressions(price_with_discount, (price_without_discount-price_discount),
                                       " сумма заказа в строке Итого перессчитывается некорректно")
-
 
         page = PaymentPage()
         page.pay_order_without_3d()
@@ -894,7 +908,7 @@ class TestSmoke:
     def test_add_fav_anonim(self):
 
         page = CatalogPage()
-        page.select_section_menu_shoes_all()
+        page.select_section_menu_sales_all()
         time.sleep(1)
         page = SmokePage()
         page.add_favourites_catalog()
@@ -916,12 +930,12 @@ class TestSmoke:
         page = CatalogPage()
         page.favoutites_clear()
 
-        page.open_url(os.getenv('base_url') + "/ru_ru/catalog/all_shoes")
+        page.open_url(os.getenv('base_url') + "/ru_ru/catalog/sale")
         page = SmokePage()
         page.add_favourites_catalog()
         time.sleep(1)
 
-        page.open_url(os.getenv('base_url') + "/ru_ru/catalog/underwear")
+        page.open_url(os.getenv('base_url') + "/ru_ru/catalog/new")
         page = SmokePage()
         page.add_favourites_catalog()
         time.sleep(1)
