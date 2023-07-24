@@ -572,9 +572,9 @@ jQuery.cookie = function(name, value, options) {
     <body>
         <div id="container">
             <div id="header">
-                <div class="time" xmlns="">18 m 49 s</div>
+                <div class="time" xmlns="">20 m 6 s</div>
                 <h1>
-                    pytest for test_smoke.TestSmoke: <strong><span class="total" xmlns="http://www.w3.org/1999/xhtml">39 total, </span><span class="failed">10 failed, </span><span class="passed">29 passed</span></strong>
+                    pytest for test_smoke.TestSmoke: <strong><span class="total" xmlns="http://www.w3.org/1999/xhtml">49 total, </span><span class="failed">14 failed, </span><span class="passed">35 passed</span></strong>
                 </h1>
                 <div id="treecontrol">
                     <ul>
@@ -593,436 +593,548 @@ jQuery.cookie = function(name, value, options) {
                 <ul id="tree">
                     <li xmlns="" class="level top failed open">
                         <span><em class="time">
-                                <div class="time">18 m 49 s</div>
+                                <div class="time">20 m 6 s</div>
                             </em>tests</span>
                         <ul>
                             <li class="level suite failed open">
                                 <span><em class="time">
-                                        <div class="time">18 m 49 s</div>
+                                        <div class="time">20 m 6 s</div>
                                     </em>test_smoke</span>
                                 <ul>
                                     <li class="level suite failed open">
                                         <span><em class="time">
-                                                <div class="time">18 m 49 s</div>
+                                                <div class="time">20 m 6 s</div>
                                             </em>TestSmoke</span>
                                         <ul>
                                             <li class="level test">
                                                 <span><em class="time">
-                                                        <div class="time">28.55 s</div>
-                                                    </em><em class="status">passed</em>test_fav_card_product_check</span>
+                                                        <div class="time">39 ms</div>
+                                                    </em><em class="status">passed</em>test_main_screen_logo</span>
                                                 <ul>
                                                     <li class="text">
-                                                        <span class="stdout">PASSED             [  2%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">7.57 s</div>
-                                                    </em><em class="status">passed</em>test_add_fav_anonim</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED                     [  4%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">8.94 s</div>
-                                                    </em><em class="status">passed</em>test_burger_menu_check_products_sections</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED [  7%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">10.85 s</div>
-                                                    </em><em class="status">passed</em>test_registration_negative</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED              [  9%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">53.70 s</div>
-                                                    </em><em class="status">passed</em>test_payment_card_error</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED                 [ 12%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test failed open">
-                                                <span><em class="time">
-                                                        <div class="time">49.39 s</div>
-                                                    </em><em class="status">failed</em>test_add_del_fav_user</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">FAILED                   [ 14%] товар не удален из избранного<br/></span>
-                                                    </li>
-                                                    <li class="text">
-                                                        <span class="stderr">tests\test_smoke.py:712 (TestSmoke.test_add_del_fav_user)test_smoke.py:743: in test_add_del_fav_user<br/>    page.wait_element_assure(page.to_pay_btn)<br/>..\pages\smoke.py:721: in check_del_product_fav_screen<br/>    self.assert_check_not_expressions(title_del_fav, title_not_del_fav, " товар не удален из избранного")<br/>..\pages\base.py:79: in assert_check_not_expressions<br/>    assert expression1 != expression2, print(allureText)<br/>E   AssertionError: None<br/></span>
+                                                        <span class="stdout">PASSED                   [  2%]<br/></span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li class="level test failed open">
                                                 <span><em class="time">
                                                         <div class="time">22.41 s</div>
-                                                    </em><em class="status">failed</em>test_cart_product</span>
+                                                    </em><em class="status">failed</em>test_main_screen_main_menu_search</span>
                                                 <ul>
                                                     <li class="text">
-                                                        <span class="stdout">FAILED                       [ 17%] изображение не портретное<br/></span>
+                                                        <span class="stdout">FAILED       [  4%]<br/></span>
                                                     </li>
                                                     <li class="text">
-                                                        <span class="stderr">tests\test_smoke.py:226 (TestSmoke.test_cart_product)test_smoke.py:246: in test_cart_product<br/>    page.assert_check_comparison(height, width, " изображение не портретное")<br/>..\pages\base.py:91: in assert_check_comparison<br/>    assert expression1 > expression2, print(allureText)<br/>E   AssertionError: None<br/></span>
+                                                        <span class="stderr">tests\test_smoke.py:44 (TestSmoke.test_main_screen_main_menu_search)..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class = 'CatalogProduct__title']"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:50: in test_main_screen_main_menu_search<br/>    page.main_menu_search()<br/>..\pages\smoke.py:292: in main_menu_search<br/>    self.wait_element_assure(self.product_in_result_search)<br/>..\pages\base.py:65: in wait_element_assure<br/>    element.assure(visible, 15)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:627: in assure<br/>    return self.should(condition, timeout)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:538: in should<br/>    return self.with_(Config(timeout=timeout)).should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 15s, while waiting for:<br/>E   browser.element(('xpath', "//div[@class = 'CatalogProduct__title']")).is visible<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class = 'CatalogProduct__title']"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>E   <br/>E   Screenshot: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205947.png<br/>E   PageSource: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205947.html<br/></span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li class="level test">
                                                 <span><em class="time">
-                                                        <div class="time">2 m 1 s</div>
-                                                    </em><em class="status">passed</em>test_main_screen_menu</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED                   [ 19%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test failed open">
-                                                <span><em class="time">
-                                                        <div class="time">40.29 s</div>
-                                                    </em><em class="status">failed</em>test_payment_cart_order_more_6000</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">FAILED       [ 21%]<br/></span>
-                                                    </li>
-                                                    <li class="text">
-                                                        <span class="stderr">tests\test_smoke.py:539 (TestSmoke.test_payment_cart_order_more_6000)..\venv\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\venv\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\venv\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\venv\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\venv\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\venv\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\venv\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(), " Скидка на заказ")]"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:550: in test_payment_cart_order_more_6000<br/>    page.sum_order_with_discount()<br/>..\pages\payment.py:210: in sum_order_with_discount<br/>    self.wait_element(self.discount_string) #ошибка - нет скидки в корзине при заказе более 6000<br/>..\pages\base.py:57: in wait_element<br/>    browser.s(locator).should(be.visible)<br/>..\venv\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\venv\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\venv\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 10s, while waiting for:<br/>E   browser.element(('xpath', '//div[contains(text(), " Скидка на заказ")]')).is visible<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(), " Скидка на заказ")]"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>E   <br/>E   Screenshot: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588124.png<br/>E   PageSource: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588124.html<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">11.29 s</div>
-                                                    </em><em class="status">passed</em>test_cart_product_discount</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED              [ 24%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">51.16 s</div>
-                                                    </em><em class="status">passed</em>test_payment_cart_valid_promo_many_prducts</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED [ 26%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">1.38 s</div>
-                                                    </em><em class="status">passed</em>test_burger_menu_bonus_card</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED             [ 29%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">55.20 s</div>
-                                                    </em><em class="status">passed</em>test_payment_cart_valid_promo</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED           [ 31%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">12.11 s</div>
-                                                    </em><em class="status">passed</em>test_first_login</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED                        [ 34%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test failed open">
-                                                <span><em class="time">
-                                                        <div class="time">19.13 s</div>
-                                                    </em><em class="status">failed</em>test_cart_add_product_user</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">FAILED              [ 36%]<br/></span>
-                                                    </li>
-                                                    <li class="text">
-                                                        <span class="stderr">tests\test_smoke.py:303 (TestSmoke.test_cart_add_product_user)..\venv\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\venv\lib\site-packages\selene\core\wait.py:56: in __call__<br/>    return self._fn(entity)<br/>..\venv\lib\site-packages\selene\core\entity.py:465: in <lambda><br/>    self.wait.command('click', lambda element: element().click())<br/>..\venv\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\venv\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\venv\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"(//a[contains(text(), "Боди без рукавов")])[3]"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:316: in test_cart_add_product_user<br/>    page.click(page.choose_a_product_1399, "Товар с ценой 1999")<br/>..\pages\base.py:39: in click<br/>    element.click()<br/>..\venv\lib\site-packages\selene\core\entity.py:465: in click<br/>    self.wait.command('click', lambda element: element().click())<br/>..\venv\lib\site-packages\selene\core\wait.py:136: in command<br/>    self.for_(Command(description, fn))<br/>..\venv\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 10s, while waiting for:<br/>E   browser.element(('xpath', '(//a[contains(text(), "Боди без рукавов")])[3]')).click<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"(//a[contains(text(), "Боди без рукавов")])[3]"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>E   <br/>E   Screenshot: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588127.png<br/>E   PageSource: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588127.html<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">1.72 s</div>
-                                                    </em><em class="status">passed</em>test_login</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED                              [ 39%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test failed open">
-                                                <span><em class="time">
-                                                        <div class="time">18.25 s</div>
-                                                    </em><em class="status">failed</em>test_search</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">FAILED                             [ 41%]<br/></span>
-                                                    </li>
-                                                    <li class="text">
-                                                        <span class="stderr">tests\test_smoke.py:494 (TestSmoke.test_search)..\venv\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\venv\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\venv\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\venv\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\venv\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\venv\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\venv\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class = 'CatalogProduct__title']"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:500: in test_search<br/>    page.search_successful_text()<br/>..\pages\smoke.py:620: in search_successful_text<br/>    self.wait_element_assure(self.product_in_result_search)<br/>..\pages\base.py:65: in wait_element_assure<br/>    element.assure(visible, 15)<br/>..\venv\lib\site-packages\selene\core\entity.py:627: in assure<br/>    return self.should(condition, timeout)<br/>..\venv\lib\site-packages\selene\core\entity.py:538: in should<br/>    return self.with_(Config(timeout=timeout)).should(condition)<br/>..\venv\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\venv\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\venv\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 15s, while waiting for:<br/>E   browser.element(('xpath', "//div[@class = 'CatalogProduct__title']")).is visible<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class = 'CatalogProduct__title']"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>E   <br/>E   Screenshot: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588128.png<br/>E   PageSource: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588128.html<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">1.58 s</div>
-                                                    </em><em class="status">passed</em>test_main_screen_logo</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED                   [ 43%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">441 ms</div>
+                                                        <div class="time">1.08 s</div>
                                                     </em><em class="status">passed</em>test_main_screen_main_menu_fav</span>
                                                 <ul>
                                                     <li class="text">
-                                                        <span class="stdout">PASSED          [ 46%]<br/></span>
+                                                        <span class="stdout">PASSED          [  6%]<br/></span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li class="level test">
                                                 <span><em class="time">
-                                                        <div class="time">5.49 s</div>
+                                                        <div class="time">5.50 s</div>
+                                                    </em><em class="status">passed</em>test_main_screen_main_menu_lk</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED           [  8%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">16.01 s</div>
+                                                    </em><em class="status">passed</em>test_main_screen_main_menu_basket</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED       [ 10%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">17.98 s</div>
+                                                    </em><em class="status">failed</em>test_main_screen_menu</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED                   [ 12%] переход выполнен не в каталог<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:102 (TestSmoke.test_main_screen_menu)test_smoke.py:109: in test_main_screen_menu<br/>    page.catalog_menu_parents_link_clothes()<br/>..\pages\smoke.py:324: in catalog_menu_parents_link_clothes<br/>    self.assert_check_coincidence("catalog", url_catalog, " переход выполнен не в каталог")<br/>..\pages\base.py:83: in assert_check_coincidence<br/>    assert expression1 in expression2, print(allureText)<br/>E   AssertionError: None<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">56.52 s</div>
+                                                    </em><em class="status">failed</em>test_burger_menu</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED                        [ 14%]<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:115 (TestSmoke.test_burger_menu)..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//span[@title = 'Ваша корзина пуста']"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:150: in test_burger_menu<br/>    page.wait_element_assure(page.cart)<br/>..\pages\base.py:65: in wait_element_assure<br/>    element.assure(visible, 15)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:627: in assure<br/>    return self.should(condition, timeout)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:538: in should<br/>    return self.with_(Config(timeout=timeout)).should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 15s, while waiting for:<br/>E   browser.element(('xpath', "//span[@title = 'Ваша корзина пуста']")).is visible<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//span[@title = 'Ваша корзина пуста']"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>E   <br/>E   Screenshot: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205949.png<br/>E   PageSource: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205949.html<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">14.72 s</div>
+                                                    </em><em class="status">passed</em>test_burger_menu_check_products_sections</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED [ 16%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">3.78 s</div>
+                                                    </em><em class="status">passed</em>test_burger_menu_bonus_card</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED             [ 18%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">3.31 s</div>
                                                     </em><em class="status">passed</em>test_burger_menu_product_card</span>
                                                 <ul>
                                                     <li class="text">
-                                                        <span class="stdout">PASSED           [ 48%]<br/></span>
+                                                        <span class="stdout">PASSED           [ 20%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">16.32 s</div>
+                                                    </em><em class="status">failed</em>test_burger_menu_check_products</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED         [ 22%]<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:215 (TestSmoke.test_burger_menu_check_products)..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:74: in fn<br/>    raise ConditionNotMatchedError()  # todo: try to handle printing actual values here too...<br/>E   selene.core.exceptions.ConditionNotMatchedError: condition not matched<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:223: in test_burger_menu_check_products<br/>    page.wait_element_hidden(page.block_catalog)<br/>..\pages\base.py:71: in wait_element_hidden<br/>    element.assure(hidden, 15)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:627: in assure<br/>    return self.should(condition, timeout)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:538: in should<br/>    return self.with_(Config(timeout=timeout)).should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 15s, while waiting for:<br/>E   browser.element(('xpath', "//nav[@class='mainmenu']")).is hidden<br/>E   <br/>E   Reason: ConditionNotMatchedError: condition not matched<br/>E   Screenshot: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205950.png<br/>E   PageSource: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205950.html<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">24.33 s</div>
+                                                    </em><em class="status">passed</em>test_cart_product</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED                       [ 24%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">15.49 s</div>
+                                                    </em><em class="status">passed</em>test_cart_add_product_anonim</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED            [ 26%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">11.49 s</div>
+                                                    </em><em class="status">passed</em>test_cart_add_product_user</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED              [ 28%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">28.27 s</div>
+                                                    </em><em class="status">passed</em>test_cart_del_product_user</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED              [ 30%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">9.70 s</div>
+                                                    </em><em class="status">passed</em>test_cart_product_discount</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED              [ 32%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">1.06 s</div>
+                                                    </em><em class="status">passed</em>test_login_screen</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED                       [ 34%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">14.52 s</div>
+                                                    </em><em class="status">failed</em>test_login_negative</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED                     [ 36%]<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:427 (TestSmoke.test_login_negative)..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:56: in __call__<br/>    return self._fn(entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:282: in fn<br/>    else element()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"input[placeholder="Введите e-mail"]"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:433: in test_login_negative<br/>    page.user_login_not_valid()<br/>..\pages\smoke.py:540: in user_login_not_valid<br/>    page.login(email="chernikov.kv@lime-shop.com", password=("VTer38XXXXXX"))<br/>..\pages\login.py:33: in login<br/>    self.email_input.set_value(email)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:303: in set_value<br/>    self.wait.for_(<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 10s, while waiting for:<br/>E   browser.element(('css selector', 'input[placeholder="Введите e-mail"]')).set value: chernikov.kv@lime-shop.com<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"input[placeholder="Введите e-mail"]"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>E   <br/>E   Screenshot: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205951.png<br/>E   PageSource: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205951.html<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">2.93 s</div>
+                                                    </em><em class="status">passed</em>test_login</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED                              [ 38%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">12.36 s</div>
+                                                    </em><em class="status">passed</em>test_registration_negative</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED              [ 40%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">14.12 s</div>
+                                                    </em><em class="status">passed</em>test_registration</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED                       [ 42%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">21.30 s</div>
+                                                    </em><em class="status">passed</em>test_first_login</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED                        [ 44%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">45.27 s</div>
+                                                    </em><em class="status">failed</em>test_profile_order</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED                      [ 46%] оформленный заказ отсутсвует в личном кабинете<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:462 (TestSmoke.test_profile_order)test_smoke.py:497: in test_profile_order<br/>    page.assert_check_expressions(number_order, number_order_lk, " оформленный заказ отсутсвует в личном кабинете")<br/>..\pages\base.py:75: in assert_check_expressions<br/>    assert expression1 == expression2, print(allureText)<br/>E   AssertionError: None<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">10.58 s</div>
+                                                    </em><em class="status">failed</em>test_search</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED                             [ 48%]солнцезащитные очки<br/> значение артикула не соответствует<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:500 (TestSmoke.test_search)test_smoke.py:508: in test_search<br/>    page.search_successful_article()<br/>..\pages\smoke.py:675: in search_successful_article<br/>    self.assert_check_expressions(article, "1418-888", " значение артикула не соответствует")<br/>..\pages\base.py:75: in assert_check_expressions<br/>    assert expression1 == expression2, print(allureText)<br/>E   AssertionError: None<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">32.15 s</div>
+                                                    </em><em class="status">passed</em>test_payment_cart_valid_promo</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED           [ 51%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">35.80 s</div>
+                                                    </em><em class="status">passed</em>test_payment_cart_valid_promo_many_prducts</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED [ 53%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">25.79 s</div>
+                                                    </em><em class="status">passed</em>test_payment_cart_no_valid_promo</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED        [ 55%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">39.75 s</div>
+                                                    </em><em class="status">failed</em>test_payment_cart_order_more_6000</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED       [ 57%]<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:546 (TestSmoke.test_payment_cart_order_more_6000)..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(), " Скидка на заказ")]"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:557: in test_payment_cart_order_more_6000<br/>    page.sum_order_with_discount()<br/>..\pages\payment.py:221: in sum_order_with_discount<br/>    self.wait_element(self.discount_string) #ошибка - нет скидки в корзине при заказе более 6000<br/>..\pages\base.py:57: in wait_element<br/>    browser.s(locator).should(be.visible)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 10s, while waiting for:<br/>E   browser.element(('xpath', '//div[contains(text(), " Скидка на заказ")]')).is visible<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(), " Скидка на заказ")]"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>E   <br/>E   Screenshot: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205952.png<br/>E   PageSource: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205952.html<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">29.05 s</div>
+                                                    </em><em class="status">passed</em>test_payment_promocodes_6000_sum_6000</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED   [ 59%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">26.78 s</div>
+                                                    </em><em class="status">passed</em>test_pay_receiving_courier</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED              [ 61%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">33.30 s</div>
+                                                    </em><em class="status">passed</em>test_card_self</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED                          [ 63%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">34.15 s</div>
+                                                    </em><em class="status">passed</em>test_card_self_no_many</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED                  [ 65%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">29.45 s</div>
+                                                    </em><em class="status">passed</em>test_card_self_no_valid_card</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED            [ 67%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">32.78 s</div>
+                                                    </em><em class="status">passed</em>test_pay_card_pick_point</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED                [ 69%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">30.88 s</div>
+                                                    </em><em class="status">passed</em>test_pay_card_no_many_pick_point</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED        [ 71%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">27.56 s</div>
+                                                    </em><em class="status">passed</em>test_pay_card_not_valid_pick_point</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED      [ 73%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">45.42 s</div>
+                                                    </em><em class="status">failed</em>test_bonus_card_courier</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED                 [ 75%]<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:708 (TestSmoke.test_bonus_card_courier)..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(),'Спасибо!')]"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:719: in test_bonus_card_courier<br/>    page.pay_order_without_3d()<br/>..\pages\payment.py:590: in pay_order_without_3d<br/>    self.wait_element_assure(self.title_thank_you_page_text)<br/>..\pages\base.py:65: in wait_element_assure<br/>    element.assure(visible, 15)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:627: in assure<br/>    return self.should(condition, timeout)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:538: in should<br/>    return self.with_(Config(timeout=timeout)).should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 15s, while waiting for:<br/>E   browser.element(('xpath', "//div[contains(text(),'Спасибо!')]")).is visible<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(),'Спасибо!')]"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>E   <br/>E   Screenshot: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205953.png<br/>E   PageSource: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205953.html<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">28.35 s</div>
+                                                    </em><em class="status">passed</em>test_bonus_card_no_many</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED                 [ 77%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">27.01 s</div>
+                                                    </em><em class="status">passed</em>test_pay_bonus_card_not_valid</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED           [ 79%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">33.70 s</div>
+                                                    </em><em class="status">failed</em>test_pay_bonus_card_not_valid_self</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED      [ 81%]<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:748 (TestSmoke.test_pay_bonus_card_not_valid_self)..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:56: in __call__<br/>    return self._fn(entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:465: in <lambda><br/>    self.wait.command('click', lambda element: element().click())<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='PickPointSelector__item']"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:756: in test_pay_bonus_card_not_valid_self<br/>    page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')<br/>..\pages\base.py:39: in click<br/>    element.click()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:465: in click<br/>    self.wait.command('click', lambda element: element().click())<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:136: in command<br/>    self.for_(Command(description, fn))<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 10s, while waiting for:<br/>E   browser.element(('xpath', "//div[@class='PickPointSelector__item']")).click<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='PickPointSelector__item']"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>E   <br/>E   Screenshot: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205954.png<br/>E   PageSource: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205954.html<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">34.66 s</div>
+                                                    </em><em class="status">failed</em>test_pay_bonus_card_no_many_self</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED        [ 83%]<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:765 (TestSmoke.test_pay_bonus_card_no_many_self)..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:56: in __call__<br/>    return self._fn(entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:465: in <lambda><br/>    self.wait.command('click', lambda element: element().click())<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='PickPointSelector__item']"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:773: in test_pay_bonus_card_no_many_self<br/>    page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')<br/>..\pages\base.py:39: in click<br/>    element.click()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:465: in click<br/>    self.wait.command('click', lambda element: element().click())<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:136: in command<br/>    self.for_(Command(description, fn))<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 10s, while waiting for:<br/>E   browser.element(('xpath', "//div[@class='PickPointSelector__item']")).click<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='PickPointSelector__item']"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>E   <br/>E   Screenshot: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205955.png<br/>E   PageSource: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205955.html<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">33.15 s</div>
+                                                    </em><em class="status">failed</em>test_bonus_card_self</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED                    [ 85%]<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:782 (TestSmoke.test_bonus_card_self)..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:56: in __call__<br/>    return self._fn(entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:465: in <lambda><br/>    self.wait.command('click', lambda element: element().click())<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//button[@class ='btn btn-cart']"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:788: in test_bonus_card_self<br/>    page.preview_payment()<br/>..\pages\payment.py:389: in preview_payment<br/>    page.basket_changes_products_1399()<br/>..\pages\catalog.py:210: in basket_changes_products_1399<br/>    self.click(self.add_to_cart, "добавить в корзину")<br/>..\pages\base.py:39: in click<br/>    element.click()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:465: in click<br/>    self.wait.command('click', lambda element: element().click())<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:136: in command<br/>    self.for_(Command(description, fn))<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 10s, while waiting for:<br/>E   browser.element(('xpath', "//button[@class ='btn btn-cart']")).click<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//button[@class ='btn btn-cart']"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>E   <br/>E   Screenshot: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205956.png<br/>E   PageSource: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205956.html<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">48.41 s</div>
+                                                    </em><em class="status">failed</em>test_bonus_card_pick_point</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED              [ 87%]<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:822 (TestSmoke.test_bonus_card_pick_point)..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(),'Спасибо!')]"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:835: in test_bonus_card_pick_point<br/>    page.pay_order_without_3d()<br/>..\pages\payment.py:590: in pay_order_without_3d<br/>    self.wait_element_assure(self.title_thank_you_page_text)<br/>..\pages\base.py:65: in wait_element_assure<br/>    element.assure(visible, 15)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:627: in assure<br/>    return self.should(condition, timeout)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:538: in should<br/>    return self.with_(Config(timeout=timeout)).should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 15s, while waiting for:<br/>E   browser.element(('xpath', "//div[contains(text(),'Спасибо!')]")).is visible<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(),'Спасибо!')]"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>E   <br/>E   Screenshot: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205957.png<br/>E   PageSource: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205957.html<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">28.36 s</div>
+                                                    </em><em class="status">passed</em>test_pay_bonus_card_not_valid_pick_point</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED [ 89%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">34.30 s</div>
+                                                    </em><em class="status">passed</em>test_pay_bonus_card_no_many_pick_point</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED  [ 91%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test failed open">
+                                                <span><em class="time">
+                                                        <div class="time">1 m 6 s</div>
+                                                    </em><em class="status">failed</em>test_card_bonus_card_self_promo</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">FAILED         [ 93%]<br/></span>
+                                                    </li>
+                                                    <li class="text">
+                                                        <span class="stderr">tests\test_smoke.py:870 (TestSmoke.test_card_bonus_card_self_promo)..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(),'Спасибо!')]"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:903: in test_card_bonus_card_self_promo<br/>    page.pay_order_without_3d()<br/>..\pages\payment.py:590: in pay_order_without_3d<br/>    self.wait_element_assure(self.title_thank_you_page_text)<br/>..\pages\base.py:65: in wait_element_assure<br/>    element.assure(visible, 15)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:627: in assure<br/>    return self.should(condition, timeout)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:538: in should<br/>    return self.with_(Config(timeout=timeout)).should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\..\..\AppData\Local\Programs\Python\Python39\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 15s, while waiting for:<br/>E   browser.element(('xpath', "//div[contains(text(),'Спасибо!')]")).is visible<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(),'Спасибо!')]"}<br/>E     (Session info: chrome=114.0.5735.199)<br/>E   <br/>E   Screenshot: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205958.png<br/>E   PageSource: file://C:\Users\gusev\.selene\screenshots\1690170205946\1690170205958.html<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">8.03 s</div>
+                                                    </em><em class="status">passed</em>test_add_fav_anonim</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED                     [ 95%]<br/></span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level test">
+                                                <span><em class="time">
+                                                        <div class="time">46.30 s</div>
+                                                    </em><em class="status">passed</em>test_add_del_fav_user</span>
+                                                <ul>
+                                                    <li class="text">
+                                                        <span class="stdout">PASSED                   [ 97%]<br/></span>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li class="level test">
                                                 <span><em class="time">
                                                         <div class="time">25.59 s</div>
-                                                    </em><em class="status">passed</em>test_cart_del_product_user</span>
+                                                    </em><em class="status">passed</em>test_fav_card_product_check</span>
                                                 <ul>
                                                     <li class="text">
-                                                        <span class="stdout">PASSED              [ 51%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">50.87 s</div>
-                                                    </em><em class="status">passed</em>test_pay_card_pick_point</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED                [ 53%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">41.74 s</div>
-                                                    </em><em class="status">passed</em>test_pay_card_not_valid_pick_point</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED      [ 56%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">1 m 2 s</div>
-                                                    </em><em class="status">passed</em>test_first_login_with_profile</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED           [ 58%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">35.59 s</div>
-                                                    </em><em class="status">passed</em>test_card_self_no_valid_card</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED            [ 60%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">16.14 s</div>
-                                                    </em><em class="status">passed</em>test_cart_add_product_anonim</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED            [ 63%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test failed open">
-                                                <span><em class="time">
-                                                        <div class="time">28.48 s</div>
-                                                    </em><em class="status">failed</em>test_payment_promocodes_6000_sum_6000</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">FAILED   [ 65%] промокод применен неверно<br/></span>
-                                                    </li>
-                                                    <li class="text">
-                                                        <span class="stderr">tests\test_smoke.py:554 (TestSmoke.test_payment_promocodes_6000_sum_6000)test_smoke.py:569: in test_payment_promocodes_6000_sum_6000<br/>    page.check_without_discount()<br/>..\pages\payment.py:302: in check_without_discount<br/>    self.assert_check_expressions(price_without_discount, price_finally, " промокод применен неверно")<br/>..\pages\base.py:75: in assert_check_expressions<br/>    assert expression1 == expression2, print(allureText)<br/>E   AssertionError: None<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">50.62 s</div>
-                                                    </em><em class="status">passed</em>test_card_self_no_many</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED                  [ 68%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">57.57 s</div>
-                                                    </em><em class="status">passed</em>test_card_self</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED                          [ 70%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">3.99 s</div>
-                                                    </em><em class="status">passed</em>test_login_negative</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED                     [ 73%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test failed open">
-                                                <span><em class="time">
-                                                        <div class="time">17.76 s</div>
-                                                    </em><em class="status">failed</em>test_burger_menu</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">FAILED                        [ 75%]<br/></span>
-                                                    </li>
-                                                    <li class="text">
-                                                        <span class="stderr">tests\test_smoke.py:115 (TestSmoke.test_burger_menu)..\venv\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\venv\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\venv\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\venv\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\venv\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\venv\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\venv\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//span[@title = 'Ваша корзина пуста']"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:127: in test_burger_menu<br/>    page.wait_element_assure(page.cart)<br/>..\pages\base.py:65: in wait_element_assure<br/>    element.assure(visible, 15)<br/>..\venv\lib\site-packages\selene\core\entity.py:627: in assure<br/>    return self.should(condition, timeout)<br/>..\venv\lib\site-packages\selene\core\entity.py:538: in should<br/>    return self.with_(Config(timeout=timeout)).should(condition)<br/>..\venv\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\venv\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\venv\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 15s, while waiting for:<br/>E   browser.element(('xpath', "//span[@title = 'Ваша корзина пуста']")).is visible<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//span[@title = 'Ваша корзина пуста']"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>E   <br/>E   Screenshot: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588133.png<br/>E   PageSource: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588133.html<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">14.05 s</div>
-                                                    </em><em class="status">passed</em>test_main_screen_main_menu_basket</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED       [ 78%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">509 ms</div>
-                                                    </em><em class="status">passed</em>test_login_screen</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED                       [ 80%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test failed open">
-                                                <span><em class="time">
-                                                        <div class="time">15.23 s</div>
-                                                    </em><em class="status">failed</em>test_main_screen_main_menu_search</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">FAILED       [ 82%]<br/></span>
-                                                    </li>
-                                                    <li class="text">
-                                                        <span class="stderr">tests\test_smoke.py:44 (TestSmoke.test_main_screen_main_menu_search)..\venv\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\venv\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\venv\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\venv\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\venv\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\venv\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\venv\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class = 'CatalogProduct__title']"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:50: in test_main_screen_main_menu_search<br/>    page.main_menu_search()<br/>..\pages\smoke.py:245: in main_menu_search<br/>    #self.move_to(self.all_bunners[i])<br/>..\pages\base.py:65: in wait_element_assure<br/>    element.assure(visible, 15)<br/>..\venv\lib\site-packages\selene\core\entity.py:627: in assure<br/>    return self.should(condition, timeout)<br/>..\venv\lib\site-packages\selene\core\entity.py:538: in should<br/>    return self.with_(Config(timeout=timeout)).should(condition)<br/>..\venv\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\venv\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\venv\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 15s, while waiting for:<br/>E   browser.element(('xpath', "//div[@class = 'CatalogProduct__title']")).is visible<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class = 'CatalogProduct__title']"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>E   <br/>E   Screenshot: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588134.png<br/>E   PageSource: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588134.html<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">44.77 s</div>
-                                                    </em><em class="status">passed</em>test_pay_card_no_many_pick_point</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED        [ 85%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test failed open">
-                                                <span><em class="time">
-                                                        <div class="time">26.29 s</div>
-                                                    </em><em class="status">failed</em>test_registration</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">FAILED                       [ 87%]<br/></span>
-                                                    </li>
-                                                    <li class="text">
-                                                        <span class="stderr">tests\test_smoke.py:444 (TestSmoke.test_registration)..\venv\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\venv\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\venv\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\venv\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\venv\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\venv\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\venv\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//button[contains(.,"Выйти")]"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:450: in test_registration<br/>    page.user_registration()<br/>..\pages\smoke.py:560: in user_registration<br/>    ???<br/>..\pages\base.py:65: in wait_element_assure<br/>    element.assure(visible, 15)<br/>..\venv\lib\site-packages\selene\core\entity.py:627: in assure<br/>    return self.should(condition, timeout)<br/>..\venv\lib\site-packages\selene\core\entity.py:538: in should<br/>    return self.with_(Config(timeout=timeout)).should(condition)<br/>..\venv\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\venv\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\venv\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>E   selene.core.exceptions.TimeoutException: Message: <br/>E   <br/>E   Timed out after 15s, while waiting for:<br/>E   browser.element(('xpath', '//button[contains(.,"Выйти")]')).is visible<br/>E   <br/>E   Reason: NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//button[contains(.,"Выйти")]"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>E   <br/>E   Screenshot: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588135.png<br/>E   PageSource: file://C:\Users\Qasquad1\.selene\screenshots\1684907588120\1684907588135.html<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">2.62 s</div>
-                                                    </em><em class="status">passed</em>test_burger_menu_check_products</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED         [ 90%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test">
-                                                <span><em class="time">
-                                                        <div class="time">36.04 s</div>
-                                                    </em><em class="status">passed</em>test_pay_receiving_courier</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">PASSED              [ 92%]<br/></span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="level test failed open">
-                                                <span><em class="time">
-                                                        <div class="time">1 m 18 s</div>
-                                                    </em><em class="status">failed</em>test_main_screen_banners</span>
-                                                <ul>
-                                                    <li class="text">
-                                                        <span class="stdout">FAILED                [ 95%]<br/></span>
-                                                    </li>
-                                                    <li class="text">
-                                                        <span class="stderr">tests\test_smoke.py:28 (TestSmoke.test_main_screen_banners)..\venv\lib\site-packages\selene\core\wait.py:102: in for_<br/>    return fn(self._entity)<br/>..\venv\lib\site-packages\selene\core\condition.py:136: in __call__<br/>    return self._fn(*args, **kwargs)<br/>..\venv\lib\site-packages\selene\core\condition.py:91: in fn<br/>    if not predicate(entity):<br/>..\venv\lib\site-packages\selene\core\match.py:37: in <lambda><br/>    'is visible', lambda element: element().is_displayed()<br/>..\venv\lib\site-packages\selene\core\entity.py:179: in __call__<br/>    return self._locator()<br/>..\venv\lib\site-packages\selene\core\locator.py:34: in __call__<br/>    return self._locate()<br/>..\venv\lib\site-packages\selene\core\entity.py:1529: in <lambda><br/>    f'{self}.element({by})', lambda: self.driver.find_element(*by)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element<br/>    return self.execute(Command.FIND_ELEMENT, {<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='App isHomepage page-index isDark theme-isDark isEmptyCart']"}<br/>E     (Session info: chrome=113.0.5672.127)<br/>During handling of the above exception, another exception occurred:<br/>test_smoke.py:35: in test_main_screen_banners<br/>    page.video()<br/>..\pages\smoke.py:212: in video<br/>    def video(self):<br/>..\pages\base.py:65: in wait_element_assure<br/>    element.assure(visible, 15)<br/>..\venv\lib\site-packages\selene\core\entity.py:627: in assure<br/>    return self.should(condition, timeout)<br/>..\venv\lib\site-packages\selene\core\entity.py:538: in should<br/>    return self.with_(Config(timeout=timeout)).should(condition)<br/>..\venv\lib\site-packages\selene\core\entity.py:540: in should<br/>    super().should(condition)<br/>..\venv\lib\site-packages\selene\core\entity.py:127: in should<br/>    self.wait.for_(condition)<br/>..\venv\lib\site-packages\selene\core\wait.py:125: in for_<br/>    raise self._hook_failure(failure)<br/>..\venv\lib\site-packages\selene\common\fp.py:41: in <lambda><br/>    lambda f, g: lambda x: f(g(x)) if g else f(x),<br/>..\venv\lib\site-packages\selene\support\shared\config.py:331: in save_and_log_screenshot<br/>    path = Help(self.driver).save_screenshot(<br/>..\venv\lib\site-packages\selene\support\webdriver.py:68: in save_screenshot<br/>    return file if self._driver.get_screenshot_as_file(file) else None<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:1032: in get_screenshot_as_file<br/>    png = self.get_screenshot_as_png()<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:1064: in get_screenshot_as_png<br/>    return base64.b64decode(self.get_screenshot_as_base64().encode('ascii'))<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:1074: in get_screenshot_as_base64<br/>    return self.execute(Command.SCREENSHOT)['value']<br/>..\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>..\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: in check_response<br/>    raise exception_class(message, screen, stacktrace)<br/>E   selenium.common.exceptions.WebDriverException: Message: unknown error: unhandled inspector error: {"code":-32000,"message":"Unable to capture screenshot"}<br/>E     (Session info: chrome=113.0.5672.127)<br/></span>
+                                                        <span class="stdout">PASSED             [100%]<br/></span>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -1036,7 +1148,7 @@ jQuery.cookie = function(name, value, options) {
             </div>
         </div>
         <div id="footer">
-            <p>Generated by PyCharm on 24.05.2023, 14:04</p>
+            <p>Generated by PyCharm on 24.07.2023, 11:39</p>
         </div>
     </body>
 </html>

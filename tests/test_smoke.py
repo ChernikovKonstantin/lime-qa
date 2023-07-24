@@ -753,6 +753,8 @@ class TestSmoke:
         page = PaymentPage()
         page.preview_payment()
         page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.field_self_and_pic_point()
+
         page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин"')
 
@@ -770,6 +772,7 @@ class TestSmoke:
         page = PaymentPage()
         page.preview_payment_many_products()
         page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.field_self_and_pic_point()
         page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин')
 
@@ -787,6 +790,7 @@ class TestSmoke:
         page = PaymentPage()
         page.preview_payment()
         page.click(page.type_of_delivery_self, 'Выбор типа доставки Самовывоз')
+        page.field_self_and_pic_point()
         page.click(page.point_self_and_pic_point_delivery, 'Выбор пункта самовывоза')
         page.click(page.button_choise_point, 'Кнопка "Выбрать этот магазин')
         page = SmokePage()

@@ -10,8 +10,8 @@ from pages.base import BasePage
 class LoginPage(BasePage):
 
     # Locators
-    email_input = s('input[placeholder="Введите e-mail"]')
-    password_input = s('input[type="password"]')
+    email_input = s('//input[@placeholder="Введите e-mail"]')
+    password_input = s('//input[@placeholder="Введите пароль"]')
     enter_btn = s('button[type="submit"]')
     #enter_btn = s('//div[@class ="FormGroup__control"]')
     logout_btn = s('//button[contains(.,"Выйти")]')

@@ -537,7 +537,7 @@ class SmokePage(BasePage):
         time.sleep(3)
 
         page = LoginPage()
-        page.login(email="chernikov.kv@lime-shop.com", password=("VTer38XXXXXX"))
+        page.login(email="chernikov.kv3@lime-shop.com", password=("VTer38XXXXXX"))
         page.check_login_error()
 
     @allure.step('Успешный логин')
