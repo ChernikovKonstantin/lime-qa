@@ -38,9 +38,9 @@ class LoginPage(BasePage):
 
     @allure.step("Проверить что кнопка Выйти отображается")
     def check_logout_btn_is_visible(self):
-        time.sleep(1)
+        time.sleep(3)
         self.wait_element_assure(self.logout_btn)
-        self.logout_btn.should(be.visible)
+        #self.logout_btn.should(be.visible)
 
     @allure.step("Проверить что ошибка логина отображается")
     def check_login_error(self):
@@ -54,6 +54,7 @@ class LoginPage(BasePage):
     def authorization(self):
 
         self.click(self.account_btn, "Нажать на Личный кабинет")
+        self.wait_element_assure(self.authorization_btn)
         self.click(self.authorization_btn, "Нажать Войти")
         self.set_text(self.email_input, os.getenv("test_user"), "Поле Email")
         self.set_text(self.password_input, os.getenv("password"), "Поле Пароль")

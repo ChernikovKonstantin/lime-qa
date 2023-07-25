@@ -147,6 +147,7 @@ class TestSmoke:
         page = SmokePage()
         page.wait_element_assure(page.block_catalog)
         page.click(page.element_plus, " список Дополнительно")
+        time.sleep(2)
         page.wait_element_assure(page.cart)
         page.wait_element_assure(page.help)
         page.wait_element_assure(page.cart_bonus)
