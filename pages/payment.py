@@ -29,7 +29,7 @@ class PaymentPage(BasePage):
     success_btn_fault_string = "//button[@class='button button_secondary']"
     check_box_save_card = s("//span[contains(text(), 'Запомнить данные карты')]")
 
-    title_thank_you_page_text = s("//div[contains(text(),'СПАСИБО!')]")
+    title_thank_you_page_text = s("//div[contains(text(),'Спасибо!')]")
     dropdown_quantity_product_on_payment = s("//div[@class='DropdownList__container DropdownList__inline']")
     # dropdown_quantity_product = s("(//div[@class='SvgIcon'])[2]/child::*")
     dropdown_quantity_product_select_5_on_payment = s("(//span[@class='DropdownList__title'])[5]")
@@ -569,6 +569,7 @@ class PaymentPage(BasePage):
     def pay_order(self):
 
         self.wait_element_assure(self.to_pay_btn)
+        time.sleep(1)
         self.click(self.to_pay_btn, "кнопка оплаты")
         time.sleep(3)
         # self.wait_element_assure(self.success_btn)
@@ -585,7 +586,7 @@ class PaymentPage(BasePage):
 
         self.wait_element_assure(self.to_pay_btn)
         self.click(self.to_pay_btn, "кнопка оплаты")
-        time.sleep(4)
+        time.sleep(5)
 
         self.wait_element_assure(self.title_thank_you_page_text)
         title_thank_you_page = self.get_element_text(self.title_thank_you_page_text, " получение текста элемента")
