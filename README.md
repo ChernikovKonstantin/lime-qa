@@ -92,7 +92,7 @@ https://lmdev.testrail.io/index.php?/cases/view/906&group_by=cases:section_id&gr
 
 test_profile_order
 https://lmdev.testrail.io/index.php?/cases/view/880
-баг, разные номера заказов в сообщение после заказа и в ЛК, воспроизвелось после выполнеия теста 4 раза 
+баг, разные номера заказов в сообщение после заказа и в ЛК
 
 
 

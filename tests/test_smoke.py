@@ -459,10 +459,13 @@ class TestSmoke:
 
     def test_first_login(self):
         page = SmokePage()
+        # SmokePage.user_first_lk()
         page.user_first_lk()
 
     @allure.title("Профиль / мои данные /")
     @allure.link("https://lmdev.testrail.io/index.php?/cases/view/880")
+    @allure.description(" Описание теста аннотация")
+
     @pytest.mark.smoke3
     def test_profile_order(self):
         page = PaymentPage()

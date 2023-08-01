@@ -238,6 +238,7 @@ class CatalogPage(BasePage):
 
         self.open_url(os.getenv('base_url') + "/ru_ru/catalog/bodysuits")
         self.click(self.choose_a_product_1399, "Товар с ценой 1999")
+        time.sleep(1)
         self.click(self.add_to_cart, "добавить в корзину")
         time.sleep(1)
         #self.open_url(os.getenv('base_url') + "/ru_ru/catalog/loafers")
